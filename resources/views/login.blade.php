@@ -39,7 +39,7 @@ if (auth()->check() && auth()->user()->status != 'active') {
     <div class="container" style="position: absolute;top: 50%; left: 50%; transform: translate(-50%, -50%);padding: 20px;margin: auto;">
         <div class="row justify-content-center">
             <div class="col-8">
-                <div class="card">
+                <div class="card border-4 border-warning mb-10" style="background-color: rgb(243, 204, 137)" >
                     <div class="card-body">
                         @if($errors->any())
                         @foreach($errors->all() as $err)
@@ -48,25 +48,26 @@ if (auth()->check() && auth()->user()->status != 'active') {
                         @endif
                         <form action="{{ route('loginacc') }}" method="POST">
                             @csrf
-                            <div class="text-center">
-                                <img src="{{ URL::asset('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZzoDeEjIOxYT2dL6zhz9J0RH-T_sNpeucjSd10omQQMSQYjUD5z9vHKjH03Vj1I4Nxwk&usqp=CAU') }}" class="rounded" alt="" height="150px" width="170px">
-                                <h1>Login</h1>
+                            <div class="text-center">  
+                                <img src="{{ asset('images/foodies-nobg.png')}}" class="rounded" alt="" height="120px" width="185px">  
+                                <h1 class="mt-3">Login</h1>
                             </div>
                             <br>
 
-                            <div class="form-group mb-3">
-                                <label for="email">Email</label>
+                           
+                            <div class="form-group mb-3 fs-5">
+                                <label for="email" >Email</label>
                                 <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
                             </div>
 
-                            <div class="form-group mb-3">
+                            <div class="form-group mb-3 fs-5">
                                 <label for="password">Password</label>
                                 <input type="password" class="form-control" id="password" name="password" placeholder="Password">
                             </div>
 
 
-                            <a href="{{ route('AccountUnexist') }}?stats=true">Don't have an account?</a>
-                            <button type="submit" class="btn btn-primary" style="float:right">Submit</button>
+                            <a href="{{ route('AccountUnexist') }}?stats=true" class="link-danger">Don't have an account?</a>
+                            <button type="submit" class="btn btn-danger" style="float:right">Submit</button>
                         </form>
                     </div>
                 </div>

@@ -31,10 +31,10 @@
     ?>
 
     <div class="background"></div>
-    <div class="container" style="position: absolute;top: 50%; left: 50%; transform: translate(-50%, -50%);padding: 20px;margin: auto;">
+    <div class="container" style="position: absolute;top: 60%; left: 50%; transform: translate(-50%, -50%);padding: 20px;margin: auto;">
         <div class="row justify-content-center">
             <div class="col-8">
-                <div class="card">
+                <div class="card border-4 border-warning mb-10" style="background-color: rgb(243, 204, 137)">
                     <div class="card-body">
                         @if($errors->any())
                         @foreach($errors->all() as $err)
@@ -44,7 +44,7 @@
                         <form action="{{ route('registeracc') }}" method="POST">
                             @csrf
                             <div class="text-center">
-                                <img src="{{ URL::asset('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZzoDeEjIOxYT2dL6zhz9J0RH-T_sNpeucjSd10omQQMSQYjUD5z9vHKjH03Vj1I4Nxwk&usqp=CAU') }}" class="rounded" alt="" height="150px" width="170px">
+                                <img src="{{ asset('images/foodies-nobg.png')}}" class="rounded" alt="" height="120px" width="170px">
                                 <h1>Register</h1>
                             </div>
                             <br>
@@ -82,8 +82,8 @@
                                 </div>
                             </div>
 
-                            <a href="{{ route('AccountExist') }}">Already have an account?</a>
-                            <button type="submit" class="btn btn-primary" style="float:right">Submit</button>
+                            <a href="{{ route('AccountExist') }}" class="link-danger">Already have an account?</a>
+                            <button type="submit" class="btn btn-danger" style="float:right">Submit</button>
                         </form>
                     </div>
                 </div>
