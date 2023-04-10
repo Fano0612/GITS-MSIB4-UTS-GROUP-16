@@ -52,13 +52,13 @@ if (!auth()->check() || auth()->user()->status != 'active') {
                         <a class="nav-link active" aria-current="page" href="{{route ('homepage')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route ('homepage')}}">Products</a>
+                        <a class="nav-link" href="{{route ('productlist')}}">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route ('homepage')}}">Manage</a>
+                        <a class="nav-link" href="{{route ('product_menu')}}">Manage</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route ('homepage')}}">Category</a>
+                        <a class="nav-link" href="{{route ('category')}}">Category</a>
                     </li>
                 </ul>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -82,7 +82,6 @@ if (!auth()->check() || auth()->user()->status != 'active') {
             </div>
         </div>
     </nav>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
 </body>
