@@ -130,7 +130,7 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
                     </li>
                 </ul>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a href="{{route ('homepage')}}">
+                <a href="{{route ('showProductCart')}}">
                         <i class="fa fa-shopping-cart" style="font-size:36px"></i>
                     </a>
                     &nbsp; &nbsp;

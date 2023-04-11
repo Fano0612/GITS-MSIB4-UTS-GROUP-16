@@ -1,11 +1,10 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Please login to access the system');</script>";
+    echo "<script>alert('Please login to access the system!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 ?>
-
 
 <!doctype html>
 <html lang="en">
@@ -15,8 +14,11 @@ if (!auth()->check() || auth()->user()->status != 'active') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>G.16 Food & Bev's.</title>
     <link rel="icon" type="image/x-icon" href="{{ URL::asset('https://www.theworlds50best.com/filestore/png/SRA-Logo-1.png') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
+
         .background {
             position: fixed;
             background-size: cover;
@@ -28,12 +30,15 @@ if (!auth()->check() || auth()->user()->status != 'active') {
             background-image: url('https://media-cldnry.s-nbcnews.com/image/upload/newscms/2023_05/1963490/puff-pastry-beef-wellington-valentines-day-2x1-zz-230201.jpg');
             filter: blur(5px);
         }
+
+
     </style>
+
 </head>
 
 <body>
-    <div class="background"></div>
 
+    <div class="background"></div>
     <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
             <nav class="navbar bg-body-tertiary">
@@ -52,7 +57,7 @@ if (!auth()->check() || auth()->user()->status != 'active') {
                         <a class="nav-link active" aria-current="page" href="{{route ('homepage')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route ('productlist')}}">Products</a>
+                        <a class="nav-link " href="{{route ('productlist')}}">Products</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{route ('product_menu')}}">Manage</a>
@@ -62,7 +67,7 @@ if (!auth()->check() || auth()->user()->status != 'active') {
                     </li>
                 </ul>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a href="{{route ('homepage')}}">
+                    <a href="{{route ('showProductCart')}}">
                         <i class="fa fa-shopping-cart" style="font-size:36px"></i>
                     </a>
                     &nbsp; &nbsp;
@@ -83,7 +88,11 @@ if (!auth()->check() || auth()->user()->status != 'active') {
         </div>
     </nav>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+
+
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </html>

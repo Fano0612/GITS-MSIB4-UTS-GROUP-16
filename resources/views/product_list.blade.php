@@ -114,7 +114,7 @@ if (!auth()->check() || auth()->user()->status != 'active') {
                     </li>
                 </ul>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a href="{{route ('homepage')}}">
+                    <a href="{{route ('showProductCart')}}">
                         <i class="fa fa-shopping-cart" style="font-size:36px"></i>
                     </a>
                     &nbsp; &nbsp;
@@ -148,7 +148,7 @@ if (!auth()->check() || auth()->user()->status != 'active') {
                     <p class="card-text">Rp {{ number_format($prod->product_price, 0, ',', '.') }}.00</p>
                     <p class="card-text">Stock: {{ $prod->product_stock }}</p>
                     @if($prod->product_stock > 0)
-                    <form action="#" method="POST">
+                    <form action="{{route ('buyproduct')}}" method="POST">
                         @csrf
                         <input type="hidden" name="product_id" value="{{ $prod->product_id }}">
                         <button type="submit" class="btn btn-primary">Buy</button>

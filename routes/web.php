@@ -40,6 +40,11 @@ Route::post('/insertproduct', [ProductController::class, 'insertproduct'])->name
 Route::get('/showproduct/{product_id}', [ProductController::class, 'showproduct'])->name('showproduct');
 Route::post('/editproduct/{product_id}', [ProductController::class, 'editproduct'])->name('editproduct');
 Route::get('/deleteproduct/{product_id}', [ProductController::class, 'deleteproduct'])->name('deleteproduct');
+Route::post('/buyProduct', [App\Http\Controllers\ProductController::class, 'buyProduct'])->name('buyproduct');
+Route::get('/showProductCart', [App\Http\Controllers\ProductController::class, 'showProductCart'])->name('showProductCart');
+Route::post('/incrementProductCart', [App\Http\Controllers\ProductController::class, 'incrementProductCart'])->name('incrementProductCart');
+Route::post('/decrementProductCart', [App\Http\Controllers\ProductController::class, 'decrementProductCart'])->name('decrementProductCart');
+Route::delete('/removeProductCart/{id}', [App\Http\Controllers\ProductController::class, 'removeProductCart'])->name('removeProductCart');
 
 Route::get('/category', [CategoryController::class, 'create'])->name('category');
 Route::post('/category', [CategoryController::class, 'store'])->name('category.store');

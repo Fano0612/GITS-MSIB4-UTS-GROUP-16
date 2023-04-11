@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Cart;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -106,6 +108,131 @@ class ProductController extends Controller
             return redirect()->route('product_menu')->with('success', 'Data Successfully Deleted');
         } else {
             return redirect()->route('product_menu')->with('error', 'Data Not Found');
+        }
+    }
+    public function buyProduct(Request $request){
+
+        $productId = $request->input('product_id');
+        $product = Product::find($productId);
+    
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found!');
+        }
+    
+        $userId = auth()->user()->id;
+        $cartCount = Cart::where('user_id', $userId)->count();
+        if ($cartCount == 0) {
+            DB::statement('ALTER TABLE carts AUTO_INCREMENT = 1');
+        }
+    
+        $cartItem = Cart::where('user_id', $userId)->where('product_id', $productId)->first();
+    
+        if ($cartItem) {
+            $cartItem->increment('quantity');
+        } else {
+            Cart::create([
+                'user_id' => $userId,
+                'product_id' => $productId,
+                'quantity' => 1,
+                'product_name' => $product->product_name,
+                'product_picture' => $product->product_picture,
+                'product_price' => $product->product_price,
+            ]);
+        }
+    
+        $product->decrement('product_stock', 1);
+    
+        return redirect()->route('productlist')->with('success', 'Product successfully added to the cart!');
+    }
+
+    public function showProductCart(){
+        $userId = auth()->user()->id;
+        
+        $cart = Cart::where('user_id', $userId)->get();
+        return view('cart_view', compact('cart'));
+    }
+
+    public function incrementProductCart(Request $request) {
+        $productId = $request->input('product_id');
+        $userId = auth()->user()->id;
+        $cart = Cart::where('product_id', $productId)
+                    ->where('user_id', $userId)
+                    ->first();
+        if (!$cart) {
+            return redirect()->back()->with('error', 'Product not found in cart!');
+        }
+        $product = Product::find($productId);
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found!');
+        }
+        $quantity = $cart->quantity + $request->input('increment');
+        if ($quantity > $product->product_stock) {
+            return redirect()->back()->with('error', 'Product out of stock!');
+        }
+        $cart->quantity = $quantity;
+        $cart->save();
+        $product->product_stock -= $request->input('increment');
+        $product->save();
+        $data = ['quantity' => $cart->quantity];
+        return response()->json($data);
+    }
+    
+    public function decrementProductCart(Request $request) {
+        $productId = $request->input('product_id');
+        $userId = auth()->user()->id;
+    
+        $cart = Cart::where('product_id', $productId)
+                    ->where('user_id', $userId)
+                    ->first();
+        if (!$cart) {
+            return redirect()->back()->with('error', 'Product not found in cart!');
+        }
+        if ($cart->quantity <= 1) {
+            return redirect()->back()->with('error', 'Quantity can not be decreased further!');
+        }
+        $product = Product::find($productId);
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found!');
+        }
+        $quantity = $cart->quantity - $request->input('decrement');
+        $cart->quantity = $quantity;
+        $cart->save();
+        $product->product_stock += $request->input('decrement');
+        $product->save();
+        $data = ['quantity' => $cart->quantity];
+        return response()->json($data);
+    }
+
+    public function removeProductCart($id) {
+        $userId = auth()->user()->id;
+    
+        $cartItem = Cart::where('user_id', $userId)
+            ->where('product_id', $id)
+            ->first();
+        
+        if ($cartItem) {
+            $removedQuantity = $cartItem->quantity;
+    
+            $product = $cartItem->product;
+            if ($product) {
+                $productStock = $product->product_stock + $removedQuantity;
+                $product->update([
+                    'product_stock' => $productStock
+                ]);
+            }
+            $cartItem->delete();
+    
+            $product = Product::find($id);
+            if ($product) {
+                $productStock = $product->product_stock + $removedQuantity;
+                $product->update([
+                    'product_stock' => $productStock
+                ]);
+            }
+    
+            return redirect()->route('showProductCart')->with('success', 'Product removed');
+        } else {
+            return redirect()->route('showProductCart')->with('error', 'Product not found');
         }
     }
 }

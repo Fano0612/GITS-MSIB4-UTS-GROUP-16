@@ -100,7 +100,7 @@ if (auth()->user()->access_rights != 'Merchant') {
                     </li>
                 </ul>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a href="{{route ('homepage')}}">
+                <a href="{{route ('showProductCart')}}">
                         <i class="fa fa-shopping-cart" style="font-size:36px"></i>
                     </a>
                     &nbsp; &nbsp;
