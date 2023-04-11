@@ -23,7 +23,11 @@ Route::get('/', function () {
 Route::get('/homepage', function () {
     return view('homepage');
 })->name('homepage');
+Route::get('/transaction_list', function () {
+    return view('transaction_list');
+})->name('transaction_list');
 Route::get('/productlist', [ProductListController::class, 'index'])->name('productlist');
+
 
 
 Route::get('register', [UserController::class, 'register'])->name('register');
@@ -45,6 +49,7 @@ Route::get('/showProductCart', [App\Http\Controllers\ProductController::class, '
 Route::post('/incrementProductCart', [App\Http\Controllers\ProductController::class, 'incrementProductCart'])->name('incrementProductCart');
 Route::post('/decrementProductCart', [App\Http\Controllers\ProductController::class, 'decrementProductCart'])->name('decrementProductCart');
 Route::delete('/removeProductCart/{id}', [App\Http\Controllers\ProductController::class, 'removeProductCart'])->name('removeProductCart');
+Route::post('/paymentProductCart', [App\Http\Controllers\ProductController::class, 'paymentProductCart'])->name('paymentProductCart');
 
 Route::get('/category', [CategoryController::class, 'create'])->name('category');
 Route::post('/category', [CategoryController::class, 'store'])->name('category.store');

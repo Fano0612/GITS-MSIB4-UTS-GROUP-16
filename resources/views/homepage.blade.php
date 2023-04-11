@@ -1,11 +1,10 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Please login to access the system');</script>";
+    echo "<script>alert('Please login to access the system!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 ?>
-
 
 <!doctype html>
 <html lang="en">
@@ -15,12 +14,19 @@ if (!auth()->check() || auth()->user()->status != 'active') {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>G.16 Food & Bev's.</title>
     <link rel="icon" type="image/x-icon" href="{{ URL::asset('https://www.theworlds50best.com/filestore/png/SRA-Logo-1.png') }}">
+<<<<<<< HEAD
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+=======
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+>>>>>>> c578ad5185dfe9bc204c6fe45c0549196c6de18a
     <style>
+
         .background {
             position: fixed;
             background-size: cover;
@@ -40,18 +46,22 @@ if (!auth()->check() || auth()->user()->status != 'active') {
                 color: green;
             } */
         }
-	</style>
+
+
+    </style>
+
 </head>
 
 <body>
-    <div class="background"></div>
 
-    <nav class="navbar navbar-expand-lg bg-warning text-dark">
+
+    <div class="background"></div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary">
         <div class="container-fluid">
-            <nav class="navbar bg-warning text-dark">
+            <nav class="navbar bg-body-tertiary">
                 <div class="container">
                     <a class="navbar-brand" href="{{route ('homepage')}}">
-                        <img src="{{ asset('images/foodies-logo.png') }}" alt="" width="58" height="48" style="border-radius: 50%;">
+                        <img src="{{ URL::asset('https://marketplace.canva.com/EAEzOw_ovvE/1/0/1600w/canva-watercolor-food-logo-0GcpZ9_7Xls.jpg') }}" alt="" width="60" height="55" style="border-radius: 50%;">
                     </a>
                 </div>
             </nav>
@@ -64,24 +74,26 @@ if (!auth()->check() || auth()->user()->status != 'active') {
                         <a class="nav-link active" aria-current="page" href="{{route ('homepage')}}">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route ('homepage')}}">Products</a>
+                        <a class="nav-link" href="{{route ('productlist')}}">Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route ('homepage')}}">Manage</a>
+                        <a class="nav-link" href="{{route ('product_menu')}}">Manage</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{route ('homepage')}}">Category</a>
+                        <a class="nav-link " href="{{route ('category')}}">Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{route ('transaction_list')}}">Transactions</a>
                     </li>
                 </ul>
-                <nav class="navbar navbar-expand-lg navbar-light bg-warning">
-                    <a href="{{route ('homepage')}}">
+                <nav class="navbar navbar-expand-lg navbar-light bg-light">
+                <a href="{{route ('showProductCart')}}">
                         <i class="fa fa-shopping-cart" style="font-size:36px"></i>
                     </a>
                     &nbsp; &nbsp;
-                    <div class="dropdown ml-auto" style="margin-left: auto;"> 
-                        <button class="btn btn-warning" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{-- <img src="{{ URL::asset('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZzoDeEjIOxYT2dL6zhz9J0RH-T_sNpeucjSd10omQQMSQYjUD5z9vHKjH03Vj1I4Nxwk&usqp=CAU') }}" alt="" width="60" height="55" style="border-radius: 50%;"> --}}
-                            <img src="{{ asset('images/aku.jpg') }}" alt="" width="48" height="48" style="border-radius: 50%;">
+                    <div class="dropdown ml-auto" style="margin-left: auto;">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <img src="{{ URL::asset('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZzoDeEjIOxYT2dL6zhz9J0RH-T_sNpeucjSd10omQQMSQYjUD5z9vHKjH03Vj1I4Nxwk&usqp=CAU') }}" alt="" width="60" height="55" style="border-radius: 50%;">
                         </button>
                         <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                             @if (auth()->check())
@@ -163,6 +175,10 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+>>>>>>> c578ad5185dfe9bc204c6fe45c0549196c6de18a
 </body>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 </html>

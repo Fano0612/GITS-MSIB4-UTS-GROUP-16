@@ -112,6 +112,9 @@ if (!auth()->check() || auth()->user()->status != 'active') {
                     <li class="nav-item">
                         <a class="nav-link" href="{{route ('category')}}">Category</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{route ('transaction_list')}}">Transactions</a>
+                    </li>
                 </ul>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <a href="{{route ('showProductCart')}}">

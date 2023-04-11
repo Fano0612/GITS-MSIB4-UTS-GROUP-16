@@ -125,6 +125,9 @@ $cart = App\Models\Cart::all();
                     <li class="nav-item">
                         <a class="nav-link " href="{{route ('category')}}">Category</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{route ('transaction_list')}}">Transactions</a>
+                    </li>
                 </ul>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a href="{{route ('showProductCart')}}">
@@ -185,7 +188,7 @@ $cart = App\Models\Cart::all();
       <br>
       <?php $total += $tax; ?>
       <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
-      <form action="#" method="POST" id="payment-form">
+      <form action="{{ route('paymentProductCart') }}" method="POST" id="payment-form">
   @csrf
   <button type="submit" class="btn btn-success mb-3 Payment">Pay</button>
 </form>

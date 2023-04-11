@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Cart;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -234,5 +235,39 @@ class ProductController extends Controller
         } else {
             return redirect()->route('showProductCart')->with('error', 'Product not found');
         }
+    }
+    public function paymentProductCart() {
+        $userId = auth()->user()->id;
+    
+        $cartItems = Cart::where('user_id', $userId)->get();
+        $transactionData = [];
+    
+        $transactionId = time();
+    
+        foreach ($cartItems as $cartItem) {
+            $transactionData[] = [
+                'transaction_id' => $transactionId,
+                'user_id' => $userId,
+                'product_id' => $cartItem->product_id,
+                'product_name' => $cartItem->product_name,
+                'product_picture' => $cartItem->product_picture,
+                'product_price' => $cartItem->product_price,
+                'quantity' => $cartItem->quantity,
+                'transaction_status' => 'Paid'
+            ];
+    
+            $product = $cartItem->product;
+            if ($product) {
+                $productStock = $product->product_stock - $cartItem->quantity;
+                $product->update([
+                    'product_stock' => $productStock
+                ]);
+            }
+        }
+    
+        Transaction::insert($transactionData);
+        Cart::where('user_id', $userId)->delete();
+    
+        return redirect()->route('showProductCart')->with('success', 'Payment successful');
     }
 }

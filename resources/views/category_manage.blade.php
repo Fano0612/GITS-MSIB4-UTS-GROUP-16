@@ -1,3 +1,4 @@
+
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
     echo "<script>alert('Please login to access the system');</script>";
@@ -97,6 +98,9 @@ if (auth()->user()->access_rights != 'Merchant') {
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{route ('category')}}">Category</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link " href="{{route ('transaction_list')}}">Transactions</a>
                     </li>
                 </ul>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
