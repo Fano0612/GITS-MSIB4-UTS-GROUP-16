@@ -113,7 +113,7 @@ if (auth()->user()->access_rights != 'Merchant') {
         </div>
     </nav>
 
-    <div class="mt-5 text-center">
+    <div class="mt-5 mb-5 text-center">
     <div class="container" style="width: 500px; display: inline-block;">
         @php
             $transactionData = App\Models\Transaction::all()->groupBy('user_id');
@@ -140,7 +140,13 @@ if (auth()->user()->access_rights != 'Merchant') {
                         <ul class="list-group">
                             <li class="list-group-item fw-bold">
                                 Transaction ID: {{ $td->transaction_id }}
+                                <span>
+                            <a href="{{ route('viewProductTransaction', ['transactionId' => $td->transaction_id]) }}" class="btn btn-success" style="float:right">
+                                View
+                            </a>
+                            </span>
                             </li>
+
                         @php
                             $prevTransactionId = $td->transaction_id;
                         @endphp

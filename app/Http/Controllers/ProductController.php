@@ -251,7 +251,7 @@ class ProductController extends Controller
                 'product_id' => $cartItem->product_id,
                 'product_name' => $cartItem->product_name,
                 'product_picture' => $cartItem->product_picture,
-                'product_price' => $cartItem->product_price,
+                'product_price' => $cartItem->product_price * $cartItem->quantity,
                 'quantity' => $cartItem->quantity,
                 'transaction_status' => 'Paid'
             ];
@@ -269,5 +269,13 @@ class ProductController extends Controller
         Cart::where('user_id', $userId)->delete();
     
         return redirect()->route('showProductCart')->with('success', 'Payment successful');
+    }
+
+    public function viewProductTransaction($transaction_id)
+    {
+        $transaction = Transaction::with('user', 'product')->where('transaction_id', $transaction_id)->firstOrFail();
+        $products = Transaction::where('transaction_id', $transaction_id)->get();
+    
+        return view('transaction_view', compact('transaction', 'products'));
     }
 }

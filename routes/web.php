@@ -50,6 +50,8 @@ Route::post('/incrementProductCart', [App\Http\Controllers\ProductController::cl
 Route::post('/decrementProductCart', [App\Http\Controllers\ProductController::class, 'decrementProductCart'])->name('decrementProductCart');
 Route::delete('/removeProductCart/{id}', [App\Http\Controllers\ProductController::class, 'removeProductCart'])->name('removeProductCart');
 Route::post('/paymentProductCart', [App\Http\Controllers\ProductController::class, 'paymentProductCart'])->name('paymentProductCart');
+Route::get('/viewProductTransaction/{transactionId}', [ProductController::class, 'viewProductTransaction'])->name('viewProductTransaction');
+
 
 Route::get('/category', [CategoryController::class, 'create'])->name('category');
 Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
