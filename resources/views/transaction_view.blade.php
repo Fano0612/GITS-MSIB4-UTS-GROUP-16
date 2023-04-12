@@ -73,29 +73,49 @@ if (!auth()->check() || auth()->user()->status != 'active') {
             </div>
         </div>
 
-        @php
-    $total = 0;
-    $authUser = auth()->user();
+        <?php
+        $transactions = \App\Models\Transaction::where('transaction_id', $transaction->transaction_id)->get();
+        $total = 0;
 
-    if ($authUser) {
-        $transactions = $authUser->transactions;
-        $currentTransactionId = $transaction->transaction_id;
-        $currentTransactionItems = $transactions ? $transactions->where('transaction_id', $currentTransactionId)->pluck('product_id') : null;
-            dd($currentTransactionItems);
-        if ($currentTransactionItems) {
-            $total = $currentTransactionItems->sum();
+        foreach($transactions as $t) {
+            $total += $t->product_price * $t->quantity;
         }
-    }
-@endphp
+        ?>
+
+        <?php
+        $tax = $total*0.1;
+        $total +=$tax;
+        ?>
+
 
 <div class="row mb-3">
     <div class="col-sm-3">
-        <h6 class="mb-0">Total:</h6>
+        <h6 class="mb-0">Total Transaction:</h6>
     </div>
     <div class="col-sm-9 text-secondary">
-        {{ $total }}
+        Rp {{ number_format($total, 0, ',', '.') }}.00
     </div>
 </div>
+
+
+
+        @foreach(\App\Models\Transaction::where('transaction_id', $transaction->transaction_id)->get() as $transaction)
+    <div class="card" style="width: 18rem; margin-bottom: 9px;">
+      <img src="{{ URL::asset('images/product_pictures/'.$transaction->product_picture)  }}" class="card-img-top" alt="">
+      <div class="card-body">
+        <h5 class="card-title">{{ $transaction->product_name }}</h5>
+        <p class="card-text">Product ID: {{ $transaction->product_id }}</p>
+      </div>
+      <ul class="list-group list-group-flush">
+        <li class="list-group-item">Transaction ID: {{ $transaction->transaction_id }}</li>
+        <li class="list-group-item">Transaction Status: {{ $transaction->transaction_status }}</li>
+        <li class="list-group-item">Quantity: {{ $transaction->quantity }}</li>
+        <li class="list-group-item">Total Price: Rp {{ number_format($transaction->product_price* $transaction->quantity, 0, ',', '.') }}.00</li>
+      </ul>
+    </div>
+@endforeach
+
+
 
         <div class="row mb-3">
             <div class="col-sm-3">

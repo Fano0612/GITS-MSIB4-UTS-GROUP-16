@@ -251,7 +251,7 @@ class ProductController extends Controller
                 'product_id' => $cartItem->product_id,
                 'product_name' => $cartItem->product_name,
                 'product_picture' => $cartItem->product_picture,
-                'product_price' => $cartItem->product_price * $cartItem->quantity,
+                'product_price' => $cartItem->product_price,
                 'quantity' => $cartItem->quantity,
                 'transaction_status' => 'Paid'
             ];
