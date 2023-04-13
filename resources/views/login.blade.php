@@ -59,7 +59,7 @@ if (auth()->check() && auth()->user()->status != 'active') {
         <div class="row justify-content-center">
         <div class="col-lg-8">
             <div class="login" style="width: 38rem;">
-                @if($errors->any()))
+                @if($errors->any())
                     @foreach($errors->all() as $err)
                         <p class="alert alert-danger">{{$err}}</p>
                     @endforeach

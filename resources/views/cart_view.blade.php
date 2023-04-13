@@ -133,7 +133,7 @@ if (!auth()->check() || !auth()->user() || auth()->user()->status != 'active') {
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Products</a>
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('product_menu')}}">Manage</a>
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('category')}}">Category</a>
-                    <a class="nav-item nav-link active" aria-current="page" href="{{route ('transaction_list')}}">Transactions</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('transaction_list')}}">Transactions</a>
                 </div>
 
                 <a href="{{route ('showProductCart')}}">
