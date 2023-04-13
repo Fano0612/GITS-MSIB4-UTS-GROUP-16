@@ -12,35 +12,37 @@ if (!auth()->check() || !auth()->user() || auth()->user()->status != 'active') {
 <html lang="en">
 
 <head>
-    <meta charset="utf-8">
-    {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
-    <meta content="width=device-width, initial-scale=1.0" name="viewport">
-    <meta content="" name="keywords">
-    <meta content="" name="description">
-    <title>G.16 Food & Bev's.</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>G.16 Food & Bev's.</title>
     <link rel="icon" type="image/x-icon" href="{{ URL::asset('https://www.theworlds50best.com/filestore/png/SRA-Logo-1.png') }}">
-    <!-- Favicon -->
-    <link href="img/favicon.ico" rel="icon">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Favicon -->
+  <link href="img/favicon.ico" rel="icon">
 
-    <!-- Google Web Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+  <!-- Google Web Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
 
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- Icon Font Stylesheet -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
 
-    <!-- Libraries Stylesheet -->
-    <link href="lib/animate/animate.min.css" rel="stylesheet">
-    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
-    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+  <!-- Libraries Stylesheet -->
+  <link href="lib/animate/animate.min.css" rel="stylesheet">
+  <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+  <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 
-    <!-- Customized Bootstrap Stylesheet -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
+  <!-- Customized Bootstrap Stylesheet -->
+  <link href="css/bootstrap.min.css" rel="stylesheet">
 
-    <!-- Template Stylesheet -->
-    <link href="css/style.css" rel="stylesheet">
+  <!-- Template Stylesheet -->
+  <link href="css/style.css" rel="stylesheet">
+
+
     <style>
                   .adjustment{
                     display: flex;
@@ -54,7 +56,7 @@ if (!auth()->check() || !auth()->user() || auth()->user()->status != 'active') {
                       z-index: -1;
                       width: 100%;
                       height: 100%;
-                      background-image: url('https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&w=1000&q=80');
+                      background-image: url('https://images7.alphacoders.com/383/383325.jpg');
                       filter: blur(5px);
                     }
                     .card-border{
@@ -103,11 +105,11 @@ if (!auth()->check() || !auth()->user() || auth()->user()->status != 'active') {
                       justify-content: center;
                       align-items: center;
                       margin: 30px auto;
-                      width: 50%;
-                      height: 150%;
+                      width: 70%;
+                      height: 85%;
                       background-color: #ffffff;
                       border-radius: 20px;
-                      box-shadow: 0px 25px 40px #f467103d;
+                      box-shadow: 0px 25px 40px #1687d933;
 
                       }
   </style>
@@ -116,9 +118,9 @@ if (!auth()->check() || !auth()->user() || auth()->user()->status != 'active') {
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
+
 <body>
     <!-- Navbar & Hero Start -->
-    <div class="background"></div>
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: #ECBC76;">
             <a href="" class="navbar-brand p-0">
@@ -130,15 +132,16 @@ if (!auth()->check() || !auth()->user() || auth()->user()->status != 'active') {
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
                     <a href="{{route ('homepage')}}" class="nav-item nav-link">Home</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Products</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_menu')}}">Manage</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('category')}}">Category</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('transaction_list')}}">Transactions</a>
-                </div>
+                    <a href="{{route ('productlist')}}" class="nav-item nav-link">Products</a>
+                    <a href="{{route ('product_menu')}}" class="nav-item nav-link">Manage</a>
+                    <a href="{{route ('category')}}" class="nav-item nav-link">Category</a>
+                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Transactions</a>
 
-                <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
-                </a>
+                </div>
+                    <a href="{{route ('showProductCart')}}">
+                            <i class="fa fa-shopping-cart" style="font-size:36px"></i>
+                        </a>
+                        &nbsp; &nbsp;
                 <div class="dropdown ml-auto" style="margin-left: auto;"> 
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('images/draft/aku.jpg') }}" alt="" width="48" height="48" style="border-radius: 50%;">
@@ -156,55 +159,69 @@ if (!auth()->check() || !auth()->user() || auth()->user()->status != 'active') {
     </div>
     <!-- Navbar & Hero End -->
 
-    @php
-    $cart = App\Models\Cart::all();
-    @endphp
-    <div class ="background"></div>
+@php
+$cart = App\Models\Cart::all();
+@endphp
+<div class ="background"></div>
 
 
-    <div class="Cart-Container">
-    <div class="Cart-content" style="display:inline-block;">
-        <div class="card-border">
-        <?php $total = 0; ?>
 
-        @foreach($cart->where('user_id', auth()->user()->id) as $cl)
-    <div class="card" style="width: 18rem;">
-        <img src="{{ URL::asset('images/product_pictures/'.$cl->product_picture) }}" class="card-img-top" alt="">
-        <div class="card-body">
-        <h5 class="card-title">{{ $cl->product_name }}</h5>
-        <p class="card-text">Rp {{ number_format($cl->product_price, 0, ',', '.') }}.00</p>
-        <p class="card-text">Quantity:
-        <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
-        <span class="quantity">{{$cl->quantity}}</span>
-        <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
-    </p>
-        <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }} ">Remove</a>
-        <form id="delete-form" action="{{ route('removeProductCart', $cl->product_id) }}" method="POST" style="display: none;">
-            @csrf
-            @method('DELETE')
-        </form>
-        </div>
-        <?php $total += $cl->product_price * $cl->quantity; ?>
-    </div>
-    @if(($loop->iteration % 3) == 0)
-        <div style="flex-basis: 100%;"></div>
-    @endif
-    @endforeach
-        </div>
-        <hr style="background-color:rgb(0,0,0); height:20px;">
-        <?php $tax = $total * 0.1; ?>
-        <div class="total">
-        <h3>Tax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Rp {{ number_format($tax, 0, ',', '.') }}.00</h3>
-        <br>
-        <?php $total += $tax; ?>
-        <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
-        <form action="{{ route('paymentProductCart') }}" method="POST" id="payment-form">
-    @csrf
-    <button type="submit" class="btn btn-success mb-3 Payment">Pay</button>
+<div class="Cart-Container">
+  <div class="Cart-content" style="display:inline-block;">
+    <div class="card-border">
+      <?php $total = 0; ?>
+
+      @foreach($cart->where('user_id', auth()->user()->id) as $cl)
+  <div class="card" style="width: 18rem;">
+    <img src="{{ URL::asset('images/product_pictures/'.$cl->product_picture) }}" class="card-img-top" alt="">
+    <div class="card-body">
+      <h5 class="card-title">{{ $cl->product_name }}</h5>
+      <p class="card-text">Rp {{ number_format($cl->product_price, 0, ',', '.') }}.00</p>
+      <p class="card-text">Quantity:
+    <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
+    <span class="quantity">{{$cl->quantity}}</span>
+    <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
+</p>
+    <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }} ">Remove</a>
+    <form id="delete-form" action="{{ route('removeProductCart', $cl->product_id) }}" method="POST" style="display: none;">
+        @csrf
+        @method('DELETE')
     </form>
     </div>
+    <?php $total += $cl->product_price * $cl->quantity; ?>
+  </div>
+  @if(($loop->iteration % 3) == 0)
+    <div style="flex-basis: 100%;"></div>
+  @endif
+@endforeach
     </div>
-    </div>
+    <hr style="background-color:rgb(0,0,0); height:20px;">
+    <?php $tax = $total * 0.1; ?>
+    <div class="total">
+      <h3>Tax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Rp {{ number_format($tax, 0, ',', '.') }}.00</h3>
+      <br>
+      <?php $total += $tax; ?>
+      <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
+      <form action="{{ route('paymentProductCart') }}" method="POST" id="payment-form">
+  @csrf
+  <button type="submit" class="btn btn-success mb-3 Payment">Pay</button>
+</form>
+</div>
+  </div>
+</div>
+<!-- JavaScript Libraries -->
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="lib/wow/wow.min.js"></script>
+<script src="lib/easing/easing.min.js"></script>
+<script src="lib/waypoints/waypoints.min.js"></script>
+<script src="lib/owlcarousel/owl.carousel.min.js"></script>
+<script src="lib/tempusdominus/js/moment.min.js"></script>
+<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+<!-- Template Javascript -->
+<script src="js/main.js"></script>
 
 </body>
 

@@ -84,6 +84,10 @@ if (!auth()->check() || auth()->user()->status != 'active') {
                     <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Transactions</a>
 
                 </div>
+                    <a href="{{route ('showProductCart')}}">
+                            <i class="fa fa-shopping-cart" style="font-size:36px"></i>
+                        </a>
+                        &nbsp; &nbsp;
                 <div class="dropdown ml-auto" style="margin-left: auto;"> 
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('images/draft/aku.jpg') }}" alt="" width="48" height="48" style="border-radius: 50%;">
@@ -103,10 +107,7 @@ if (!auth()->check() || auth()->user()->status != 'active') {
                 <div class="row justify-content-center py-5">
                     <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
                         <h1 class="display-3 text-white mb-3 animated slideInDown">Enjoy Your Meal With Us</h1>
-                        <div class="position-relative w-75 mx-auto animated slideInDown">
-                            <input class="form-control border-0 rounded-pill w-100 py-3 ps-4 pe-5" type="text" placeholder="Contoh: Bakso">
-                            <button type="button" class="btn btn-primary rounded-pill py-2 px-4 position-absolute top-0 end-0 me-2" style="background-color: #983d3d; margin-top: 7px;">Search</button>
-                        </div>
+                        
                     </div>
                 </div>
             </div>
@@ -124,30 +125,11 @@ if (!auth()->check() || auth()->user()->status != 'active') {
                     </div>
                 </div>
                 <div class="col-lg-6 wow fadeInUp" data-wow-delay="0.3s">
-                    <h6 class="section-title bg-white text-start text-primary pe-3">Hallo</h6>
+                    <h6 class="section-title bg-white text-start text-primary pe-3">Hello</h6>
                     <h1 class="mb-4">Welcome to <span class="text-primary">Foodies</span></h1>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit.</p>
-                    <p class="mb-4">Tempor erat elitr rebum at clita. Diam dolor diam ipsum sit. Aliqu diam amet diam et eos. Clita erat ipsum et lorem et sit, sed stet lorem sit clita duo justo magna dolore erat amet</p>
-                    <div class="row gy-2 gx-4 mb-4">
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>First Class Flights</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Handpicked Hotels</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>5 Star Accommodations</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>Latest Model Vehicles</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>150 Premium City Tours</p>
-                        </div>
-                        <div class="col-sm-6">
-                            <p class="mb-0"><i class="fa fa-arrow-right text-primary me-2"></i>24/7 Service</p>
-                        </div>
-                    </div>
+                    <p class="mb-4">Aplikasi foodies mampu untuk memenuhi kebutuhan kalian semua di era serba digital ini. Aplikasi ini memudahkan kalian dalam bertransaksi online.</p>
+                    <p class="mb-4">Penjual dan Pembeli diberi kemudahan dengannya adanya berbagai fitur dalam aplikasi ini, seperti
+                    </p>
                 </div>
             </div>
         </div>
