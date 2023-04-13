@@ -11,18 +11,35 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
     <title>G.16 Food & Bev's.</title>
     <link rel="icon" type="image/x-icon" href="{{ URL::asset('https://www.theworlds50best.com/filestore/png/SRA-Logo-1.png') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <style>
-        .adjustment {
-            display: flex;
-            align-items: flex-start;
-        }
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
 
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+    {{-- <style>
         .background {
             position: fixed;
             background-size: cover;
@@ -31,117 +48,219 @@ if (!auth()->check() || auth()->user()->status != 'active') {
             z-index: -1;
             width: 100%;
             height: 100%;
-            background-image: url('https://media-cldnry.s-nbcnews.com/image/upload/newscms/2023_05/1963490/puff-pastry-beef-wellington-valentines-day-2x1-zz-230201.jpg');
-            filter: blur(5px);
         }
-
-        .card-border {
-            border-style: solid;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: fit-content;
-            block-size: fit-content;
-            border-color: rgba(255, 255, 255);
-            margin-top: 30px;
-            margin-bottom: 30px;
-            margin-right: auto;
-            margin-left: auto;
-        }
-
-        .card {
-            display: inline-block;
-            margin: 10px;
-
-        }
-
-        .hr1 {
-            padding: 0;
-            margin: 0;
-        }
-
-        footer {
-            background-color: rgba(255, 255, 255, 0.7);
-        }
-
-        .h1-footer {
-            color: rgb(152, 255, 200);
-            text-align: center;
-            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-        }
-
-        .text-muted {
-            text-align: center;
-            color: white;
-        }
-
-        img.sosimg {
-            height: 20px;
-            width: 20px;
-            margin-right: 2px;
-        }
-    </style>
-
+	</style> --}}
 </head>
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+
 
 <body>
-
-    <div class="background"></div>
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-        <div class="container-fluid">
-            <nav class="navbar bg-body-tertiary">
-                <div class="container">
-                    <a class="navbar-brand" href="{{route ('homepage')}}">
-                        <img src="{{ URL::asset('https://marketplace.canva.com/EAEzOw_ovvE/1/0/1600w/canva-watercolor-food-logo-0GcpZ9_7Xls.jpg') }}" alt="" width="60" height="55" style="border-radius: 50%;">
-                    </a>
-                </div>
-            </nav>
-            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
+     <!-- Navbar & Hero Start -->
+     <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: #ECBC76;">
+            <a href="" class="navbar-brand p-0">
+                <img src="{{ asset('images/draft/foodies-nobg.png') }}" alt="" width="90" height="66" style="border-radius: 50%;">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
             </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0 text-center text-lg-start">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route ('homepage')}}">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{route ('productlist')}}">Products</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route ('product_menu')}}">Manage</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{route ('category')}}">Category</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link " href="{{route ('transaction_list')}}">Transactions</a>
-                    </li>
-                </ul>
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <a href="{{route ('showProductCart')}}">
-                        <i class="fa fa-shopping-cart" style="font-size:36px"></i>
-                    </a>
-                    &nbsp; &nbsp;
-                    <div class="dropdown ml-auto" style="margin-left: auto;">
-                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <img src="{{ URL::asset('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZzoDeEjIOxYT2dL6zhz9J0RH-T_sNpeucjSd10omQQMSQYjUD5z9vHKjH03Vj1I4Nxwk&usqp=CAU') }}" alt="" width="60" height="55" style="border-radius: 50%;">
-                        </button>
-                        <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
-                            @if (auth()->check())
-                            <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
-                            @endif
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                    <a href="{{route ('homepage')}}" class="nav-item nav-link">Home</a>
+                    <a class="nav-item nav-link active" aria-current="page" href="{{route ('productlist')}}">Products</a>
+                    <a href="{{route ('product_menu')}}" class="nav-item nav-link">Manage</a>
+                    <a href="{{route ('category')}}" class="nav-item nav-link">Category</a>
+                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Transactions</a>
+                </div>
+
+                <a href="{{route ('showProductCart')}}">
+                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+                </a>
+                <div class="dropdown ml-auto" style="margin-left: auto;"> 
+                    <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{ asset('images/draft/aku.jpg') }}" alt="" width="48" height="48" style="border-radius: 50%;">
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
+                        @if (auth()->check())
+                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
+                        @endif
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+    <!-- Navbar & Hero End -->
+
+    <div class="container-xxl py-5">
+        <div class="container">
+            <div class="card-border">
+                @foreach($products as $prod)
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ URL::asset('images/product_pictures/'.$prod->product_picture) }}" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $prod->product_name }}</h5>
+                        <p class="card-text">Rp {{ number_format($prod->product_price, 0, ',', '.') }}.00</p>
+                        <p class="card-text">Stock: {{ $prod->product_stock }}</p>
+                        @if($prod->product_stock > 0)
+                        <form action="{{route ('buyproduct')}}" method="POST">
+                            @csrf
+                            <input type="hidden" name="product_id" value="{{ $prod->product_id }}">
+                            <button type="submit" class="btn btn-primary">Buy</button>
+                        </form>
+                        @else
+                        <p class="card-text text-danger">Out of stock</p>
+                        @endif
+                    </div>
+                </div>
+                @if(($loop->iteration % 3) == 0)
+                <div style="flex-basis: 100%;"></div>
+                @endif
+                @endforeach
+            </div>
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                    <div class="package-item">
+                        <div class="overflow-hidden">
+                            <img src="{{ asset('images/product/sushi.jpg') }}" alt="">
+                        </div>
+                        <div class="d-flex border-bottom">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>Surabaya</small>
+                            <small class="flex-fill text-center border-end py-2"><i class="fa text-primary me-2"></i>27 minute</small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>2 Person</small>
+                        </div>
+                        <div class="text-center p-4">
+                            <h3 class="mb-0">Rp. 120.000</h3>
+                            <div class="mb-3">
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                            </div>
+                            <p>Sushi is a Japanese dish featuring specially prepared rice and usually some type of fish or seafood, often raw, but sometimes cooked.</p>
                         </div>
                     </div>
-                </nav>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.3s">
+                    <div class="package-item">
+                        <div class="overflow-hidden">
+                            <img src="{{ asset('images/product/sushi.jpg') }}" alt="">
+                        </div>
+                        <div class="d-flex border-bottom">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>Bandung</small>
+                            <small class="flex-fill text-center border-end py-2"><i class="fa text-primary me-2"></i>30 minute</small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>1 Person</small>
+                        </div>
+                        <div class="text-center p-4">
+                            <h3 class="mb-0">Rp. 130.000</h3>
+                            <div class="mb-3">
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                            </div>
+                            <p>Sushi is a Japanese dish featuring specially prepared rice and usually some type of fish or seafood, often raw, but sometimes cooked.</p>
+                            <div class="d-flex justify-content-center mb-2">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="package-item">
+                        <div class="overflow-hidden">
+                            <img src="{{ asset('images/product/sushi.jpg') }}" alt="">
+                        </div>
+                        <div class="d-flex border-bottom">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>Jakarta</small>
+                            <small class="flex-fill text-center border-end py-2"><i class="fa text-primary me-2"></i>45 minute</small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>1 Person</small>
+                        </div>
+                        <div class="text-center p-4">
+                            <h3 class="mb-0">Rp. 160.000</h3>
+                            <div class="mb-3">
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                            </div>
+                            <p>Sushi is a Japanese dish featuring specially prepared rice and usually some type of fish or seafood, often raw, but sometimes cooked.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="package-item">
+                        <div class="overflow-hidden">
+                            <img src="{{ asset('images/product/kebab.jpg') }}" alt=""  width="430" height="450">
+                        </div>
+                        <div class="d-flex border-bottom">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>Surabaya</small>
+                            <small class="flex-fill text-center border-end py-2"><i class="fa text-primary me-2"></i>23 minute</small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>1 Person</small>
+                        </div>
+                        <div class="text-center p-4">
+                            <h3 class="mb-0">Rp. 20.000</h3>
+                            <div class="mb-3">
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                            </div>
+                            <p>Kebabs are a popular Middle Eastern food made by mounting pieces of meat and/or vegetables on a skewer and mounting the skewer on a grill.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="package-item">
+                        <div class="overflow-hidden">
+                            <img src="{{ asset('images/product/kebab.jpg') }}" alt="" width="430" height="450">
+                        </div>
+                        <div class="d-flex border-bottom">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>Bandung</small>
+                            <small class="flex-fill text-center border-end py-2"><i class="fa text-primary me-2"></i>27 minute</small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>1 Person</small>
+                        </div>
+                        <div class="text-center p-4">
+                            <h3 class="mb-0">Rp. 26.000</h3>
+                            <div class="mb-3">
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                            </div>
+                            <p>Kebabs are a popular Middle Eastern food made by mounting pieces of meat and/or vegetables on a skewer and mounting the skewer on a grill.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-md-6 wow fadeInUp" data-wow-delay="0.5s">
+                    <div class="package-item">
+                        <div class="overflow-hidden">
+                            <img src="{{ asset('images/product/kebab.jpg') }}" alt=""  width="430" height="450">
+                        </div>
+                        <div class="d-flex border-bottom">
+                            <small class="flex-fill text-center border-end py-2"><i class="fa fa-map-marker-alt text-primary me-2"></i>Jakarta</small>
+                            <small class="flex-fill text-center border-end py-2"><i class="fa text-primary me-2"></i>33 minute</small>
+                            <small class="flex-fill text-center py-2"><i class="fa fa-user text-primary me-2"></i>1 Person</small>
+                        </div>
+                        <div class="text-center p-4">
+                            <h3 class="mb-0">Rp. 35.000</h3>
+                            <div class="mb-3">
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                                <small class="fa fa-star text-primary"></small>
+                            </div>
+                            <p>Kebabs are a popular Middle Eastern food made by mounting pieces of meat and/or vegetables on a skewer and mounting the skewer on a grill.</p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
-    </nav>
+    </div>
+    <!-- Package End -->
 
-    <div class="adjustment">
-
-        <img class="imgone" src="https://media.voguebusiness.com/photos/607f3e087faa95508b216455/2:3/w_2560%2Cc_limit/kering-earnings-voguebus-vanessa-charlot-for-gucci-apr-21-story.jpg" alt="" style="width:250px; height:100%; float: left; margin-top: 30px; margin-left:30px;">
-
+    
         <div class="card-border">
             @foreach($products as $prod)
             <div class="card" style="width: 18rem;">
@@ -166,15 +285,46 @@ if (!auth()->check() || auth()->user()->status != 'active') {
             @endif
             @endforeach
         </div>
-
-
-        <img class="imgtwo" src="https://assets.vogue.com/photos/5602abd41422670c16303aa3/master/w_1280%2Cc_limit/_GUC0031.jpg" alt="" style="width:250px; height:100%; float: right; margin-top: 30px;margin-right:30px;">
-
     </div>
 
+    <!-- Footer Start -->
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="#">Foodies</a>
+                    </div>
+                    <div class="col-md-6 text-center text-md-end">
+                        <div class="footer-menu">
+                            <a href="">Home</a>
+                            <a href="">Contact</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+    
+    
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
+    
+    
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+    
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
+    
 </html>
