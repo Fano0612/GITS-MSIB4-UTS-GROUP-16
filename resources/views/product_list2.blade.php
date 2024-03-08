@@ -4,18 +4,18 @@ if (!auth()->check() || auth()->user()->status != 'active') {
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
-if (auth()->user()->jabatan != 'generalmanageroperasional') {
-    echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
+if (auth()->user()->jabatan != 'karyawan') {
+    echo "<script>alert('Anda Bukan Karyawan!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 ?>
 
-
 <?php
 $user = auth()->user();
 $profilePicture = $user->gambar;
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -47,33 +47,30 @@ $profilePicture = $user->gambar;
 
 <body>
     <!-- Navbar & Hero Start -->
-    <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
+    <!-- <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
         <h1>Data Barang</h1>
     </div>
-
+     -->
     <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: white;">
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: White; border-bottom: 1px solid black;">
             <a href="" class="navbar-brand p-0">
                 <img src="    https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png" style="width:150px;height:50px;">
-
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
-                    <a class="nav-item nav-link active" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
+            <div class="navbar-nav ms-auto py-0">
+                    <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link">Home</a>
+                    <a class="nav-item nav-link active" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Riwayat Belanja</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_manage2')}}">Data Barang</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_manage2')}}">Laporan Kriminalitas</a>
                 </div>
-
                 <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+                    <i class="fa fa-shopping-cart" style="font-size:36px"></i>
                 </a>
+                &nbsp; &nbsp;
                 <div class="dropdown ml-auto" style="margin-left: auto;">
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
@@ -88,6 +85,16 @@ $profilePicture = $user->gambar;
                 </div>
             </div>
         </nav>
+        <div class="container-fluid bg-primary py-5 mb-5 hero-header">
+            <div class="container py-5">
+                <div class="row justify-content-center py-5">
+                    <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
+                        <h1 class="display-3 text-white mb-3 animated slideInDown">Belanja Puas Harga Pas</h1>
+
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
     <!-- Navbar & Hero End -->
     @php
@@ -202,7 +209,6 @@ $profilePicture = $user->gambar;
         });
     });
 </script>
-
 
 </body>
 

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PasscodeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductListController;
@@ -26,24 +27,35 @@ Route::get('/homepage', function () {
 Route::get('/transaction_list', function () {
     return view('transaction_list');
 })->name('transaction_list');
+Route::get('/product_list_front', function () {
+    return view('product_list_front');
+})->name('product_list_front');
+Route::get('/laporankriminalitas', function () {
+    return view('laporankriminalitas');
+})->name('laporankriminalitas');
+
+
+
+
 Route::get('/productlist', [ProductListController::class, 'index'])->name('productlist');
+Route::get('/product_list2', [ProductListController::class, 'index2'])->name('product_list2');
+Route::get('/product_list3', [ProductListController::class, 'index3'])->name('product_list3');
 
-
-
-Route::get('register', [UserController::class, 'register'])->name('register');
-Route::POST('register', [UserController::class, 'registeracc'])->name('registeracc');
-Route::get('login', [UserController::class, 'login'])->name('login');
-Route::POST('login', [UserController::class, 'loginacc'])->name('loginacc');
-Route::get('logout', [UserController::class, 'logout'])->name('logout');
-Route::get('AccountExist', [UserController::class, 'AccountExist'])->name('AccountExist');
-Route::get('AccountUnexist', [UserController::class, 'AccountUnexist'])->name('AccountUnexist');
+// Route::get('register', [UserController::class, 'register'])->name('register');
+// Route::POST('register', [UserController::class, 'registeracc'])->name('registeracc');
+// Route::get('login', [UserController::class, 'login'])->name('login');
+// Route::POST('login', [UserController::class, 'loginacc'])->name('loginacc');
+// Route::get('logout', [UserController::class, 'logout'])->name('logout');
+// Route::get('AccountExist', [UserController::class, 'AccountExist'])->name('AccountExist');
+// Route::get('AccountUnexist', [UserController::class, 'AccountUnexist'])->name('AccountUnexist');
 
 
 Route::get('/product_menu', [ProductController::class, 'index'])->name('product_menu');
+Route::get('/product_manage2', [ProductController::class, 'index2'])->name('product_manage2');
 Route::post('/insertproduct', [ProductController::class, 'insertproduct'])->name('insertproduct');
-Route::get('/showproduct/{product_id}', [ProductController::class, 'showproduct'])->name('showproduct');
-Route::post('/editproduct/{product_id}', [ProductController::class, 'editproduct'])->name('editproduct');
-Route::get('/deleteproduct/{product_id}', [ProductController::class, 'deleteproduct'])->name('deleteproduct');
+Route::get('/showproduct/{id_barang}', [ProductController::class, 'showproduct'])->name('showproduct');
+Route::post('/editproduct/{id_barang}', [ProductController::class, 'editproduct'])->name('editproduct');
+Route::get('/deleteproduct/{id_barang}', [ProductController::class, 'deleteproduct'])->name('deleteproduct');
 Route::post('/buyProduct', [App\Http\Controllers\ProductController::class, 'buyProduct'])->name('buyproduct');
 Route::get('/showProductCart', [App\Http\Controllers\ProductController::class, 'showProductCart'])->name('showProductCart');
 Route::post('/incrementProductCart', [App\Http\Controllers\ProductController::class, 'incrementProductCart'])->name('incrementProductCart');
@@ -59,3 +71,48 @@ Route::get('/category/{id}', [CategoryController::class, 'show'])->name('categor
 Route::get('/category/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
 Route::post('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
 Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+
+
+
+Route::get('', function () {
+    return view('login');
+});
+Route::get('login', [UserController::class, 'login'])->name('login');
+Route::POST('login', [UserController::class, 'loginacc'])->name('loginacc');
+Route::get('/forgotpassword', function () {
+    return view('forgotpassword');
+})->name('lupapassword');
+Route::get('logout', [UserController::class, 'logout'])->name('logout');
+Route::POST('forgotPassword', [UserController::class, 'forgotPassword'])->name('forgotPassword');
+
+
+// pelanggan
+Route::POST('register', [UserController::class, 'registeracc'])->name('registeracc');
+Route::get('register', [UserController::class, 'register'])->name('register');
+Route::get('/dashboardpelanggan', function () {
+    return view('dashboardpelanggan');
+})->name('dashboardpelanggan');
+
+
+// Karyawan + General Manager Operasional
+Route::get('/dashboardkaryawan', function () {
+    return view('dashboardkaryawan');
+})->name('dashboardkaryawan');
+Route::get('/homebarang', function () {
+    return view('homebarang');
+})->name('homebarang');
+Route::get('/homebarangedit', function () {
+    return view('homebarangedit');
+})->name('homebarangedit');
+Route::get('/dashboardgeneralmanageroperasional', function () {
+    return view('dashboardgeneralmanageroperasional');
+})->name('dashboardgeneralmanageroperasional');
+Route::POST('registerstaff', [UserController::class, 'registeraccstaff'])->name('registeraccstaff');
+Route::get('registerstaff', [UserController::class, 'registerstaff'])->name('registerstaff');
+
+
+Route::get('/password', function () {
+    return view('password');
+});
+Route::post('/check-password', [PasscodeController::class, 'checkPassword'])->name('checkPassword');

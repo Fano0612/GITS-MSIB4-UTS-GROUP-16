@@ -16,6 +16,25 @@ class ProductListController extends Controller
     
         return view('product_list', compact('products', 'productCategories'));
     }
+    public function index2()
+    {
+        $products = Product::with('categories')->get();
+        $productIds = $products->pluck('product_id')->toArray();
+        $productCategories = Category::whereIn('id', $productIds)->get();
+    
+        return view('product_list2', compact('products', 'productCategories'));
+    }
+
+    public function index3()
+    {
+        $products = Product::with('categories')->get();
+        $productIds = $products->pluck('product_id')->toArray();
+        $productCategories = Category::whereIn('id', $productIds)->get();
+    
+        return view('product_list3', compact('products', 'productCategories'));
+    }
+
+
 
     public function showproduct($id)
     {

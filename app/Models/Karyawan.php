@@ -7,12 +7,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
 
-class User extends Authenticatable
+class Karyawan extends Authenticatable
 {
     use Notifiable;
     use HasFactory;
-    protected $table = 'userlist';
-    protected $primaryKey = 'id';
+    protected $table = 'karyawan';
+    protected $primaryKey = 'id_karyawan';
     protected $fillable = ['email','nama','nomor_telepon', 'username', 'password','jabatan','status','status_belanja_bantuan_karyawan','gambar'];
 
 }

@@ -7,8 +7,8 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 ?>
 
 <?php
-if (auth()->user()->jabatan != 'generalmanageroperasional') {
-    echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
+if (auth()->user()->jabatan != 'pelanggan') {
+    echo "<script>alert('Anda Bukan Pelanggan!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
@@ -32,11 +32,10 @@ $profilePicture = $user->gambar;
 
 <head>
     <meta charset="utf-8">
-    {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <title>Indomaret Self Service System - Login</title>
+    <title>Indomaret Self Service System - Pelaporan Kegiatan Kriminalitas</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -82,7 +81,7 @@ $profilePicture = $user->gambar;
     <!-- Navbar & Hero Start -->
     <div class="background"></div>
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
-        <h1>Data Barang</h1>
+        <h1>Pelaporan Kegiatan Kriminalitas</h1>
     </div>
 
     <div class="container-fluid position-relative p-0">
@@ -95,22 +94,20 @@ $profilePicture = $user->gambar;
                 <span class="fa fa-bars"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
-                    <a class="nav-item nav-link active" aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
+            <div class="navbar-nav ms-auto py-0">
+                    <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
+                    <a href="{{route ('product_list_front')}}" class="nav-item nav-link">Belanja</a>
+                    <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link active">Laporan Kriminalitas</a>
+                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Riwayat Transaksi</a>
+
                 </div>
 
                 <a href="{{route ('showProductCart')}}">
                     <i class="fa fa-shopping-cart" style="font-size:30px"></i>
                 </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
-                <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{ asset('images/draft/aku.jpg') }}" alt="" width="48" height="48" style="border-radius: 50%;">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())

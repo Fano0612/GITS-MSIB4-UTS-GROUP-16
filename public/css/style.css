@@ -1,7 +1,8 @@
 /********** Template CSS **********/
+
 :root {
-    --primary: #983d3d;
-    --secondary: #FE8800;
+    --primary: #037ca1;
+    --secondary: #7f7400;
     --light: #F5F5F5;
     --dark: #14141F;
 }
@@ -24,6 +25,7 @@
 
 
 /*** Spinner ***/
+
 #spinner {
     opacity: 0;
     visibility: hidden;
@@ -39,6 +41,7 @@
 
 
 /*** Button ***/
+
 .btn {
     font-family: 'Nunito', sans-serif;
     font-weight: 600;
@@ -78,12 +81,13 @@
 
 
 /*** Navbar ***/
+
 .navbar-light .navbar-nav .nav-link {
     font-family: 'Nunito', sans-serif;
     position: relative;
     margin-right: 25px;
     padding: 35px 0;
-    color: #281f1f !important;
+    color: #000000 !important;
     font-size: 18px;
     font-weight: 600;
     outline: none;
@@ -114,19 +118,16 @@
         position: relative;
         background: #FFFFFF;
     }
-
     .navbar-light .navbar-collapse {
         margin-top: 15px;
         border-top: 1px solid #DDDDDD;
     }
-
     .navbar-light .navbar-nav .nav-link,
     .sticky-top.navbar-light .navbar-nav .nav-link {
         padding: 10px 0;
         margin-left: 0;
         color: var(--dark) !important;
     }
-
     .navbar-light .navbar-brand img {
         max-height: 45px;
     }
@@ -141,12 +142,10 @@
         border-bottom: 1px solid rgba(256, 256, 256, .1);
         z-index: 999;
     }
-    
     .sticky-top.navbar-light {
         position: fixed;
         background: #FFFFFF;
     }
-
     .navbar-light .navbar-nav .nav-link::before {
         position: absolute;
         content: "";
@@ -157,13 +156,11 @@
         background: var(--primary);
         transition: .5s;
     }
-
     .navbar-light .navbar-nav .nav-link:hover::before,
     .navbar-light .navbar-nav .nav-link.active::before {
         width: calc(100% - 2px);
         left: 1px;
     }
-
     .navbar-light .navbar-nav .nav-link.nav-contact::before {
         display: none;
     }
@@ -171,6 +168,7 @@
 
 
 /*** Hero Header ***/
+
 .hero-header {
     background: linear-gradient(rgba(20, 20, 31, .7), rgba(20, 20, 31, .7)), url(stock.jpg);
     background-position: center center;
@@ -178,12 +176,13 @@
     background-size: cover;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+.breadcrumb-item+.breadcrumb-item::before {
     color: rgba(255, 255, 255, .5);
 }
 
 
 /*** Section Title ***/
+
 .section-title {
     position: relative;
     display: inline-block;
@@ -224,6 +223,7 @@
 
 
 /*** Service ***/
+
 .service-item {
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
     transition: .5s;
@@ -241,7 +241,9 @@
     color: var(--light) !important;
 }
 
+
 /*** Destination ***/
+
 .destination img {
     transition: .5s;
 }
@@ -252,6 +254,7 @@
 
 
 /*** Package ***/
+
 .package-item {
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
 }
@@ -266,6 +269,7 @@
 
 
 /*** Booking ***/
+
 .booking {
     background: linear-gradient(rgba(15, 23, 43, .7), rgba(15, 23, 43, .7)), url(../img/booking.jpg);
     background-position: center center;
@@ -275,6 +279,7 @@
 
 
 /*** Team ***/
+
 .team-item {
     box-shadow: 0 0 45px rgba(0, 0, 0, .08);
 }
@@ -301,6 +306,7 @@
 
 
 /*** Testimonial ***/
+
 .testimonial-carousel::before {
     position: absolute;
     content: "";
@@ -376,6 +382,7 @@
 
 
 /*** Footer ***/
+
 .footer .btn.btn-social {
     margin-right: 5px;
     width: 35px;

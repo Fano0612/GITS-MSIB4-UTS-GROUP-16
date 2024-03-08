@@ -7,7 +7,7 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 ?>
 
 <?php
-if (auth()->user()->access_rights != 'Merchant') {
+if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional') {
     echo "<script>alert('You are not a merchant!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/homepage'; }, 1000);</script>";
     die();
@@ -20,9 +20,9 @@ if (auth()->user()->access_rights != 'Merchant') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>G.16 Food & Bev's.</title>
-    <link rel="icon" type="image/x-icon" href="{{ URL::asset('https://www.theworlds50best.com/filestore/png/SRA-Logo-1.png') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+    <title>Indomaret Self Service System - Login</title>
+    <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         .background {
@@ -33,7 +33,7 @@ if (auth()->user()->access_rights != 'Merchant') {
             z-index: -1;
             width: 100%;
             height: 100%;
-            background-image: url('https://media-cldnry.s-nbcnews.com/image/upload/newscms/2023_05/1963490/puff-pastry-beef-wellington-valentines-day-2x1-zz-230201.jpg');
+            background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
             filter: blur(5px);
 
         }
@@ -75,13 +75,12 @@ if (auth()->user()->access_rights != 'Merchant') {
             <nav class="navbar bg-body-tertiary">
                 <div class="container">
                     <a class="navbar-brand" href="">
-                        <img src="{{ URL::asset('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZzoDeEjIOxYT2dL6zhz9J0RH-T_sNpeucjSd10omQQMSQYjUD5z9vHKjH03Vj1I4Nxwk&usqp=CAU') }}" alt="" width="60" height="55" style="border-radius: 50%;">
-                    </a>
+                    <img src="    https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png" style="width:150px;height:50px;"> </a>
                 </div>
             </nav>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <h1 class="position-absolute top-50 start-50 translate-middle">Product Data Update</h1>
+                <h1 class="position-absolute top-50 start-50 translate-middle">Pembaharuan Data Barang</h1>
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     &nbsp; &nbsp;
                     <div class="dropdown ml-auto">
@@ -98,37 +97,53 @@ if (auth()->user()->access_rights != 'Merchant') {
             <div class="col-8">
                 <div class="card">
                     <div class="card-body">
-                        <form action="/editproduct/{{$productdata->product_id}}" method="POST" enctype="multipart/form-data">
+                        <form action="/editproduct/{{$productdata->id_barang}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Product ID</label>
-                                <input type="number" name="product_id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$productdata->product_id}}" readonly>
+                                <label for="exampleInputEmail1" class="form-label">ID Barang</label>
+                                <input type="number" name="id_barang" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$productdata->id_barang}}" readonly>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Name</label>
-                                <input type="text" name="product_name" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$productdata->product_name}}">
+                                <label for="exampleInputEmail1" class="form-label">Nama Barang</label>
+                                <input type="text" name="namabarang" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$productdata->namabarang}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Jenis Barang</label>
+                                <input type="text" name="jenisbarang" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$productdata->jenisbarang}}">
                             </div>
                             <div class="mb-3">
 
-                                <label for="exampleInputEmail1" class="form-label">Price</label>
+                                <label for="exampleInputEmail1" class="form-label">Harga</label>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">Rp</span>
-                                    <input type="number" name="product_price" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$productdata->product_price}}">
+                                    <input type="number" name="harga" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$productdata->harga}}">
                                     <span class="input-group-text">.00</span>
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Stock</label>
-                                <input type="number" name="product_stock" class="form-control input-number" id="exampleInputEmail1" value="{{ $productdata->product_stock }}" min="1" aria-describedby="emailHelp">
+                                <label for="exampleInputEmail1" class="form-label">Deskripsi</label>
+                                <input type="text" name="deskripsi" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$productdata->deskripsi}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Komposisi</label>
+                                <input type="text" name="komposisi" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$productdata->komposisi}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Tanggal Kedaluwarsa</label>
+                                <input type="text" name="tanggalkedaluwarsa" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$productdata->tanggalkedaluwarsa}}">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label">Jumlah Stok Barang</label>
+                                <input type="number" name="jumlahstokbarang" class="form-control input-number" id="exampleInputEmail1" value="{{ $productdata->jumlahstokbarang }}" min="1" aria-describedby="emailHelp">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Picture</label>
-                                <input type="file" name="product_picture" class="form-control custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" value="">
+                                <input type="file" name="foto" class="form-control custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" value="">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Product Category</label>
-                                <select class="form-select" name="category_id" aria-label="Default select example">
-                                    <option value="{{$productdata->category_id}}" selected>{{$productdata->categories->product_category }}</option>
+                                <select class="form-select" name="kategori_id" aria-label="Default select example">
+                                    <option value="{{$productdata->kategori_id}}" selected>{{$productdata->categories->product_category }}</option>
                                     @php
                                     $category = App\Models\Category::all();
                                     @endphp

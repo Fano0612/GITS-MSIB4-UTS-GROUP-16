@@ -65,7 +65,7 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
             z-index: -1;
             width: 100%;
             height: 100%;
-            background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
+            background-image: url('https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&w=1000&q=80');
             filter: blur(5px);
         }
     </style>

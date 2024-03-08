@@ -1,94 +1,80 @@
 <?php
 if (auth()->check()) {
-    header('Location: /homepage');
-    exit();
+    if (auth()->user()->jabatan == 'pelanggan') {
+        header('Location: /dashboardpelanggan');
+        exit();
+    } elseif (auth()->user()->jabatan == 'karyawan') {
+        header('Location: /dashboardkaryawan');
+        exit();
+    }
+    elseif (auth()->user()->jabatan == 'generalmanageroperasional') {
+        header('Location: /dashboardgeneralmanageroperasional');
+        exit();
+    }
 }
 if (auth()->check() && auth()->user()->status != 'active') {
     header('Location: /login');
     exit();
 }
 ?>
-
-
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>G.16 Food & Bev's.</title>
-    <link rel="icon" type="image/x-icon" href="{{ URL::asset('https://www.theworlds50best.com/filestore/png/SRA-Logo-1.png') }}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <title>Indomaret Self Service System - Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
+    <style>
 
-    <!-- Loding font -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:300,700" rel="stylesheet">
-
-    <!-- Custom Styles -->
-    <link rel="stylesheet" type="text/css" href="./styles.css">
-
-    <title>Login</title>
-    {{-- <style>
-        .background {
-            position: fixed;
-            background-size: cover;
-            top: 0;
-            left: 0;
-            z-index: -1;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://www.unileverfoodsolutions.co.id/dam/global-ufs/mcos/SEA/calcmenu/recipes/ID-recipes/salads/nasi-pecel/main-header.jpg');
-            filter: blur(5px);
-        }
-    </style> --}}
+    </style>
 </head>
-<link rel="stylesheet" href="{{ asset('css/login.css') }}">
-
 
 <body>
-     <!-- Backgrounds -->
-    <div id="login-bg" class="container-fluid">
-        <div class="bg-img"></div>
-        <div class="bg-color"></div>
-    </div>
-  
-      <!-- End Backgrounds -->
-  
-    <div class="container" id="login">
-        <div class="row justify-content-center">
-        <div class="col-lg-8">
-            <div class="login" style="width: 38rem;">
-                @if($errors->any())
-                    @foreach($errors->all() as $err)
-                        <p class="alert alert-danger">{{$err}}</p>
-                    @endforeach
-                @endif
-                <form action="{{ route('loginacc') }}" method="POST">
-                    @csrf
-                    <div class="text-center">  
-                        <img src="{{ asset('images/draft/foodies-nobg.png')}}" class="rounded" alt="" height="120px" width="185px">  
-                            <h1 class="mt-1">Login</h1>
-                    </div>
-                    <br>
-                    <div class="form-group mb-2">
-                        <label for="email" ></label>
-                        <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email">
-                    </div>
-                    <div class="form-group mb-2 ">
-                        <label for="password"></label>
-                        <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-                    </div>
-                    <br>
-                        <a href="{{ route('AccountUnexist') }}?stats=true" class="no link-danger">Don't have an account?</a>
-                        <button type="submit" class="btn btn-danger" style="float:right">Submit</button>
-                </form>
+
+    <div class="login-box">
+        <img src="https://www.cakeresume.com/cdn-cgi/image/fit=scale-down,format=auto,w=1200/https://images.cakeresume.com/images/19f33da4-afbc-4abd-8f66-cb6c24fa4aa2.jpeg" alt="" style="width:auto; height:250px; border-radius: 30px;">
+        <h1 style="text-align:center; margin: 10px 0px;">Login</h1>
+        @if ($errors->any())
+        <div class="alert alert-danger">
+            <ul>
+                @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+        @endif
+
+        @if(session('success'))
+        <div class="alert alert-success">
+            {{ session('success') }}
+        </div>
+        @endif
+        <form action="{{ route('loginacc') }}" method="post">
+            @csrf
+            <div class="mb-3">
+                <label for="exampleInputEmail1" class="form-label">Username</label>
+                <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" required>
             </div>
-        </div>
-        </div>
+            <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label">Password</label>
+                <input type="password" name="password" class="form-control" id="exampleInputPassword1" required>
+            </div>
+            <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">
+                <div>
+                    <a href="{{ route('register') }}" style="display: block;">Tidak Punya Akun?</a>
+                    <a href="{{ route('lupapassword') }}" style="display: block;">Lupa Password</a>
+                </div>
+                <button type="submit" class="btn btn-primary">Login</button>
+            </div>
+        </form>
+
     </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
 </body>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-mQ93GR66B00ZXjt0YO5KlohRA5SY2XofN4zfuZxLkoj1gXtW8ANNCe9d5Y3eG5eD" crossorigin="anonymous"></script>
 
 </html>
