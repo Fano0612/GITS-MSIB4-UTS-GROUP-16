@@ -6,6 +6,7 @@ use App\Http\Controllers\PasscodeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ProductListController;
+use App\Http\Controllers\LaporanKriminalitasController;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,6 +72,11 @@ Route::get('/category/{id}', [CategoryController::class, 'show'])->name('categor
 Route::get('/category/{id}/edit', [CategoryController::class, 'edit'])->name('category.edit');
 Route::post('/category/{id}', [CategoryController::class, 'update'])->name('category.update');
 Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('category.destroy');
+
+
+
+Route::get('/laporankriminalitas', [LaporanKriminalitasController::class, 'index'])->name('laporankriminalitas');
+Route::post('/laporankriminalitas/insert', [LaporanKriminalitasController::class, 'insertlaporan'])->name('insertlaporan');
 
 
 

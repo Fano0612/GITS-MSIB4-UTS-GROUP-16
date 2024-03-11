@@ -72,7 +72,7 @@ $profilePicture = $user->gambar;
             filter: blur(5px);
         }
     </style>
-   
+
 </head>
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -94,7 +94,7 @@ $profilePicture = $user->gambar;
                 <span class="fa fa-bars"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto py-0">
+                <div class="navbar-nav ms-auto py-0">
                     <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
                     <a href="{{route ('product_list_front')}}" class="nav-item nav-link">Belanja</a>
                     <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link active">Laporan Kriminalitas</a>
@@ -138,128 +138,22 @@ $profilePicture = $user->gambar;
                             </ul>
                         </div>
                         @endif
-                        <form action="/insertproduct" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('insertlaporan') }}" method="POST" enctype="multipart/form-data">
+
                             @csrf
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">ID Barang</label>
-                                <input type="number" name="id_barang" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onchange="checkIdLength(this.value)">
-                                <script>
-                                    function checkIdLength(id) {
-                                        if (id.length !== 5) {
-                                            alert("Invalid Product ID! \nPlease enter a 5 digit number.");
-                                            document.getElementById("exampleInputEmail1").value = "";
-                                        }
-                                    }
-                                </script>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="exampleInputName" class="form-label">Nama Barang</label>
-                                <input type="text" name="namabarang" class="form-control" id="exampleInputName" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
-                                <span id="name-error-msg" class="error-msg"></span>
-                                <script>
-                                    function checkNameLength(name) {
-                                        if (name.length > 255) {
-                                            alert("Invalid Name! Please enter a name with less than 255 characters.");
-                                            document.getElementById("exampleInputName").value = "";
-                                            document.getElementById("name-error-msg").textContent = "";
-                                        } else {
-                                            document.getElementById("name-error-msg").textContent = "";
-                                        }
-                                    }
-                                </script>
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="exampleInputName" class="form-label">Jenis Barang</label>
-                                <input type="text" name="jenisbarang" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
-                                <span id="name-error-msg" class="error-msg"></span>
-
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Harga</label>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">Rp</span>
-                                    <input type="number" name="harga" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-                                    <span class="input-group-text">.00</span>
-                                </div>
-                                <script>
-                                    $(document).ready(function() {
-                                        $('form').submit(function(event) {
-                                            var price = $('input[name="harga"]').val();
-                                            if (isNaN(price)) {
-                                                alert('Please enter a valid number for the price.');
-                                                event.preventDefault();
-                                            }
-                                        });
-                                    });
-                                </script>
-
-                            </div>
 
                             <div class="mb-3">
                                 <label for="exampleInputName" class="form-label">Deskripsi</label>
-                                <input type="text" name="deskripsi" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
+                                <input type="text" name="deskripsi" class="form-control" id="exampleInputName" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
                                 <span id="name-error-msg" class="error-msg"></span>
-
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputName" class="form-label">Komposisi</label>
-                                <input type="text" name="komposisi" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
-                                <span id="name-error-msg" class="error-msg"></span>
-
-                            </div>
-                            <div class="mb-3">
-                                <label for="exampleInputName" class="form-label">Tanggal Kedaluwarsa</label>
-                                <input type="text" name="tanggalkedaluwarsa" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
-                                <span id="name-error-msg" class="error-msg"></span>
-
-                            </div>
-
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Jumlah Stok Barang</label>
-                                <input type="number" name="jumlahstokbarang" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="1" min="1">
                             </div>
 
 
-
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Gambar</label>
+                                <label for="exampleInputEmail1" class="form-label">foto</label>
                                 <input type="file" name="foto" class="form-control custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                             </div>
 
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Kategori</label>
-                                <select class="form-select" name="kategori_id" aria-label="Default select example">
-                                    <option value="" selected disabled hidden>Pilih Kategori</option>
-                                    @php
-                                    $category = App\Models\Category::all();
-                                    @endphp
-                                    @foreach($category as $cat)
-                                    <option value="{{$cat->id}}">{{$cat->product_category}}</option>
-                                    @endforeach
-                                </select>
-                                <span id="category-error-msg" class="error-msg"></span>
-                                <script>
-                                    function checkCategory(category) {
-                                        if (category === "") {
-                                            document.getElementById("category-error-msg").textContent = "Please choose a category";
-                                            return false;
-                                        } else {
-                                            document.getElementById("category-error-msg").textContent = "";
-                                            return true;
-                                        }
-                                    }
-
-                                    document.querySelector("form").addEventListener("submit", function(event) {
-                                        const category = document.querySelector("[name='kategori_id']").value;
-                                        if (!checkCategory(category)) {
-                                            event.preventDefault();
-                                        }
-                                    });
-                                </script>
-                            </div>
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
                     </div>
@@ -274,38 +168,20 @@ $profilePicture = $user->gambar;
             <table class="table table-dark table-striped-columns">
                 <thead>
                     <tr>
-                        <th scope="col">ID Barang</th>
-                        <th scope="col">Nama Barang</th>
-                        <th scope="col">Jenis Barang</th>
-                        <th scope="col">Harga</th>
                         <th scope="col">Deskripsi</th>
-                        <th scope="col">Komposisi</th>
-                        <th scope="col">Tanggal Kedaluwarsa</th>
-                        <th scope="col">Jumlah Stok Barang</th>
-                        <th scope="col">Gambar</th>
-                        <th scope="col">Kategori</th>
-                        <th scope="col" style="text-align: center;">Action</th>
+                        <th scope="col">Foto</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach($products as $prod)
+                    @foreach($laporan as $item)
                     <tr>
-                        <th scope="row">{{$prod->id_barang}}</th>
-                        <td>{{$prod->namabarang}}</td>
-                        <td>{{$prod->jenisbarang}}</td>
-                        <td>Rp {{ number_format($prod->harga, 0, ',', '.') }}.00</td>
-                        <td>{{$prod->deskripsi}}</td>
-                        <td>{{$prod->komposisi}}</td>
-                        <td>{{$prod->tanggalkedaluwarsa}}</td>
-                        <td>{{$prod->jumlahstokbarang}}</td>
-                        <td><img src="{{ URL::asset('images/product_pictures/'.$prod->foto) }}" alt="" class="card-img-top"></td>
-                        <td>{{ $prod->categories->product_category }}</td>
-                        <td style="text-align: center;">
-                            <a href="/showproduct/{{$prod->id_barang}}" class="btn btn-success">Edit</a>
-                            <a href="#" class="btn btn-danger delete" id-data="{{$prod->id_barang}}">Delete</a>
+                        <th scope="row">{{ $item->deskripsi }}</th>
+                        <td>
+                            <img src="{{ asset('images/fotolaporan/' . $item->foto) }}" alt="Foto Kriminalitas" style="max-width: 100px;">
                         </td>
                     </tr>
                     @endforeach
+
 
                 </tbody>
             </table>
@@ -349,31 +225,5 @@ $profilePicture = $user->gambar;
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
-
-<script>
-    $('.delete').click(function() {
-        var stdid = $(this).attr('id-data');
-        swal({
-                title: "Delete Data?",
-                text: "Delete " + stdid + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                closeOnClickOutside: false,
-                closeOnEsc: false,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    swal("Data has been deleted successfully!", {
-                        icon: "success",
-                    }).then(() => {
-                        window.location = "/deleteproduct/" + stdid;
-                    });
-                } else {
-                    swal("Data deletion cancelled!");
-                }
-            });
-    });
-</script>
 
 </html>
