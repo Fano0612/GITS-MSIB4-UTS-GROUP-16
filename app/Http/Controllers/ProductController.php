@@ -177,7 +177,7 @@ class ProductController extends Controller
         }
         $product->decrement('jumlahstokbarang', 1);
     
-        return redirect()->route('productlist')->with('success', 'Product successfully added to the cart!');
+        return redirect()->back()->with('success', 'Product successfully added to the cart!');
     }
 
     public function getProductDetails($id) {
@@ -326,5 +326,12 @@ class ProductController extends Controller
         $products = Transaction::where('transaction_id', $transaction_id)->get();
 
         return view('transaction_view', compact('transaction', 'products'));
+    }
+    public function viewProductTransaction3($transaction_id)
+    {
+        $transaction = Transaction::with('user', 'product')->where('transaction_id', $transaction_id)->firstOrFail();
+        $products = Transaction::where('transaction_id', $transaction_id)->get();
+
+        return view('transaction_view3', compact('transaction', 'products'));
     }
 }

@@ -32,10 +32,11 @@ $profilePicture = $user->gambar;
 
 <head>
     <meta charset="utf-8">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <title>Indomaret Self Service System - Pelaporan Kegiatan Kriminalitas</title>
+    <title>Indomaret Self Service System - Login</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -71,6 +72,18 @@ $profilePicture = $user->gambar;
             background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
             filter: blur(5px);
         }
+        .table-striped-columns th:not(:last-child),
+        .table-striped-columns td:not(:last-child) {
+            border-right: 1px solid rgba(255, 255, 255, 1);
+        }
+
+        .table.table-striped-columns th,
+        .table.table-striped-columns td {
+            text-align: center;
+        }
+        .fotolap{
+            max-width:200px;
+        }
     </style>
 
 </head>
@@ -81,7 +94,7 @@ $profilePicture = $user->gambar;
     <!-- Navbar & Hero Start -->
     <div class="background"></div>
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
-        <h1>Pelaporan Kegiatan Kriminalitas</h1>
+        <h1>Data Barang</h1>
     </div>
 
     <div class="container-fluid position-relative p-0">
@@ -98,8 +111,7 @@ $profilePicture = $user->gambar;
                     <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
                     <a href="{{route ('product_list_front')}}" class="nav-item nav-link">Belanja</a>
                     <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link active">Laporan Kriminalitas</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Riwayat Transaksi</a>
-
+                    <a href="{{route ('transaction_list3')}}" class="nav-item nav-link">Riwayat Transaksi</a>
                 </div>
 
                 <a href="{{route ('showProductCart')}}">
@@ -107,7 +119,7 @@ $profilePicture = $user->gambar;
                 </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/draft/aku.jpg') }}" alt="" width="48" height="48" style="border-radius: 50%;">
+                        <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())
@@ -150,7 +162,7 @@ $profilePicture = $user->gambar;
 
 
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">foto</label>
+                                <label for="exampleInputEmail1" class="form-label">Foto</label>
                                 <input type="file" name="foto" class="form-control custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                             </div>
 
@@ -158,33 +170,41 @@ $profilePicture = $user->gambar;
                         </form>
                     </div>
                 </div>
+
             </div>
         </div>
     </div>
 
 
     <div class="container">
-        <div class="row">
-            <table class="table table-dark table-striped-columns">
-                <thead>
-                    <tr>
-                        <th scope="col">Deskripsi</th>
-                        <th scope="col">Foto</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($laporan as $item)
-                    <tr>
-                        <th scope="row">{{ $item->deskripsi }}</th>
-                        <td>
-                            <img src="{{ asset('images/fotolaporan/' . $item->foto) }}" alt="Foto Kriminalitas" style="max-width: 100px;">
-                        </td>
-                    </tr>
-                    @endforeach
+        <div class="row justify-content-center">
+            <div class="col-8">
+                <table class="table table-dark table-striped-columns">
+                    <thead>
+                        <tr>
+                            <th scope="col">Deskripsi</th>
+                            <th scope="col">Foto</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                        $laporan = App\Models\LaporanKriminalitas::all();
+                        @endphp
+                        @foreach($laporan as $item)
+
+                        <tr>
+                            <td>{{$item->deskripsi}}</td>
+
+                            <td><img class ="fotolap" src="{{ URL::asset('images/fotolaporan/'.$item->foto) }}" alt="" class="card-img-top"></td>
 
 
-                </tbody>
-            </table>
+                        </tr>
+                        @endforeach
+
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 
@@ -225,5 +245,31 @@ $profilePicture = $user->gambar;
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
+
+<script>
+    $('.delete').click(function() {
+        var stdid = $(this).attr('id-data');
+        swal({
+                title: "Delete Data?",
+                text: "Delete " + stdid + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    swal("Data has been deleted successfully!", {
+                        icon: "success",
+                    }).then(() => {
+                        window.location = "/deleteproduct/" + stdid;
+                    });
+                } else {
+                    swal("Data deletion cancelled!");
+                }
+            });
+    });
+</script>
 
 </html>

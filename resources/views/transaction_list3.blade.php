@@ -4,8 +4,8 @@ if (!auth()->check() || auth()->user()->status != 'active') {
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
-if (auth()->user()->jabatan != 'generalmanageroperasional') {
-    echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
+if (auth()->user()->jabatan != 'pelanggan') {
+    echo "<script>alert('Anda Bukan Pelanggan!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
@@ -61,7 +61,7 @@ $profilePicture = $user->gambar;
                     <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
                     <a href="{{route ('product_list_front')}}" class="nav-item nav-link">Belanja</a>
                     <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link">Laporan Kriminalitas</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link active">Riwayat Transaksi</a>
+                    <a href="{{route ('transaction_list3')}}" class="nav-item nav-link active">Riwayat Transaksi</a>
 
                 </div>
                 <a href="{{route ('showProductCart')}}">
@@ -115,7 +115,7 @@ $profilePicture = $user->gambar;
                 <li class="list-group-item fw-bold">
                     Transaction ID: {{ $td->transaction_id }}
                     <span>
-                        <a href="{{ route('viewProductTransaction', ['transactionId' => $td->transaction_id]) }}" class="btn btn-success" style="float:right">
+                        <a href="{{ route('viewProductTransaction3', ['transactionId' => $td->transaction_id]) }}" class="btn btn-success" style="float:right">
                             View
                         </a>
                     </span>

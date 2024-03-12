@@ -65,7 +65,7 @@ $profilePicture = $user->gambar;
                     <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
                     <a href="{{route ('product_list_front')}}" class="nav-item nav-link active">Belanja</a>
                     <a href="{{route ('product_menu')}}" class="nav-item nav-link">Laporan Kriminalitas</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Riwayat Transaksi</a>
+                    <a href="{{route ('transaction_list3')}}" class="nav-item nav-link">Riwayat Transaksi</a>
 
                 </div>
                 <a href="{{route ('showProductCart')}}">

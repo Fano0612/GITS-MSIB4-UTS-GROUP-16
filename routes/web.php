@@ -28,6 +28,9 @@ Route::get('/homepage', function () {
 Route::get('/transaction_list', function () {
     return view('transaction_list');
 })->name('transaction_list');
+Route::get('/transaction_list3', function () {
+    return view('transaction_list3');
+})->name('transaction_list3');
 Route::get('/product_list_front', function () {
     return view('product_list_front');
 })->name('product_list_front');
@@ -64,7 +67,7 @@ Route::post('/decrementProductCart', [App\Http\Controllers\ProductController::cl
 Route::delete('/removeProductCart/{id}', [App\Http\Controllers\ProductController::class, 'removeProductCart'])->name('removeProductCart');
 Route::post('/paymentProductCart', [App\Http\Controllers\ProductController::class, 'paymentProductCart'])->name('paymentProductCart');
 Route::get('/viewProductTransaction/{transactionId}', [ProductController::class, 'viewProductTransaction'])->name('viewProductTransaction');
-
+Route::get('/viewProductTransaction3/{transactionId}', [ProductController::class, 'viewProductTransaction3'])->name('viewProductTransaction3');
 
 Route::get('/category', [CategoryController::class, 'create'])->name('category');
 Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
