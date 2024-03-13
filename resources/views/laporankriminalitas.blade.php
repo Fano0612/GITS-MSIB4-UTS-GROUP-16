@@ -72,6 +72,7 @@ $profilePicture = $user->gambar;
             background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
             filter: blur(5px);
         }
+
         .table-striped-columns th:not(:last-child),
         .table-striped-columns td:not(:last-child) {
             border-right: 1px solid rgba(255, 255, 255, 1);
@@ -81,8 +82,9 @@ $profilePicture = $user->gambar;
         .table.table-striped-columns td {
             text-align: center;
         }
-        .fotolap{
-            max-width:200px;
+
+        .fotolap {
+            max-width: 200px;
         }
     </style>
 
@@ -184,6 +186,7 @@ $profilePicture = $user->gambar;
                         <tr>
                             <th scope="col">Deskripsi</th>
                             <th scope="col">Foto</th>
+                            <th scope="col">Status Laporan</th>
 
                         </tr>
                     </thead>
@@ -196,8 +199,8 @@ $profilePicture = $user->gambar;
                         <tr>
                             <td>{{$item->deskripsi}}</td>
 
-                            <td><img class ="fotolap" src="{{ URL::asset('images/fotolaporan/'.$item->foto) }}" alt="" class="card-img-top"></td>
-
+                            <td><img class="fotolap" src="{{ URL::asset('images/fotolaporan/'.$item->foto) }}" alt="" class="card-img-top"></td>
+                            <td>{{$item->statuspelaporan}}</td>
 
                         </tr>
                         @endforeach

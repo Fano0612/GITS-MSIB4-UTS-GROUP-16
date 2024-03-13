@@ -58,11 +58,13 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
-                    <a href="{{route ('product_list_front')}}" class="nav-item nav-link">Belanja</a>
-                    <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link">Laporan Kriminalitas</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link active">Riwayat Transaksi</a>
-
+                <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link ">Home</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
+          <a href="{{route ('transaction_list')}}" class="nav-item nav-link active">Daftar Transaksi</a>
                 </div>
                 <a href="{{route ('showProductCart')}}">
                     <i class="fa fa-shopping-cart" style="font-size:36px"></i>

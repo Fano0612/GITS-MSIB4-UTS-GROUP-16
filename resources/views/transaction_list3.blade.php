@@ -90,7 +90,8 @@ $profilePicture = $user->gambar;
     <div class="mt-5 mb-5 text-center">
         <div class="container" style="width: 500px; display: inline-block;">
             @php
-            $transactionData = App\Models\Transaction::all()->groupBy('user_id');
+            $userId = Auth::id();
+            $transactionData = App\Models\Transaction::where('user_id', $userId)->get()->groupBy('user_id');
             @endphp
 
             @foreach($transactionData as $userId => $transactions)
