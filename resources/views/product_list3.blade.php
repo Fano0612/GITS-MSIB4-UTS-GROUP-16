@@ -62,7 +62,7 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
+                    <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
                     <a href="{{route ('product_list_front')}}" class="nav-item nav-link active">Belanja</a>
                     <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link">Laporan Kriminalitas</a>
                     <a href="{{route ('transaction_list3')}}" class="nav-item nav-link ">Riwayat Transaksi</a>
@@ -148,16 +148,16 @@ $profilePicture = $user->gambar;
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-  <div class="container">
-    <div class="copyright">
-      <div class="row">
-        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-          &copy; <a class="border-bottom" href="https://www.linkedin.com/in/yonathan-fanuel-mulyadi-08a690231/">2024 Copyright: Yonathan Fanuel Mulyadi</a>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="https://www.linkedin.com/in/yonathan-fanuel-mulyadi-08a690231/">2024 Copyright: Yonathan Fanuel Mulyadi</a>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-  </div>
-</div>
     <!-- Footer End -->
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
@@ -173,24 +173,28 @@ $profilePicture = $user->gambar;
     <script src="{{ asset('lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
     <!-- Template Javascript -->
     <script src="{{ asset('js/main.js') }}"></script>
-@php
+    @php
     $categories = App\Models\Category::all()->pluck('product_category', 'id')->toArray();
     $productsJson = json_encode($products);
-@endphp
+    @endphp
 
-<script>
-    var products = {!! $productsJson !!};
-    var categories = {!! json_encode($categories) !!};
+    <script>
+        var products = {
+            !!$productsJson!!
+        };
+        var categories = {
+            !!json_encode($categories) !!
+        };
 
-    $(document).ready(function() {
-        $('.detail-btn').click(function() {
-            var productId = $(this).data('product-id');
-            var product = products.find(p => p.id_barang === productId);
+        $(document).ready(function() {
+            $('.detail-btn').click(function() {
+                var productId = $(this).data('product-id');
+                var product = products.find(p => p.id_barang === productId);
 
-            if (product) {
-                var category = categories[product.kategori_id];
+                if (product) {
+                    var category = categories[product.kategori_id];
 
-                $('#productDetailModal .modal-body').html(`
+                    $('#productDetailModal .modal-body').html(`
                     <div class="card">
                         <img src="{{ asset('images/product_pictures/') }}/${product.foto}" class="card-img-top mx-auto d-block" alt="" style="width: 200px; height: 200px;">
                         <div class="card-body">
@@ -204,11 +208,11 @@ $profilePicture = $user->gambar;
                         </div>
                     </div>
                 `);
-                $('#productDetailModal').modal('show');
-            }
+                    $('#productDetailModal').modal('show');
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 
 </body>
