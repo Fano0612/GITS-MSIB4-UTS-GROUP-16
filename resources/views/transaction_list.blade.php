@@ -1,6 +1,6 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Please login to access the system!');</script>";
+    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
@@ -9,6 +9,7 @@ if (auth()->user()->jabatan != 'generalmanageroperasional') {
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
+
 
 
 $user = auth()->user();

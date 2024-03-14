@@ -1,12 +1,17 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Please login to access the system!');</script>";
+    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 if (auth()->user()->jabatan != 'pelanggan') {
     echo "<script>alert('Anda Bukan Pelanggan!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+    die();
+}
+if (auth()->user()->status_belanja_bantuan_karyawan != 'inactive') {
+    echo "<script>alert('Anda Sedang Berbelanja dengan Bantuan Karyawan!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/product_list4'; }, 1000);</script>";
     die();
 }
 ?>
@@ -179,12 +184,8 @@ $profilePicture = $user->gambar;
     @endphp
 
     <script>
-        var products = {
-            !!$productsJson!!
-        };
-        var categories = {
-            !!json_encode($categories) !!
-        };
+        var products = { !!$productsJson!! };
+        var categories = { !!json_encode($categories) !! };
 
         $(document).ready(function() {
             $('.detail-btn').click(function() {

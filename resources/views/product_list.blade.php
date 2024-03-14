@@ -1,9 +1,10 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Please login to access the system!');</script>";
+    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
+
 if (auth()->user()->jabatan != 'generalmanageroperasional') {
     echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
@@ -65,14 +66,15 @@ $profilePicture = $user->gambar;
                     <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
                     <a class="nav-item nav-link active" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
                     <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
                     <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
                     <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
                 </div>
 
-                <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+
+                <a href="{{route ('shopwithhelp')}}">
+                    <i class="fas fa-comments" style="font-size:30px"></i>
                 </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -107,7 +109,7 @@ $profilePicture = $user->gambar;
                             <p class="card-text">Stock: {{ $prod->jumlahstokbarang }}</p>
                             <div class="d-flex justify-content-between align-items-center">
                                 @if($prod->jumlahstokbarang > 0)
-                                <form action="{{ route('buyproduct') }}" method="POST">
+                                <form action="{{ route('buyproduct2') }}" method="POST">
                                     @csrf
                                     <input type="hidden" name="product_id" value="{{ $prod->id_barang }}">
                                     <button type="submit" class="btn btn-primary">Buy</button>
@@ -169,21 +171,25 @@ $profilePicture = $user->gambar;
     @php
     $categories = App\Models\Category::all()->pluck('product_category', 'id')->toArray();
     $productsJson = json_encode($products);
-@endphp
+    @endphp
 
-<script>
-    var products = {!! $productsJson !!};
-    var categories = {!! json_encode($categories) !!};
+    <script>
+        var products = {
+            !!$productsJson!!
+        };
+        var categories = {
+            !!json_encode($categories) !!
+        };
 
-    $(document).ready(function() {
-        $('.detail-btn').click(function() {
-            var productId = $(this).data('product-id');
-            var product = products.find(p => p.id_barang === productId);
+        $(document).ready(function() {
+            $('.detail-btn').click(function() {
+                var productId = $(this).data('product-id');
+                var product = products.find(p => p.id_barang === productId);
 
-            if (product) {
-                var category = categories[product.kategori_id];
+                if (product) {
+                    var category = categories[product.kategori_id];
 
-                $('#productDetailModal .modal-body').html(`
+                    $('#productDetailModal .modal-body').html(`
                     <div class="card">
                         <img src="{{ asset('images/product_pictures/') }}/${product.foto}" class="card-img-top mx-auto d-block" alt="" style="width: 200px; height: 200px;">
                         <div class="card-body">
@@ -197,11 +203,11 @@ $profilePicture = $user->gambar;
                         </div>
                     </div>
                 `);
-                $('#productDetailModal').modal('show');
-            }
+                    $('#productDetailModal').modal('show');
+                }
+            });
         });
-    });
-</script>
+    </script>
 
 
 </body>

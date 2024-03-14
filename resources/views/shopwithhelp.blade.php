@@ -1,17 +1,25 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
+    echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 ?>
 
 <?php
-if (auth()->user()->jabatan != 'pelanggan') {
-    echo "<script>alert('Anda Bukan Pelanggan!');</script>";
+if (auth()->user()->jabatan != 'generalmanageroperasional') {
+    echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
+
+if (auth()->user()->status_belanja_bantuan_karyawan != 'inactive') {
+    echo "<script>alert('Anda Sedang Membantu Belanja Pelanggan!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/productlist'; }, 1000);</script>";
+    die();
+}
+$user = auth()->user();
+$profilePicture = $user->gambar;
 ?>
 
 <?php
@@ -22,31 +30,39 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
 }
 
 ?>
-<?php
-$user = auth()->user();
-$profilePicture = $user->gambar;
-?>
 
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
+    {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <title>Indomaret Self Service System - Laporan Kriminalitas</title>
+    <title>Indomaret Self Service System - Belanja Dengan Bantuan Karyawan</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
+    <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
+
+    <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <style>
         .background {
@@ -61,18 +77,55 @@ $profilePicture = $user->gambar;
             filter: blur(5px);
         }
 
-        .table-striped-columns th:not(:last-child),
-        .table-striped-columns td:not(:last-child) {
-            border-right: 1px solid rgba(255, 255, 255, 1);
+
+
+        .carousel {
+            width: 100vw;
+            overflow: hidden;
         }
 
-        .table.table-striped-columns th,
-        .table.table-striped-columns td {
+        .carousel-inner {
             text-align: center;
         }
 
-        .fotolap {
-            max-width: 200px;
+        .carousel-inner .item img {
+            display: block;
+            margin: auto;
+            padding-bottom: 0;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 30%;
+            transform: translateY(-50%);
+        }
+
+        .carousel-control.left {
+            left: 0;
+        }
+
+        .carousel-control.right {
+            right: 0;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            width: 500px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            text-shadow: 2px 2px 4px black;
+            color: #ffffff;
+            font-size: 1.75rem;
+            background-color: rgb(255, 255, 255, 0.4);
+        }
+
+        @media (max-width: 767px) {
+            #myCarousel img {
+                max-height: 300px;
+                width: auto;
+            }
         }
     </style>
 
@@ -81,11 +134,11 @@ $profilePicture = $user->gambar;
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
 <body>
+    <!-- Navbar & Hero Start -->
     <div class="background"></div>
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
-        <h1>Laporan Kriminalitas</h1>
+        <h1>Belanja dengan Bantuan Karyawan</h1>
     </div>
-
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: white;">
             <a href="" class="navbar-brand p-0">
@@ -97,15 +150,19 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
-                    <a href="{{route ('product_list_front')}}" class="nav-item nav-link">Belanja</a>
-                    <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link active">Laporan Kriminalitas</a>
-                    <a href="{{route ('transaction_list3')}}" class="nav-item nav-link">Riwayat Transaksi</a>
-                </div>
+                <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
+          <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
+        </div>
 
-                <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
-                </a>
+
+        <a href="{{route ('shopwithhelp')}}">
+          <i class="fas fa-comments" style="font-size:30px"></i>
+        </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
@@ -122,81 +179,38 @@ $profilePicture = $user->gambar;
         </nav>
     </div>
     <!-- Navbar & Hero End -->
-
-
-    <!-- manage start -->
-    <div class="container" style="margin-top: 30px; margin-bottom: 30px;">
+    <div class="container" style="margin-top:30px;">
         <div class="row justify-content-center">
-            <div class="col-8">
-                <div class="card">
-                    <div class="card-body">
-                        @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
-                        <form action="{{ route('insertlaporan') }}" method="POST" enctype="multipart/form-data">
-
-                            @csrf
-
-                            <div class="mb-3">
-                                <label for="exampleInputName" class="form-label">Deskripsi</label>
-                                <input type="text" name="deskripsi" class="form-control" id="exampleInputName" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
-                                <span id="name-error-msg" class="error-msg"></span>
-                            </div>
-
-
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Foto</label>
-                                <input type="file" name="foto" class="form-control custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="col-7">
                 <table class="table table-dark table-striped-columns">
                     <thead>
                         <tr>
-                            <th scope="col">Deskripsi</th>
-                            <th scope="col">Foto</th>
-                            <th scope="col">Status Laporan</th>
+                            <th scope="col">Nama User</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Aksi</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         @php
-                        $laporan = App\Models\LaporanKriminalitas::all();
+                        $users = App\Models\User::where('status_belanja_bantuan_karyawan', 'active')->get();
                         @endphp
-                        @foreach($laporan as $item)
-
+                        @foreach($users as $user)
                         <tr>
-                            <td>{{$item->deskripsi}}</td>
-
-                            <td><img class="fotolap" src="{{ URL::asset('images/fotolaporan/'.$item->foto) }}" alt="" class="card-img-top"></td>
-                            <td>{{$item->statuspelaporan}}</td>
-
+                            <td>{{$user->nama}}</td>
+                            <td>{{$user->id}}</td>
+                            <td>
+    <a href="{{ route('product_list5', ['id' => $user->id]) }}" class="btn btn-danger success">Bantu</a>
+</td>
                         </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -206,19 +220,15 @@ $profilePicture = $user->gambar;
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                         &copy; <a class="border-bottom" href="https://www.linkedin.com/in/yonathan-fanuel-mulyadi-08a690231/">2024 Copyright: Yonathan Fanuel Mulyadi</a>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Footer End -->
 
-
-    <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
-
-    <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/wow/wow.min.js"></script>
@@ -232,34 +242,9 @@ $profilePicture = $user->gambar;
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
 
-<script>
-    $('.delete').click(function() {
-        var stdid = $(this).attr('id-data');
-        swal({
-                title: "Delete Data?",
-                text: "Delete " + stdid + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                closeOnClickOutside: false,
-                closeOnEsc: false,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    swal("Data has been deleted successfully!", {
-                        icon: "success",
-                    }).then(() => {
-                        window.location = "/deleteproduct/" + stdid;
-                    });
-                } else {
-                    swal("Data deletion cancelled!");
-                }
-            });
-    });
-</script>
+
 
 </html>

@@ -7,8 +7,8 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 ?>
 
 <?php
-if (auth()->user()->jabatan != 'generalmanageroperasional') {
-  echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
+if (auth()->user()->jabatan != 'generalmanageroperasional' && auth()->user()->jabatan != 'karyawan') {
+  echo "<script>alert('Anda Bukan General Manager Operasional/Karyawan!');</script>";
   echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
   die();
 }
@@ -34,7 +34,7 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
   <meta content="" name="keywords">
   <meta content="" name="description">
-  <title>Indomaret Self Service System - Login</title>
+  <title>Indomaret Self Service System - Dashboard General Manager Operasional</title>
   <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
   <!-- Favicon -->
   <link href="img/favicon.ico" rel="icon">
@@ -154,8 +154,8 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
         </div>
 
 
-        <a href="{{route ('showProductCart')}}">
-          <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+        <a href="{{route ('shopwithhelp')}}">
+          <i class="fas fa-comments" style="font-size:30px"></i>
         </a>
         <div class="dropdown ml-auto" style="margin-left: auto;">
           <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

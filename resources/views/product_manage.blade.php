@@ -36,7 +36,7 @@ $profilePicture = $user->gambar;
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <title>Indomaret Self Service System - Login</title>
+    <title>Indomaret Self Service System - Manajemen Produk</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
@@ -73,7 +73,7 @@ $profilePicture = $user->gambar;
             filter: blur(5px);
         }
     </style>
-   
+
 </head>
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -105,11 +105,12 @@ $profilePicture = $user->gambar;
                     <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
                 </div>
 
-                <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+
+                <a href="{{route ('shopwithhelp')}}">
+                    <i class="fas fa-comments" style="font-size:30px"></i>
                 </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
-                <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">

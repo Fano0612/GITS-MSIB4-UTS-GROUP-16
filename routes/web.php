@@ -37,14 +37,17 @@ Route::get('/product_list_front', function () {
 Route::get('/laporankriminalitas', function () {
     return view('laporankriminalitas');
 })->name('laporankriminalitas');
-
+Route::get('/shopwithhelp', function () {
+    return view('shopwithhelp');
+})->name('shopwithhelp');
 
 
 
 Route::get('/productlist', [ProductListController::class, 'index'])->name('productlist');
 Route::get('/product_list2', [ProductListController::class, 'index2'])->name('product_list2');
 Route::get('/product_list3', [ProductListController::class, 'index3'])->name('product_list3');
-
+Route::get('/product_list4', [ProductListController::class, 'index4'])->name('product_list4');
+Route::get('/product_list5', [ProductListController::class, 'index5'])->name('product_list5');
 // Route::get('register', [UserController::class, 'register'])->name('register');
 // Route::POST('register', [UserController::class, 'registeracc'])->name('registeracc');
 // Route::get('login', [UserController::class, 'login'])->name('login');
@@ -61,13 +64,17 @@ Route::get('/showproduct/{id_barang}', [ProductController::class, 'showproduct']
 Route::post('/editproduct/{id_barang}', [ProductController::class, 'editproduct'])->name('editproduct');
 Route::get('/deleteproduct/{id_barang}', [ProductController::class, 'deleteproduct'])->name('deleteproduct');
 Route::post('/buyProduct', [App\Http\Controllers\ProductController::class, 'buyProduct'])->name('buyproduct');
+Route::post('/buyProduct2', [App\Http\Controllers\ProductController::class, 'buyProduct2'])->name('buyproduct2');
 Route::get('/showProductCart', [App\Http\Controllers\ProductController::class, 'showProductCart'])->name('showProductCart');
+Route::get('/showProductCart2', [App\Http\Controllers\ProductController::class, 'showProductCart2'])->name('showProductCart2');
 Route::post('/incrementProductCart', [App\Http\Controllers\ProductController::class, 'incrementProductCart'])->name('incrementProductCart');
 Route::post('/decrementProductCart', [App\Http\Controllers\ProductController::class, 'decrementProductCart'])->name('decrementProductCart');
 Route::delete('/removeProductCart/{id}', [App\Http\Controllers\ProductController::class, 'removeProductCart'])->name('removeProductCart');
 Route::post('/paymentProductCart', [App\Http\Controllers\ProductController::class, 'paymentProductCart'])->name('paymentProductCart');
+Route::post('/paymentProductCart2', [App\Http\Controllers\ProductController::class, 'paymentProductCart2'])->name('paymentProductCart2');
 Route::get('/viewProductTransaction/{transactionId}', [ProductController::class, 'viewProductTransaction'])->name('viewProductTransaction');
 Route::get('/viewProductTransaction3/{transactionId}', [ProductController::class, 'viewProductTransaction3'])->name('viewProductTransaction3');
+Route::post('/update_status', [ProductListController::class, 'updateStatus'])->name('update_status');
 
 Route::get('/category', [CategoryController::class, 'create'])->name('category');
 Route::post('/category', [CategoryController::class, 'store'])->name('category.store');

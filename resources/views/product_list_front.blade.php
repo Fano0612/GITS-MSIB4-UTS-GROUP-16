@@ -1,7 +1,8 @@
 <?php
-if (auth()->check() && auth()->user()->status != 'active') {
-    header('Location: /login');
-    exit();
+if (!auth()->check() || auth()->user()->status != 'active') {
+    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+    die();
 }
 if (auth()->user()->jabatan != 'pelanggan') {
     echo "<script>alert('Anda Bukan Pelanggan!');</script>";
@@ -15,7 +16,7 @@ if (auth()->user()->jabatan != 'pelanggan') {
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Indomaret Self Service System</title>
+    <title>Indomaret Self Service System - Pilihan Cara Berbelanja</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <link rel="stylesheet" href="css/login.css">
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
@@ -49,7 +50,7 @@ if (auth()->user()->jabatan != 'pelanggan') {
                 </div>
             </div>
             </a>
-            <a href="{{route ('product_list3')}}">
+            <a href="{{route ('product_list4')}}">
             <div class="card m-2" style="width: 400px;">
                 <img src="https://assets-global.website-files.com/637610b6e8be873142dadb34/63e23006e168492abf6c2ff6_5-Reasons-Why-Every-Employee-Need-Customer-Service-1.png" alt="" style="height: 100%; width: 100%;filter: blur(8px);">
                 <div class="position-absolute top-50 start-50 translate-middle text-center">

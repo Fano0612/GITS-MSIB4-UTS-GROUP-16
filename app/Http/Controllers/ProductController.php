@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Barang;
+use App\Models\User;
 use App\Models\Category;
 use App\Models\Cart;
 use App\Models\Transaction;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
 
 class ProductController extends Controller
 {
@@ -179,6 +181,42 @@ class ProductController extends Controller
     
         return redirect()->back()->with('success', 'Product successfully added to the cart!');
     }
+    
+    public function buyProduct2(Request $request)
+    {
+        $productId = $request->input('product_id'); 
+    
+        $product = Barang::find($productId);
+    
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found!');
+        }
+        
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+    
+        if (!$userId) {
+            return redirect()->back()->with('error', 'User not found!');
+        }
+        
+        $cartItem = Cart::where('user_id', $userId)->where('product_id', $productId)->first();
+    
+        if ($cartItem) {
+            $cartItem->increment('quantity');
+        } else {
+            Cart::create([
+                'user_id' => $userId,
+                'product_id' => $productId,
+                'quantity' => 1,
+                'product_name' => $product->namabarang, 
+                'product_picture' => $product->foto,
+                'product_price' => $product->harga, 
+            ]);
+        }
+        $product->decrement('jumlahstokbarang', 1);
+    
+        return redirect()->back()->with('success', 'Product successfully added to the cart!');
+    }
+    
 
     public function getProductDetails($id) {
         $product = Barang::find($id);
@@ -191,7 +229,16 @@ class ProductController extends Controller
         $userId = auth()->user()->id;
 
         $cart = Cart::where('user_id', $userId)->get();
-        return view('cart_view', compact('cart'));
+        return view('cart_view3', compact('cart'));
+    }
+
+    public function showProductCart2()
+    {
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+        
+
+        $cart2 = Cart::where('user_id', $userId)->get();
+        return view('cart_view', compact('cart2'));
     }
 
     public function incrementProductCart(Request $request)
@@ -286,6 +333,7 @@ class ProductController extends Controller
 
     public function paymentProductCart()
     {
+        $user = Auth::user();
         $userId = auth()->user()->id;
 
         $cartItems = Cart::where('user_id', $userId)->get();
@@ -316,9 +364,60 @@ class ProductController extends Controller
 
         Transaction::insert($transactionData);
         Cart::where('user_id', $userId)->delete();
+        if ($user) {
+            $user->status_belanja_bantuan_karyawan = 'inactive';
+            $user->save();
+        }
 
         return redirect()->route('showProductCart')->with('success', 'Payment successful');
     }
+    public function paymentProductCart2()
+    {
+        $user = Auth::user();
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+    
+        $cartItems = Cart::where('user_id', $userId)->get();
+        $transactionData = [];
+    
+        $transactionId = time();
+    
+        foreach ($cartItems as $cartItem) {
+            $transactionData[] = [
+                'transaction_id' => $transactionId,
+                'user_id' => $userId,
+                'product_id' => $cartItem->product_id,
+                'product_name' => $cartItem->product_name,
+                'product_picture' => $cartItem->product_picture,
+                'product_price' => $cartItem->product_price,
+                'quantity' => $cartItem->quantity,
+                'transaction_status' => 'Paid'
+            ];
+    
+            $product = $cartItem->product;
+            if ($product) {
+                $productStock = $product->product_stock - $cartItem->quantity;
+                $product->update([
+                    'jumlahstokbarang' => $productStock
+                ]);
+            }
+        }
+    
+        Transaction::insert($transactionData);
+        Cart::where('user_id', $userId)->delete();
+        
+        if ($user) {
+            $user->status_belanja_bantuan_karyawan = 'inactive';
+            $user->id_pelanggan_belanja_bantuan_karyawan = 0;
+            $user->save();
+            
+            // Update corresponding user's status_belanja_bantuan_karyawan in userlist table
+            User::where('id', $userId)
+                    ->update(['status_belanja_bantuan_karyawan' => 'inactive']);
+        }
+    
+        return redirect()->route('showProductCart2')->with('success', 'Payment successful');
+    }
+    
 
     public function viewProductTransaction($transaction_id)
     {

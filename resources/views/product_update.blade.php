@@ -1,14 +1,14 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Please login to access the system');</script>";
+    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 ?>
 
 <?php
-if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional') {
-    echo "<script>alert('You are not a merchant!');</script>";
+if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional' && auth()->user()->jabatan != 'karyawan') {
+    echo "<script>alert('Anda Bukan General Manager Operasional/Karyawan!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/homepage'; }, 1000);</script>";
     die();
 }

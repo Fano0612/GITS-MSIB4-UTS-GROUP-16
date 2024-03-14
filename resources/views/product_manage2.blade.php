@@ -1,6 +1,6 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Please login to access the system');</script>";
+    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
@@ -36,7 +36,7 @@ $profilePicture = $user->gambar;
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <title>Indomaret Self Service System - Login</title>
+    <title>Indomaret Self Service System - Manajemen Produk</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
      <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">

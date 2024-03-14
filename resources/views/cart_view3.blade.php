@@ -5,8 +5,8 @@ if (!auth()->check() || auth()->user()->status != 'active') {
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
   }
-if (auth()->user()->jabatan != 'generalmanageroperasional') {
-    echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
+if (auth()->user()->jabatan != 'pelanggan') {
+    echo "<script>alert('Anda Bukan Pelanggan!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
@@ -22,7 +22,7 @@ $profilePicture = $user->gambar;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Indomaret Self Service System - Keranjang Belanja General Manager Operasional</title>
+    <title>Indomaret Self Service System - Keranjang Belanja Pelanggan</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
     <!-- Favicon -->
     <link href="{{ asset('img/favicon.ico') }}" rel="icon">
@@ -116,7 +116,11 @@ $profilePicture = $user->gambar;
             border-radius: 20px;
             box-shadow: 0px 25px 40px #1687d933;
 
-        }
+        }   
+        .container-fluid {
+    height: 20vh; /* Adjust the height as needed */
+    overflow-y: auto; /* Enable vertical scrolling */
+}
     </style>
 
 </head>
@@ -138,16 +142,13 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
+                    <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
+                    <a href="{{route ('product_list_front')}}" class="nav-item nav-link">Belanja</a>
+                    <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link">Laporan Kriminalitas</a>
+                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Riwayat Transaksi</a>
                 </div>
 
-                <a href="{{route ('showProductCart2')}}">
+                <a href="{{route ('showProductCart')}}">
                     <i class="fa fa-shopping-cart" style="font-size:30px"></i>
                 </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
@@ -179,7 +180,7 @@ $profilePicture = $user->gambar;
             <div class="card-border">
                 <?php $total = 0; ?>
 
-                @foreach($cart->where('user_id', auth()->user()->id_pelanggan_belanja_bantuan_karyawan) as $cl)
+                @foreach($cart->where('user_id', auth()->user()->id) as $cl)
                 <div class="card" style="width: 18rem;">
                     <img src="{{ URL::asset('images/product_pictures/'.$cl->product_picture) }}" class="card-img-top" alt="">
                     <div class="card-body">
@@ -210,9 +211,11 @@ $profilePicture = $user->gambar;
                 <br>
                 <?php $total += $tax; ?>
                 <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
-                <form action="{{ route('paymentProductCart2') }}" method="POST" id="payment-form">
+                <form action="{{ route('paymentProductCart') }}" method="POST" id="payment-form">
                     @csrf
+                    @if ($user->status_belanja_bantuan_karyawan != 'active')
                     <button type="submit" class="btn btn-success mb-3 Payment">Pay</button>
+                    @endif
                 </form>
             </div>
         </div>
