@@ -1,15 +1,15 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
+    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
-  }
+}
 ?>
 
 <?php
 if (auth()->user()->jabatan != 'generalmanageroperasional') {
     echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/dashboardpelanggan'; }, 1000);</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 ?>
@@ -22,39 +22,31 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
 }
 
 ?>
+<?php
+$user = auth()->user();
+$profilePicture = $user->gambar;
+?>
 
 <!doctype html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
-    {{-- <meta name="viewport" content="width=device-width, initial-scale=1"> --}}
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <title>Indomaret Self Service System - Manajemen Kategori</title>
+    <title>Indomaret Self Service System - Laporan Kriminalitas</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
-    <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
-
-    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
-
-    <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-
-    <!-- Libraries Stylesheet -->
     <link href="lib/animate/animate.min.css" rel="stylesheet">
     <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
-
-    <!-- Customized Bootstrap Stylesheet -->
     <link href="css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
     <style>
         .background {
@@ -68,38 +60,30 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
             background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
             filter: blur(5px);
         }
-    </style>
-    <script>
-        $(document).ready(function() {
 
-            $("form").submit(function(event) {
-                var product_id = $("#exampleInputEmail1").val();
-                var product_name = $("#exampleInputName").val();
-                var exist = false;
-                $("table tbody tr").each(function() {
-                    var id = $(this).find("th:eq(0)").text();
-                    var name = $(this).find("td:eq(0)").text();
-                    if (id == product_id || name == product_name) {
-                        exist = true;
-                        return false;
-                    }
-                });
-                if (exist) {
-                    alert("Product already exists in the table.");
-                    event.preventDefault();
-                }
-            });
-        });
-    </script>
+        .table-striped-columns th:not(:last-child),
+        .table-striped-columns td:not(:last-child) {
+            border-right: 1px solid rgba(255, 255, 255, 1);
+        }
+
+        .table.table-striped-columns th,
+        .table.table-striped-columns td {
+            text-align: center;
+        }
+
+        .fotolap {
+            max-width: 200px;
+        }
+    </style>
+
 </head>
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
 <body>
-    <!-- Navbar & Hero Start -->
     <div class="background"></div>
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
-        <h1>Kategori</h1>
+        <h1>Laporan Kriminalitas</h1>
     </div>
 
     <div class="container-fluid position-relative p-0">
@@ -113,21 +97,22 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
+                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link ">Home</a>
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+                    <a class="nav-item nav-link active" aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
                     <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
                     <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
                 </div>
 
-                <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+
+                <a href="{{route ('shopwithhelp')}}">
+                    <i class="fas fa-comments" style="font-size:30px"></i>
                 </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/draft/aku.jpg') }}" alt="" width="48" height="48" style="border-radius: 50%;">
+                        <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())
@@ -143,83 +128,53 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
     <!-- Navbar & Hero End -->
 
 
-    <!-- manage start -->
-    <div class="container" style="margin-top: 30px; margin-bottom: 30px;">
+    <div class="container" style="margin-top:20px;">
         <div class="row justify-content-center">
             <div class="col-8">
-                <div class="card">
-                    <div class="card-body">
-                        @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
-                        <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
-                            @csrf
-                            <div class="mb-3">
-                                <label for="id" class="form-label">ID</label>
-                                <input type="number" name="id" class="form-control {{ $errors->has('id') ? 'is-invalid' : '' }}" id="id" placeholder="Enter ID" value="{{ old('id') }}" required>
+                <table class="table table-dark table-striped-columns">
+                    <thead>
+                        <tr>
+                        <th scope="col">ID Pelapor</th>
+                        <th scope="col">Nama Pelapor</th>
+                            <th scope="col">Deskripsi</th>
+                            <th scope="col">Foto</th>
+                            <th scope="col">Status Laporan</th>
 
-                            </div>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @php
+                        $laporan = App\Models\LaporanKriminalitas::all();
+                        @endphp
+                        @foreach($laporan as $item)
+                        <tr>
+                        <td>{{$item->id_pelaporankegiatankriminalitas}}</td>
+                        <td>{{$item->username}}</td>
+                        <td>{{$item->deskripsi}}</td>
+                        <td><img class="fotolap" src="{{ URL::asset('images/fotolaporan/'.$item->foto) }}" alt="" class="card-img-top"></td>
+                        <td>{{$item->statuspelaporan}}</td>
+                        </tr>
+                        @endforeach
 
-                            <div class="mb-3">
-                                <label for="product_category" class="form-label">Product Category</label>
-                                <input type="text" name="product_category" class="form-control {{ $errors->has('product_category') ? 'is-invalid' : '' }}" id="product_category" placeholder="Enter Product Category" value="{{ old('product_category') }}" required>
-
-                            </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
-                </div>
+                    </tbody>
+                </table>
             </div>
-        </div>
-    </div>
-
-
-    <div class="container">
-        <div class="row">
-        <table id="example" class="table table-dark table-striped-columns">
-        <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Product Category</th>
-                        <th scope="col" style="text-align: center;">Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach($category as $cat)
-                    <tr>
-                        <th scope="row">{{$cat->id}}</th>
-                        <td>{{$cat->product_category}}</td>
-                        <td style="text-align: center;">
-                            <a href="{{ route('category.edit', ['id' => $cat->id]) }}" class="btn btn-success">Edit</a>
-                            <a href="#" class="btn btn-danger delete" data-id="{{$cat->id}}">Delete</a>
-                        </td>
-                    </tr>
-                    @endforeach
-
-                </tbody>
-            </table>
         </div>
     </div>
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container">
-      <div class="copyright">
-        <div class="row">
-          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-            &copy; <a class="border-bottom" href="https://www.linkedin.com/in/yonathan-fanuel-mulyadi-08a690231/">2024 Copyright: Yonathan Fanuel Mulyadi</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="https://www.linkedin.com/in/yonathan-fanuel-mulyadi-08a690231/">2024 Copyright: Yonathan Fanuel Mulyadi</a>
+                    </div>
 
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Footer End -->
 
 
@@ -247,10 +202,10 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
 
 <script>
     $('.delete').click(function() {
-        var catId = $(this).data('id');
+        var stdid = $(this).attr('id-data');
         swal({
-                title: "Delete Category?",
-                text: "Delete category " + catId + "?\n" + "Once it's deleted, you won't be able to recover this category anymore",
+                title: "Delete Data?",
+                text: "Delete " + stdid + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -259,26 +214,13 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    $.ajax({
-                        url: "{{ url('category') }}" + '/' + catId,
-                        type: "POST",
-                        data: {
-                            '_method': 'DELETE',
-                            '_token': '{{ csrf_token() }}'
-                        },
-                        success: function(data) {
-                            swal("Category has been deleted successfully!", {
-                                icon: "success",
-                            }).then(() => {
-                                window.location.reload();
-                            });
-                        },
-                        error: function(data) {
-                            swal("Oops", "You can't delete a category with products connected to it", "error");
-                        }
+                    swal("Data has been deleted successfully!", {
+                        icon: "success",
+                    }).then(() => {
+                        window.location = "/deleteproduct/" + stdid;
                     });
                 } else {
-                    swal("Category deletion cancelled!");
+                    swal("Data deletion cancelled!");
                 }
             });
     });

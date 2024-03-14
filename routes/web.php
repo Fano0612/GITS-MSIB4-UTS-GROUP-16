@@ -37,6 +37,9 @@ Route::get('/product_list_front', function () {
 Route::get('/laporankriminalitas', function () {
     return view('laporankriminalitas');
 })->name('laporankriminalitas');
+Route::get('/daftarlaporankriminalitas', function () {
+    return view('daftarlaporankriminalitas');
+})->name('daftarlaporankriminalitas');
 Route::get('/shopwithhelp', function () {
     return view('shopwithhelp');
 })->name('shopwithhelp');

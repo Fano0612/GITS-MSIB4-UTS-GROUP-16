@@ -153,6 +153,72 @@ $profilePicture = $user->gambar;
     </div>
 
 
+    <footer class="text-center text-lg-start text-white" style="background-color: #1c2331">
+        <section class="d-flex justify-content-between p-4" style="background-color: #006ab4">
+            <div class="me-5">
+                <span>Social Media</span>
+            </div>
+
+            <div>
+                <a href="https://www.facebook.com/IndomaretMudahdanHemat/" class="text-white me-4">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/indomaret" class="text-white me-4">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://indomaret.co.id/" class="text-white me-4">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a href="https://www.instagram.com/indomaret/" class="text-white me-4">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/indomaretcoid" class="text-white me-4">
+                    <i class="fab fa-youtube"></i>
+                </a>
+
+            </div>
+            <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
+
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+
+                <div class="row mt-3">
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold" style="color: white">PT. Petrolux Arya Mandala</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: white; height: 2px" />
+                        <p>
+                            Berbekal dedikasi dan inovasi, Indomaret mengukuhkan statusnya sebagai perusahaan waralaba minimarket pertama dan terbesar di Indonesia.
+                        </p>
+                    </div>
+
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold" style="color: white">Contact</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: white; height: 2px" />
+                        <p><i class="fas fa-home mr-3"></i> Menara Indomaret:
+                            Jl. Pantai Indah Kapuk Boulevard, No 1,
+                            Pantai Indah Kapuk, Jakarta Utara, 14470</p>
+                        <p><i class="fas fa-envelope mr-3"></i> kontak@indomaret.co.id</p>
+                        <p><i class="fas fa-phone mr-3"></i> +62 21 5089 7400</p>
+                        <p><i class="fas fa-print mr-3"></i> +62 21 5089 7411</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2024 Copyright:
+            <a class="text-white" href="https://www.instagram.com/fano12.m/">Yonathan Fanuel Mulyadi</a>
+        </div>
+    </footer>
+
 </body>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>

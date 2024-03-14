@@ -48,6 +48,9 @@ $profilePicture = $user->gambar;
 
 
 <body>
+    <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
+        <h1>Daftar Transaksi</h1>
+    </div>
     <!-- Navbar & Hero Start -->
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: White; border-bottom: 1px solid black;">
@@ -59,16 +62,16 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link ">Home</a>
-          <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-          <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
-          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
-          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
-          <a href="{{route ('transaction_list')}}" class="nav-item nav-link active">Daftar Transaksi</a>
+                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link ">Home</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
+                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link active">Daftar Transaksi</a>
                 </div>
-                <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:36px"></i>
+                <a href="{{route ('shopwithhelp')}}">
+                    <i class="fas fa-comments" style="font-size:30px"></i>
                 </a>
                 &nbsp; &nbsp;
                 <div class="dropdown ml-auto" style="margin-left: auto;">
