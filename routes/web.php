@@ -70,11 +70,21 @@ Route::post('/buyProduct', [App\Http\Controllers\ProductController::class, 'buyP
 Route::post('/buyProduct2', [App\Http\Controllers\ProductController::class, 'buyProduct2'])->name('buyproduct2');
 Route::get('/showProductCart', [App\Http\Controllers\ProductController::class, 'showProductCart'])->name('showProductCart');
 Route::get('/showProductCart2', [App\Http\Controllers\ProductController::class, 'showProductCart2'])->name('showProductCart2');
+Route::get('/showProductCart3', [App\Http\Controllers\ProductController::class, 'showProductCart3'])->name('showProductCart3');
 Route::post('/incrementProductCart', [App\Http\Controllers\ProductController::class, 'incrementProductCart'])->name('incrementProductCart');
 Route::post('/decrementProductCart', [App\Http\Controllers\ProductController::class, 'decrementProductCart'])->name('decrementProductCart');
 Route::delete('/removeProductCart/{id}', [App\Http\Controllers\ProductController::class, 'removeProductCart'])->name('removeProductCart');
+Route::post('/incrementProductCart2', [App\Http\Controllers\ProductController::class, 'incrementProductCart2'])->name('incrementProductCart2');
+Route::post('/decrementProductCart2', [App\Http\Controllers\ProductController::class, 'decrementProductCart2'])->name('decrementProductCart2');
+Route::delete('/removeProductCart2/{id}', [App\Http\Controllers\ProductController::class, 'removeProductCart2'])->name('removeProductCart2');
+Route::post('/incrementProductCart3', [App\Http\Controllers\ProductController::class, 'incrementProductCart3'])->name('incrementProductCart3');
+Route::post('/decrementProductCart3', [App\Http\Controllers\ProductController::class, 'decrementProductCart3'])->name('decrementProductCart3');
+Route::delete('/removeProductCart3/{id}', [App\Http\Controllers\ProductController::class, 'removeProductCart3'])->name('removeProductCart3');
+
 Route::post('/paymentProductCart', [App\Http\Controllers\ProductController::class, 'paymentProductCart'])->name('paymentProductCart');
 Route::post('/paymentProductCart2', [App\Http\Controllers\ProductController::class, 'paymentProductCart2'])->name('paymentProductCart2');
+Route::post('/paymentProductCart3', [App\Http\Controllers\ProductController::class, 'paymentProductCart3'])->name('paymentProductCart3');
+
 Route::get('/viewProductTransaction/{transactionId}', [ProductController::class, 'viewProductTransaction'])->name('viewProductTransaction');
 Route::get('/viewProductTransaction3/{transactionId}', [ProductController::class, 'viewProductTransaction3'])->name('viewProductTransaction3');
 Route::post('/update_status', [ProductListController::class, 'updateStatus'])->name('update_status');

@@ -4,9 +4,14 @@ if (!auth()->check() || auth()->user()->status != 'active') {
     echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
-  }
+}
 if (auth()->user()->jabatan != 'generalmanageroperasional') {
     echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+    die();
+}
+if (auth()->user()->id_pelanggan_belanja_bantuan_karyawan == 0) {
+    echo "<script>alert('Anda Tidak Membantu Pelanggan!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
@@ -127,51 +132,67 @@ $profilePicture = $user->gambar;
 <body>
     <!-- Navbar & Hero Start -->
 
-    <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: white;">
+    <div class="background"></div>
+    <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: space-between; border-bottom: 0.5px solid black; padding-top:10px;padding-bottom:10px;">
+
+        <div style="display: flex; align-items: center;">
             <a href="" class="navbar-brand p-0">
-                <img src="    https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png" style="width:150px;height:50px;">
-
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png" style="width:150px;height:50px;">
             </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-                <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
-                </div>
 
-                <a href="{{route ('showProductCart2')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
-                </a>
-                <div class="dropdown ml-auto" style="margin-left: auto;">
-                    <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
-                        @if (auth()->check())
-                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
-                        @endif
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
-                    </div>
-                </div>
+        </div>
+
+        <h1 style="margin: 0 auto;">Dashboard General Manager Operasional</h1>
+
+
+        <div class="dropdown" style="margin-left: auto;">
+            <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
+            </button>
+            <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
+                @if (auth()->check())
+                <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</b></a>
+                @endif
+                <div class="dropdown-divider"></div>
+                <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
             </div>
-        </nav>
+        </div>
+
     </div>
+
+
+    <div class="container-fluid" style="background-color: white;">
+        <div class="row justify-content-center">
+            <div class="col-12 col-lg-10 position-relative p-0">
+                <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav ms-auto py-0">
+                            <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
+                            <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
+                            <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
+                            <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+                            <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
+                            <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
+                            <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
+                        </div>
+                        <a href="{{route ('showProductCart2')}}">
+                            <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+                        </a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </div>
+
     <!-- Navbar & Hero End -->
 
     @php
     $cart = App\Models\Cart::all();
     @endphp
     <div class="background"></div>
-
 
 
     <div class="Cart-Container">
@@ -186,12 +207,14 @@ $profilePicture = $user->gambar;
                         <h5 class="card-title">{{ $cl->product_name }}</h5>
                         <p class="card-text">Rp {{ number_format($cl->product_price, 0, ',', '.') }}.00</p>
                         <p class="card-text">Quantity:
-                            <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
-                            <span class="quantity">{{$cl->quantity}}</span>
+
                             <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
+
+                            <span class="quantity">{{$cl->quantity}}</span>
+                            <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
                         </p>
-                        <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }} ">Remove</a>
-                        <form id="delete-form" action="{{ route('removeProductCart', $cl->product_id) }}" method="POST" style="display: none;">
+                        <a href="#" class="btn btn-danger delete" data-product-id="{{ $cl->product_id }}">Remove</a>
+                        <form id="delete-form-{{ $cl->product_id }}" action="{{ route('removeProductCart2', $cl->product_id) }}" method="POST" style="display: none;">
                             @csrf
                             @method('DELETE')
                         </form>
@@ -213,22 +236,79 @@ $profilePicture = $user->gambar;
                 <form action="{{ route('paymentProductCart2') }}" method="POST" id="payment-form">
                     @csrf
                     <button type="submit" class="btn btn-success mb-3 Payment">Pay</button>
+
                 </form>
             </div>
         </div>
     </div>
 
-    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-    <div class="container">
-      <div class="copyright">
-        <div class="row">
-          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-            &copy; <a class="border-bottom" href="https://www.linkedin.com/in/yonathan-fanuel-mulyadi-08a690231/">2024 Copyright: Yonathan Fanuel Mulyadi</a>
-          </div>
+
+
+    <footer class="text-center text-lg-start text-white" style="background-color: #1c2331">
+        <section class="d-flex justify-content-between p-4" style="background-color: #006ab4">
+            <div class="me-5">
+                <span>Social Media</span>
+            </div>
+
+            <div>
+                <a href="https://www.facebook.com/IndomaretMudahdanHemat/" class="text-white me-4">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/indomaret" class="text-white me-4">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://indomaret.co.id/" class="text-white me-4">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a href="https://www.instagram.com/indomaret/" class="text-white me-4">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/indomaretcoid" class="text-white me-4">
+                    <i class="fab fa-youtube"></i>
+                </a>
+
+            </div>
+            <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
+
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+
+                <div class="row mt-3">
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold" style="color: white">PT. Petrolux Arya Mandala</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: white; height: 2px" />
+                        <p>
+                            Berbekal dedikasi dan inovasi, Indomaret mengukuhkan statusnya sebagai perusahaan waralaba minimarket pertama dan terbesar di Indonesia.
+                        </p>
+                    </div>
+
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold" style="color: white">Contact</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: white; height: 2px" />
+                        <p><i class="fas fa-home mr-3"></i> Menara Indomaret:
+                            Jl. Pantai Indah Kapuk Boulevard, No 1,
+                            Pantai Indah Kapuk, Jakarta Utara, 14470</p>
+                        <p><i class="fas fa-envelope mr-3"></i> kontak@indomaret.co.id</p>
+                        <p><i class="fas fa-phone mr-3"></i> +62 21 5089 7400</p>
+                        <p><i class="fas fa-print mr-3"></i> +62 21 5089 7411</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2024 Copyright:
+            <a class="text-white" href="https://www.instagram.com/fano12.m/">Yonathan Fanuel Mulyadi</a>
         </div>
-      </div>
-    </div>
-  </div>
+    </footer>
 
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -247,60 +327,58 @@ $profilePicture = $user->gambar;
 </body>
 
 <script>
-    $(document).ready(function() {
-        $('.increment-btn').click(function(e) {
-            e.preventDefault();
+    $('.increment-btn').click(function(e) {
+        e.preventDefault();
 
-            var productId = $(this).data('product-id');
-            var quantityElement = $(this).siblings('.quantity');
+        var productId = $(this).data('product-id');
+        var quantityElement = $(this).siblings('.quantity');
 
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('incrementProductCart') }}",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    product_id: productId,
-                    increment: 1
-                },
-                success: function(data) {
-                    quantityElement.text(data.quantity);
-                },
-                error: function(data) {
-                    alert('Error: ' + data.responseJSON.error);
-                }
-            });
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('incrementProductCart2') }}",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id_barang: productId,
+                increment: 1
+            },
+            success: function(data) {
+                quantityElement.text(data.quantity);
+            },
+            error: function(data) {
+                alert('Error: ' + data.responseJSON.error);
+            }
         });
+    });
 
-        $('.decrement-btn').click(function(e) {
-            e.preventDefault();
+    $('.decrement-btn').click(function(e) {
+        e.preventDefault();
 
-            var productId = $(this).data('product-id');
-            var quantityElement = $(this).siblings('.quantity');
+        var productId = $(this).data('product-id');
+        var quantityElement = $(this).siblings('.quantity');
 
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('decrementProductCart') }}",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    product_id: productId,
-                    decrement: 1
-                },
-                success: function(data) {
-                    quantityElement.text(data.quantity);
-                },
-                error: function(data) {
-                    alert('Error: ' + data.responseJSON.error);
-                }
-            });
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('decrementProductCart2') }}",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id_barang: productId, // Updated parameter name
+                decrement: 1
+            },
+            success: function(data) {
+                quantityElement.text(data.quantity);
+            },
+            error: function(data) {
+                alert('Error: ' + data.responseJSON.error);
+            }
         });
     });
 </script>
 <script>
     $('.delete').click(function() {
-        var catId = $(this).data('id');
+        var productId = $(this).data('product-id');
         swal({
                 title: "Delete Data?",
-                text: "Delete data " + catId + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
+                text: "Delete data " + productId + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -309,7 +387,7 @@ $profilePicture = $user->gambar;
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    $('#delete-form').submit();
+                    $('#delete-form-' + productId).submit();
                 } else {
                     swal("Data deletion cancelled!");
                 }
@@ -320,6 +398,5 @@ $profilePicture = $user->gambar;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-
 
 </html>

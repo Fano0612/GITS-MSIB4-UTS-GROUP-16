@@ -10,6 +10,11 @@ if (auth()->user()->jabatan != 'karyawan') {
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
   }
+  if (auth()->user()->id_pelanggan_belanja_bantuan_karyawan == 0) {
+    echo "<script>alert('Anda Tidak Membantu Pelanggan!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+    die();
+}
 
 
 $user = auth()->user();
@@ -121,7 +126,6 @@ $profilePicture = $user->gambar;
 
 <body>
     <!-- Navbar & Hero Start -->
-   
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: white;">
             <a href="" class="navbar-brand p-0">
@@ -133,13 +137,14 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
-                    <a href="{{route ('product_list_front')}}" class="nav-item nav-link">Belanja</a>
-                    <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link">Laporan Kriminalitas</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Riwayat Transaksi</a>
- </div>
+                <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link active">Home</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Riwayat Belanja</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
+         </div>
 
-                <a href="{{route ('showProductCart2')}}">
+                <a href="{{route ('showProductCart3')}}">
                     <i class="fa fa-shopping-cart" style="font-size:30px"></i>
                 </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
@@ -167,132 +172,202 @@ $cart = App\Models\Cart::all();
 
 
 <div class="Cart-Container">
-  <div class="Cart-content" style="display:inline-block;">
-    <div class="card-border">
-      <?php $total = 0; ?>
+        <div class="Cart-content" style="display:inline-block;">
+            <div class="card-border">
+                <?php $total = 0; ?>
 
-      @foreach($cart->where('user_id', auth()->user()->id) as $cl)
-  <div class="card" style="width: 18rem;">
-    <img src="{{ URL::asset('images/product_pictures/'.$cl->product_picture) }}" class="card-img-top" alt="">
-    <div class="card-body">
-      <h5 class="card-title">{{ $cl->product_name }}</h5>
-      <p class="card-text">Rp {{ number_format($cl->product_price, 0, ',', '.') }}.00</p>
-      <p class="card-text">Quantity:
-    <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
-    <span class="quantity">{{$cl->quantity}}</span>
-    <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
-</p>
-    <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }} ">Remove</a>
-    <form id="delete-form" action="{{ route('removeProductCart', $cl->product_id) }}" method="POST" style="display: none;">
-        @csrf
-        @method('DELETE')
-    </form>
-    </div>
-    <?php $total += $cl->product_price * $cl->quantity; ?>
-  </div>
-  @if(($loop->iteration % 3) == 0)
-    <div style="flex-basis: 100%;"></div>
-  @endif
-@endforeach
-    </div>
-    <hr style="background-color:rgb(0,0,0); height:20px;">
-    <?php $tax = $total * 0.1; ?>
-    <div class="total">
-      <h3>Tax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Rp {{ number_format($tax, 0, ',', '.') }}.00</h3>
-      <br>
-      <?php $total += $tax; ?>
-      <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
-      <form action="{{ route('paymentProductCart') }}" method="POST" id="payment-form">
-  @csrf
-  <button type="submit" class="btn btn-success mb-3 Payment">Pay</button>
-</form>
-</div>
-  </div>
-</div>
-<!-- JavaScript Libraries -->
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-<script src="lib/wow/wow.min.js"></script>
-<script src="lib/easing/easing.min.js"></script>
-<script src="lib/waypoints/waypoints.min.js"></script>
-<script src="lib/owlcarousel/owl.carousel.min.js"></script>
-<script src="lib/tempusdominus/js/moment.min.js"></script>
-<script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-<script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+                @foreach($cart->where('user_id', auth()->user()->id_pelanggan_belanja_bantuan_karyawan) as $cl)
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ URL::asset('images/product_pictures/'.$cl->product_picture) }}" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $cl->product_name }}</h5>
+                        <p class="card-text">Rp {{ number_format($cl->product_price, 0, ',', '.') }}.00</p>
+                        <p class="card-text">Quantity:
 
-<!-- Template Javascript -->
-<script src="js/main.js"></script>
+                            <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
+
+                            <span class="quantity">{{$cl->quantity}}</span>
+                            <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
+                        </p>
+                        <a href="#" class="btn btn-danger delete" data-product-id="{{ $cl->product_id }}">Remove</a>
+                        <form id="delete-form-{{ $cl->product_id }}" action="{{ route('removeProductCart2', $cl->product_id) }}" method="POST" style="display: none;">
+                            @csrf
+                            @method('DELETE')
+                        </form>
+                    </div>
+                    <?php $total += $cl->product_price * $cl->quantity; ?>
+                </div>
+                @if(($loop->iteration % 3) == 0)
+                <div style="flex-basis: 100%;"></div>
+                @endif
+                @endforeach
+            </div>
+            <hr style="background-color:rgb(0,0,0); height:20px;">
+            <?php $tax = $total * 0.1; ?>
+            <div class="total">
+                <h3>Tax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Rp {{ number_format($tax, 0, ',', '.') }}.00</h3>
+                <br>
+                <?php $total += $tax; ?>
+                <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
+                <form action="{{ route('paymentProductCart3') }}" method="POST" id="payment-form">
+                    @csrf
+                    <button type="submit" class="btn btn-success mb-3 Payment">Pay</button>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+
+
+    <footer class="text-center text-lg-start text-white" style="background-color: #1c2331">
+        <section class="d-flex justify-content-between p-4" style="background-color: #006ab4">
+            <div class="me-5">
+                <span>Social Media</span>
+            </div>
+
+            <div>
+                <a href="https://www.facebook.com/IndomaretMudahdanHemat/" class="text-white me-4">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://twitter.com/indomaret" class="text-white me-4">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://indomaret.co.id/" class="text-white me-4">
+                    <i class="fab fa-google"></i>
+                </a>
+                <a href="https://www.instagram.com/indomaret/" class="text-white me-4">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://www.youtube.com/indomaretcoid" class="text-white me-4">
+                    <i class="fab fa-youtube"></i>
+                </a>
+
+            </div>
+            <!-- Right -->
+        </section>
+        <!-- Section: Social media -->
+
+        <!-- Section: Links  -->
+        <section class="">
+            <div class="container text-center text-md-start mt-5">
+
+                <div class="row mt-3">
+                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                        <!-- Content -->
+                        <h6 class="text-uppercase fw-bold" style="color: white">PT. Petrolux Arya Mandala</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: white; height: 2px" />
+                        <p>
+                            Berbekal dedikasi dan inovasi, Indomaret mengukuhkan statusnya sebagai perusahaan waralaba minimarket pertama dan terbesar di Indonesia.
+                        </p>
+                    </div>
+
+
+                    <!-- Grid column -->
+                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                        <!-- Links -->
+                        <h6 class="text-uppercase fw-bold" style="color: white">Contact</h6>
+                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: white; height: 2px" />
+                        <p><i class="fas fa-home mr-3"></i> Menara Indomaret:
+                            Jl. Pantai Indah Kapuk Boulevard, No 1,
+                            Pantai Indah Kapuk, Jakarta Utara, 14470</p>
+                        <p><i class="fas fa-envelope mr-3"></i> kontak@indomaret.co.id</p>
+                        <p><i class="fas fa-phone mr-3"></i> +62 21 5089 7400</p>
+                        <p><i class="fas fa-print mr-3"></i> +62 21 5089 7411</p>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
+            © 2024 Copyright:
+            <a class="text-white" href="https://www.instagram.com/fano12.m/">Yonathan Fanuel Mulyadi</a>
+        </div>
+    </footer>
+
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/wow/wow.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
 
 </body>
 
 <script>
-    $(document).ready(function() {
-        $('.increment-btn').click(function(e) {
-            e.preventDefault();
+    $('.increment-btn').click(function(e) {
+        e.preventDefault();
 
-            var productId = $(this).data('product-id');
-            var quantityElement = $(this).siblings('.quantity');
+        var productId = $(this).data('product-id');
+        var quantityElement = $(this).siblings('.quantity');
 
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('incrementProductCart') }}",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    product_id: productId,
-                    increment: 1
-                },
-                success: function(data) {
-                    quantityElement.text(data.quantity);
-                },
-                error: function(data) {
-                    alert('Error: ' + data.responseJSON.error);
-                }
-            });
-        });
-
-        $('.decrement-btn').click(function(e) {
-            e.preventDefault();
-
-            var productId = $(this).data('product-id');
-            var quantityElement = $(this).siblings('.quantity');
-
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('decrementProductCart') }}",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    product_id: productId,
-                    decrement: 1
-                },
-                success: function(data) {
-                    quantityElement.text(data.quantity);
-                },
-                error: function(data) {
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('incrementProductCart3') }}",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id_barang: productId,
+                increment: 1
+            },
+            success: function(data) {
+                quantityElement.text(data.quantity);
+            },
+            error: function(data) {
                 alert('Error: ' + data.responseJSON.error);
-                }
-                });
-                });
-                });
+            }
+        });
+    });
+
+    $('.decrement-btn').click(function(e) {
+        e.preventDefault();
+
+        var productId = $(this).data('product-id');
+        var quantityElement = $(this).siblings('.quantity');
+
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('decrementProductCart3') }}",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id_barang: productId, // Updated parameter name
+                decrement: 1
+            },
+            success: function(data) {
+                quantityElement.text(data.quantity);
+            },
+            error: function(data) {
+                alert('Error: ' + data.responseJSON.error);
+            }
+        });
+    });
 </script>
 <script>
     $('.delete').click(function() {
-        var catId = $(this).data('id');
+        var productId = $(this).data('product-id');
         swal({
-            title: "Delete Data?",
-            text: "Delete data " + catId + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-            closeOnClickOutside: false,
-            closeOnEsc: false,
-        })
-        .then((willDelete) => {
-            if (willDelete) {
-                $('#delete-form').submit();
-            } else {
-                swal("Data deletion cancelled!");
-            }
-        });
+                title: "Delete Data?",
+                text: "Delete data " + productId + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
+                icon: "warning",
+                buttons: true,
+                dangerMode: true,
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+            })
+            .then((willDelete) => {
+                if (willDelete) {
+                    $('#delete-form-' + productId).submit();
+                } else {
+                    swal("Data deletion cancelled!");
+                }
+            });
     });
 </script>
 

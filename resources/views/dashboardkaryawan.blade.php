@@ -144,7 +144,7 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
       </button>
       <div class="collapse navbar-collapse" id="navbarCollapse">
         <div class="navbar-nav ms-auto py-0">
-          <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link active">Home</a>
+          <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link active">Home</a>
           <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
           <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Riwayat Belanja</a>
           <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>

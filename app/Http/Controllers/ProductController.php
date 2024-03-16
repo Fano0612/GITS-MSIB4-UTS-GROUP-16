@@ -33,17 +33,19 @@ class ProductController extends Controller
 
     public function insertproduct(Request $insertion)
     {
-        $validatedData = $insertion->validate([
-            'id_barang' => 'required|unique:barang,id_barang',
-            'namabarang' => 'required',
-            'jenisbarang' => 'required',
-            'harga' => 'required|numeric',
-            'deskripsi' => 'required',
-            'komposisi' => 'required',
-            'tanggalkedaluwarsa' => 'required',
-            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000',
-            'jumlahstokbarang' => 'required|numeric',
-            'kategori_id' => 'required|numeric', ], 
+        $validatedData = $insertion->validate(
+            [
+                'id_barang' => 'required|unique:barang,id_barang',
+                'namabarang' => 'required',
+                'jenisbarang' => 'required',
+                'harga' => 'required|numeric',
+                'deskripsi' => 'required',
+                'komposisi' => 'required',
+                'tanggalkedaluwarsa' => 'required',
+                'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000',
+                'jumlahstokbarang' => 'required|numeric',
+                'kategori_id' => 'required|numeric',
+            ],
             [
                 'id_barang.unique' => 'ID Barang sudah terdaftar!',
                 'id_barang.required' => 'ID Barang Kosong!',
@@ -56,7 +58,8 @@ class ProductController extends Controller
                 'foto.required' => 'Foto Barang Kosong!',
                 'jumlahstokbarang.required' => 'Jumlah Stok Barang Kosong!',
                 'kategori_id.required' => 'Kategori Barang Kosong!',
-            ]);
+            ]
+        );
 
         $productPicture = '';
         if ($insertion->hasFile('foto')) {
@@ -154,17 +157,17 @@ class ProductController extends Controller
     }
     public function buyProduct(Request $request)
     {
-        $productId = $request->input('product_id'); 
-    
+        $productId = $request->input('product_id');
+
         $product = Barang::find($productId);
-    
+
         if (!$product) {
             return redirect()->back()->with('error', 'Product not found!');
         }
-    
+
         $userId = auth()->user()->id;
         $cartItem = Cart::where('user_id', $userId)->where('product_id', $productId)->first();
-    
+
         if ($cartItem) {
             $cartItem->increment('quantity');
         } else {
@@ -172,34 +175,34 @@ class ProductController extends Controller
                 'user_id' => $userId,
                 'product_id' => $productId,
                 'quantity' => 1,
-                'product_name' => $product->namabarang, 
+                'product_name' => $product->namabarang,
                 'product_picture' => $product->foto,
-                'product_price' => $product->harga, 
+                'product_price' => $product->harga,
             ]);
         }
         $product->decrement('jumlahstokbarang', 1);
-    
+
         return redirect()->back()->with('success', 'Product successfully added to the cart!');
     }
-    
+
     public function buyProduct2(Request $request)
     {
-        $productId = $request->input('product_id'); 
-    
+        $productId = $request->input('product_id');
+
         $product = Barang::find($productId);
-    
+
         if (!$product) {
             return redirect()->back()->with('error', 'Product not found!');
         }
-        
+
         $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
-    
+
         if (!$userId) {
             return redirect()->back()->with('error', 'User not found!');
         }
-        
+
         $cartItem = Cart::where('user_id', $userId)->where('product_id', $productId)->first();
-    
+
         if ($cartItem) {
             $cartItem->increment('quantity');
         } else {
@@ -207,23 +210,24 @@ class ProductController extends Controller
                 'user_id' => $userId,
                 'product_id' => $productId,
                 'quantity' => 1,
-                'product_name' => $product->namabarang, 
+                'product_name' => $product->namabarang,
                 'product_picture' => $product->foto,
-                'product_price' => $product->harga, 
+                'product_price' => $product->harga,
             ]);
         }
         $product->decrement('jumlahstokbarang', 1);
-    
+
         return redirect()->back()->with('success', 'Product successfully added to the cart!');
     }
-    
 
-    public function getProductDetails($id) {
+
+    public function getProductDetails($id)
+    {
         $product = Barang::find($id);
         return response()->json($product);
     }
-    
-    
+
+
     public function showProductCart()
     {
         $userId = auth()->user()->id;
@@ -235,14 +239,27 @@ class ProductController extends Controller
     public function showProductCart2()
     {
         $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
-        
+
 
         $cart2 = Cart::where('user_id', $userId)->get();
         return view('cart_view', compact('cart2'));
     }
 
+    public function showProductCart3()
+    {
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+
+
+        $cart2 = Cart::where('user_id', $userId)->get();
+        return view('cart_view2', compact('cart2'));
+    }
+
     public function incrementProductCart(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'You need to be logged in to perform this action.');
+        }
+
         $productId = $request->input('id_barang');
         $userId = auth()->user()->id;
         $cart = Cart::where('product_id', $productId)
@@ -256,12 +273,12 @@ class ProductController extends Controller
             return redirect()->back()->with('error', 'Product not found!');
         }
         $quantity = $cart->quantity + $request->input('increment');
-        if ($quantity > $product->product_stock) {
+        if ($quantity > $product->jumlahstokbarang) {
             return redirect()->back()->with('error', 'Product out of stock!');
         }
         $cart->quantity = $quantity;
         $cart->save();
-        $product->product_stock -= $request->input('increment');
+        $product->jumlahstokbarang -= $request->input('increment');
         $product->save();
         $data = ['quantity' => $cart->quantity];
         return response()->json($data);
@@ -269,6 +286,10 @@ class ProductController extends Controller
 
     public function decrementProductCart(Request $request)
     {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'You need to be logged in to perform this action.');
+        }
+
         $productId = $request->input('id_barang');
         $userId = auth()->user()->id;
 
@@ -285,10 +306,11 @@ class ProductController extends Controller
         if (!$product) {
             return redirect()->back()->with('error', 'Product not found!');
         }
-        $quantity = $cart->quantity - $request->input('decrement');
+        $decrement = min($request->input('decrement'), $cart->quantity - 1);
+        $quantity = $cart->quantity - $decrement;
         $cart->quantity = $quantity;
         $cart->save();
-        $product->product_stock += $request->input('decrement');
+        $product->jumlahstokbarang += $decrement;
         $product->save();
         $data = ['quantity' => $cart->quantity];
         return response()->json($data);
@@ -296,6 +318,10 @@ class ProductController extends Controller
 
     public function removeProductCart($id)
     {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'You need to be logged in to perform this action.');
+        }
+
         $userId = auth()->user()->id;
 
         $cartItem = Cart::where('user_id', $userId)
@@ -306,8 +332,9 @@ class ProductController extends Controller
             $removedQuantity = $cartItem->quantity;
 
             $product = $cartItem->product;
+
             if ($product) {
-                $productStock = $product->product_stock + $removedQuantity;
+                $productStock = $product->jumlahstokbarang + $removedQuantity;
                 $product->update([
                     'jumlahstokbarang' => $productStock
                 ]);
@@ -315,21 +342,200 @@ class ProductController extends Controller
 
             $cartItem->delete();
 
-            if ($cartItem->deleted_at) {
-                $product = Barang::find($id);
-                if ($product) {
-                    $productStock = $product->product_stock + $removedQuantity;
-                    $product->update([
-                        'jumlahstokbarang' => $productStock
-                    ]);
-                }
-            }
-
-            return redirect()->route('showProductCart')->with('success', 'Product removed');
+            return redirect()->back()->with('success', 'Product removed');
         } else {
-            return redirect()->route('showProductCart')->with('error', 'Product not found');
+            return redirect()->back()->with('error', 'Product not found');
         }
     }
+
+    public function incrementProductCart2(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'You need to be logged in to perform this action.');
+        }
+
+        $productId = $request->input('id_barang');
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+        $cart = Cart::where('product_id', $productId)
+            ->where('user_id', $userId)
+            ->first();
+        if (!$cart) {
+            return redirect()->back()->with('error', 'Product not found in cart!');
+        }
+        $product = Barang::find($productId);
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found!');
+        }
+        $quantity = $cart->quantity + $request->input('increment');
+        if ($quantity > $product->jumlahstokbarang) {
+            return redirect()->back()->with('error', 'Product out of stock!');
+        }
+        $cart->quantity = $quantity;
+        $cart->save();
+        $product->jumlahstokbarang -= $request->input('increment');
+        $product->save();
+        $data = ['quantity' => $cart->quantity];
+        return response()->json($data);
+    }
+
+    public function decrementProductCart2(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'You need to be logged in to perform this action.');
+        }
+
+        $productId = $request->input('id_barang');
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+
+        $cart = Cart::where('product_id', $productId)
+            ->where('user_id', $userId)
+            ->first();
+        if (!$cart) {
+            return redirect()->back()->with('error', 'Product not found in cart!');
+        }
+        if ($cart->quantity <= 1) {
+            return redirect()->back()->with('error', 'Quantity can not be decreased further!');
+        }
+        $product = Barang::find($productId);
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found!');
+        }
+        $decrement = min($request->input('decrement'), $cart->quantity - 1);
+        $quantity = $cart->quantity - $decrement;
+        $cart->quantity = $quantity;
+        $cart->save();
+        $product->jumlahstokbarang += $decrement;
+        $product->save();
+        $data = ['quantity' => $cart->quantity];
+        return response()->json($data);
+    }
+
+    public function removeProductCart2($id)
+    {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'You need to be logged in to perform this action.');
+        }
+
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+
+        $cartItem = Cart::where('user_id', $userId)
+            ->where('product_id', $id)
+            ->first();
+
+        if ($cartItem) {
+            $removedQuantity = $cartItem->quantity;
+
+            $product = $cartItem->product;
+
+            if ($product) {
+                $productStock = $product->jumlahstokbarang + $removedQuantity;
+                $product->update([
+                    'jumlahstokbarang' => $productStock
+                ]);
+            }
+
+            $cartItem->delete();
+
+            return redirect()->back()->with('success', 'Product removed');
+        } else {
+            return redirect()->back()->with('error', 'Product not found');
+        }
+    }
+
+    public function incrementProductCart3(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'You need to be logged in to perform this action.');
+        }
+
+        $productId = $request->input('id_barang');
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+        $cart = Cart::where('product_id', $productId)
+            ->where('user_id', $userId)
+            ->first();
+        if (!$cart) {
+            return redirect()->back()->with('error', 'Product not found in cart!');
+        }
+        $product = Barang::find($productId);
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found!');
+        }
+        $quantity = $cart->quantity + $request->input('increment');
+        if ($quantity > $product->jumlahstokbarang) {
+            return redirect()->back()->with('error', 'Product out of stock!');
+        }
+        $cart->quantity = $quantity;
+        $cart->save();
+        $product->jumlahstokbarang -= $request->input('increment');
+        $product->save();
+        $data = ['quantity' => $cart->quantity];
+        return response()->json($data);
+    }
+
+    public function decrementProductCart3(Request $request)
+    {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'You need to be logged in to perform this action.');
+        }
+
+        $productId = $request->input('id_barang');
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+
+        $cart = Cart::where('product_id', $productId)
+            ->where('user_id', $userId)
+            ->first();
+        if (!$cart) {
+            return redirect()->back()->with('error', 'Product not found in cart!');
+        }
+        if ($cart->quantity <= 1) {
+            return redirect()->back()->with('error', 'Quantity can not be decreased further!');
+        }
+        $product = Barang::find($productId);
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found!');
+        }
+        $decrement = min($request->input('decrement'), $cart->quantity - 1);
+        $quantity = $cart->quantity - $decrement;
+        $cart->quantity = $quantity;
+        $cart->save();
+        $product->jumlahstokbarang += $decrement;
+        $product->save();
+        $data = ['quantity' => $cart->quantity];
+        return response()->json($data);
+    }
+
+    public function removeProductCart3($id)
+    {
+        if (!Auth::check()) {
+            return redirect()->back()->with('error', 'You need to be logged in to perform this action.');
+        }
+
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+
+        $cartItem = Cart::where('user_id', $userId)
+            ->where('product_id', $id)
+            ->first();
+
+        if ($cartItem) {
+            $removedQuantity = $cartItem->quantity;
+
+            $product = $cartItem->product;
+
+            if ($product) {
+                $productStock = $product->jumlahstokbarang + $removedQuantity;
+                $product->update([
+                    'jumlahstokbarang' => $productStock
+                ]);
+            }
+
+            $cartItem->delete();
+
+            return redirect()->back()->with('success', 'Product removed');
+        } else {
+            return redirect()->back()->with('error', 'Product not found');
+        }
+    }
+
 
     public function paymentProductCart()
     {
@@ -353,14 +559,6 @@ class ProductController extends Controller
                 'transaction_status' => 'Paid'
             ];
 
-            $product = $cartItem->product;
-            if ($product) {
-                $productStock = $product->product_stock - $cartItem->quantity;
-                $product->update([
-                    'jumlahstokbarang' => $productStock
-                ]);
-            }
-        }
 
         Transaction::insert($transactionData);
         Cart::where('user_id', $userId)->delete();
@@ -371,16 +569,17 @@ class ProductController extends Controller
 
         return redirect()->route('showProductCart')->with('success', 'Payment successful');
     }
+}
     public function paymentProductCart2()
     {
         $user = Auth::user();
         $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
-    
+
         $cartItems = Cart::where('user_id', $userId)->get();
         $transactionData = [];
-    
+
         $transactionId = time();
-    
+
         foreach ($cartItems as $cartItem) {
             $transactionData[] = [
                 'transaction_id' => $transactionId,
@@ -392,32 +591,66 @@ class ProductController extends Controller
                 'quantity' => $cartItem->quantity,
                 'transaction_status' => 'Paid'
             ];
-    
-            $product = $cartItem->product;
-            if ($product) {
-                $productStock = $product->product_stock - $cartItem->quantity;
-                $product->update([
-                    'jumlahstokbarang' => $productStock
-                ]);
-            }
+
+
         }
-    
+
         Transaction::insert($transactionData);
         Cart::where('user_id', $userId)->delete();
-        
+
         if ($user) {
             $user->status_belanja_bantuan_karyawan = 'inactive';
             $user->id_pelanggan_belanja_bantuan_karyawan = 0;
             $user->save();
-            
+
             // Update corresponding user's status_belanja_bantuan_karyawan in userlist table
             User::where('id', $userId)
-                    ->update(['status_belanja_bantuan_karyawan' => 'inactive']);
+                ->update(['status_belanja_bantuan_karyawan' => 'inactive']);
         }
-    
+
         return redirect()->route('showProductCart2')->with('success', 'Payment successful');
     }
-    
+    public function paymentProductCart3()
+    {
+        $user = Auth::user();
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+
+        $cartItems = Cart::where('user_id', $userId)->get();
+        $transactionData = [];
+
+        $transactionId = time();
+
+        foreach ($cartItems as $cartItem) {
+            $transactionData[] = [
+                'transaction_id' => $transactionId,
+                'user_id' => $userId,
+                'product_id' => $cartItem->product_id,
+                'product_name' => $cartItem->product_name,
+                'product_picture' => $cartItem->product_picture,
+                'product_price' => $cartItem->product_price,
+                'quantity' => $cartItem->quantity,
+                'transaction_status' => 'Paid'
+            ];
+
+
+        }
+
+        Transaction::insert($transactionData);
+        Cart::where('user_id', $userId)->delete();
+
+        if ($user) {
+            $user->status_belanja_bantuan_karyawan = 'inactive';
+            $user->id_pelanggan_belanja_bantuan_karyawan = 0;
+            $user->save();
+
+            // Update corresponding user's status_belanja_bantuan_karyawan in userlist table
+            User::where('id', $userId)
+                ->update(['status_belanja_bantuan_karyawan' => 'inactive']);
+        }
+
+        return redirect()->route('showProductCart2')->with('success', 'Payment successful');
+    }
+
 
     public function viewProductTransaction($transaction_id)
     {

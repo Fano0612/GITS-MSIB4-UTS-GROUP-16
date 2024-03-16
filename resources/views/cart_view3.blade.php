@@ -4,7 +4,7 @@ if (!auth()->check() || auth()->user()->status != 'active') {
     echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
-  }
+}
 if (auth()->user()->jabatan != 'pelanggan') {
     echo "<script>alert('Anda Bukan Pelanggan!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
@@ -116,11 +116,14 @@ $profilePicture = $user->gambar;
             border-radius: 20px;
             box-shadow: 0px 25px 40px #1687d933;
 
-        }   
+        }
+
         .container-fluid {
-    height: 20vh; /* Adjust the height as needed */
-    overflow-y: auto; /* Enable vertical scrolling */
-}
+            height: 20vh;
+            /* Adjust the height as needed */
+            overflow-y: auto;
+            /* Enable vertical scrolling */
+        }
     </style>
 
 </head>
@@ -187,12 +190,14 @@ $profilePicture = $user->gambar;
                         <h5 class="card-title">{{ $cl->product_name }}</h5>
                         <p class="card-text">Rp {{ number_format($cl->product_price, 0, ',', '.') }}.00</p>
                         <p class="card-text">Quantity:
-                            <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
-                            <span class="quantity">{{$cl->quantity}}</span>
+
                             <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
+
+                            <span class="quantity">{{$cl->quantity}}</span>
+                            <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
                         </p>
-                        <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }} ">Remove</a>
-                        <form id="delete-form" action="{{ route('removeProductCart', $cl->product_id) }}" method="POST" style="display: none;">
+                        <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }}">Remove</a>
+                        <form id="delete-form-{{ $cl->product_id }}" action="{{ route('removeProductCart', $cl->product_id) }}" method="POST" style="display: none;">
                             @csrf
                             @method('DELETE')
                         </form>
@@ -306,60 +311,58 @@ $profilePicture = $user->gambar;
 </body>
 
 <script>
-    $(document).ready(function() {
-        $('.increment-btn').click(function(e) {
-            e.preventDefault();
+    $('.increment-btn').click(function(e) {
+        e.preventDefault();
 
-            var productId = $(this).data('product-id');
-            var quantityElement = $(this).siblings('.quantity');
+        var productId = $(this).data('product-id');
+        var quantityElement = $(this).siblings('.quantity');
 
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('incrementProductCart') }}",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    product_id: productId,
-                    increment: 1
-                },
-                success: function(data) {
-                    quantityElement.text(data.quantity);
-                },
-                error: function(data) {
-                    alert('Error: ' + data.responseJSON.error);
-                }
-            });
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('incrementProductCart') }}",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id_barang: productId, 
+                increment: 1
+            },
+            success: function(data) {
+                quantityElement.text(data.quantity);
+            },
+            error: function(data) {
+                alert('Error: ' + data.responseJSON.error);
+            }
         });
+    });
 
-        $('.decrement-btn').click(function(e) {
-            e.preventDefault();
+    $('.decrement-btn').click(function(e) {
+        e.preventDefault();
 
-            var productId = $(this).data('product-id');
-            var quantityElement = $(this).siblings('.quantity');
+        var productId = $(this).data('product-id');
+        var quantityElement = $(this).siblings('.quantity');
 
-            $.ajax({
-                type: 'POST',
-                url: "{{ route('decrementProductCart') }}",
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    product_id: productId,
-                    decrement: 1
-                },
-                success: function(data) {
-                    quantityElement.text(data.quantity);
-                },
-                error: function(data) {
-                    alert('Error: ' + data.responseJSON.error);
-                }
-            });
+        $.ajax({
+            type: 'POST',
+            url: "{{ route('decrementProductCart') }}",
+            data: {
+                _token: '{{ csrf_token() }}',
+                id_barang: productId, // Updated parameter name
+                decrement: 1
+            },
+            success: function(data) {
+                quantityElement.text(data.quantity);
+            },
+            error: function(data) {
+                alert('Error: ' + data.responseJSON.error);
+            }
         });
     });
 </script>
 <script>
     $('.delete').click(function() {
-        var catId = $(this).data('id');
+        var productId = $(this).data('id');
         swal({
                 title: "Delete Data?",
-                text: "Delete data " + catId + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
+                text: "Delete data " + productId + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -368,7 +371,7 @@ $profilePicture = $user->gambar;
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    $('#delete-form').submit();
+                    $('#delete-form-' + productId).submit(); 
                 } else {
                     swal("Data deletion cancelled!");
                 }
