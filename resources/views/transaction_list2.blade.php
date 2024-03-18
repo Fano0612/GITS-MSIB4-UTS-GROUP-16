@@ -4,9 +4,9 @@ if (!auth()->check() || auth()->user()->status != 'active') {
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
-if (auth()->user()->jabatan != 'generalmanageroperasional') {
-    echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/dashboardgeneralmanageroperasional'; }, 1000);</script>";
+if (auth()->user()->jabatan != 'karyawan') {
+    echo "<script>alert('Anda Bukan Karyawan!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
     die();
 }
 
@@ -62,12 +62,11 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link ">Home</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarpelanggan')}}">Data Pelanggan</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link active">Daftar Transaksi</a>
+                <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link ">Home</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu2')}}">Data Barang</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas2')}}">Laporan Kriminalitas</a>
+          <a class="nav-item nav-link active" aria-current="page" href="{{route ('transaction_list2')}}">Daftar Transaksi</a>
                 </div>
                 <a href="{{route ('shopwithhelp')}}">
                     <i class="fas fa-comments" style="font-size:30px"></i>
@@ -127,7 +126,7 @@ $profilePicture = $user->gambar;
                         <li class="list-group-item fw-bold">
                             ID Transaksi: {{ $td->transaction_id }}
                             <span>
-                                <a href="{{ route('viewProductTransaction', ['transactionId' => $td->transaction_id]) }}" class="btn btn-success" style="float:right">
+                                <a href="{{ route('viewProductTransaction2', ['transactionId' => $td->transaction_id]) }}" class="btn btn-success" style="float:right">
                                     View
                                 </a>
                             </span>
@@ -175,8 +174,6 @@ $profilePicture = $user->gambar;
         @endforeach
     </div>
 </div>
-
-
 
 
 </body>

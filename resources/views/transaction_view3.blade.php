@@ -43,24 +43,24 @@
     <div class="card-body">
         <div class="row mb-3">
             <div class="col-sm-3">
-                <h6 class="mb-0">Transaction ID:</h6>
+                <h6 class="mb-0">ID Transaksi:</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    {{ $transaction->transaction_id }}
+                </div>
             </div>
-            <div class="col-sm-9 text-secondary">
-                {{ $transaction->transaction_id }}
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Username:</h6>
+                </div>
+                <div class="col-sm-9 text-secondary">
+                    {{ $transaction->user->username }}
+                </div>
             </div>
-        </div>
-        <div class="row mb-3">
-            <div class="col-sm-3">
-                <h6 class="mb-0">User:</h6>
-            </div>
-            <div class="col-sm-9 text-secondary">
-                {{ $transaction->user->username }}
-            </div>
-        </div>
 
-        <div class="row mb-3">
-            <div class="col-sm-3">
-                <h6 class="mb-0">Transaction Status:</h6>
+            <div class="row mb-3">
+                <div class="col-sm-3">
+                    <h6 class="mb-0">Status Transaksi:</h6>
             </div>
             <div class="col-sm-9 text-secondary">
                 {{ $transaction->transaction_status }}
@@ -98,13 +98,13 @@
       <img src="{{ URL::asset('images/product_pictures/'.$transaction->product_picture)  }}" class="card-img-top" alt="">
       <div class="card-body">
         <h5 class="card-title">{{ $transaction->product_name }}</h5>
-        <p class="card-text">Product ID: {{ $transaction->product_id }}</p>
-      </div>
-      <ul class="list-group list-group-flush">
-        <li class="list-group-item">Transaction ID: {{ $transaction->transaction_id }}</li>
-        <li class="list-group-item">Transaction Status: {{ $transaction->transaction_status }}</li>
-        <li class="list-group-item">Quantity: {{ $transaction->quantity }}</li>
-        <li class="list-group-item">Total Price: Rp {{ number_format($transaction->product_price* $transaction->quantity, 0, ',', '.') }}.00</li>
+        <p class="card-text">ID Produk: {{ $transaction->product_id }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item">ID Transaksi: {{ $transaction->transaction_id }}</li>
+                    <li class="list-group-item">Status Transaksi: {{ $transaction->transaction_status }}</li>
+                    <li class="list-group-item">Kuantitas: {{ $transaction->quantity }}</li>
+                    <li class="list-group-item">Total Harga: Rp {{ number_format($transaction->product_price* $transaction->quantity, 0, ',', '.') }}.00</li>
       </ul>
     </div>
 @endforeach

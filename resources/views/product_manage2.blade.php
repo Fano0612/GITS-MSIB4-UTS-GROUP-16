@@ -1,6 +1,6 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
+    echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
@@ -8,8 +8,8 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 
 <?php
 if (auth()->user()->jabatan != 'karyawan') {
-    echo "<script>alert('You are not a Karyawan');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+    echo "<script>alert('Anda Bukan Karyawan!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
     die();
 }
 ?>
@@ -38,7 +38,7 @@ $profilePicture = $user->gambar;
     <meta content="" name="description">
     <title>Indomaret Self Service System - Manajemen Produk</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
-     <!-- Favicon -->
+    <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
@@ -69,32 +69,12 @@ $profilePicture = $user->gambar;
             z-index: -1;
             width: 100%;
             height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8NHx8fGVufDB8fHx8&w=1000&q=80');
+            background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
             filter: blur(5px);
         }
+        
     </style>
-    <script>
-        $(document).ready(function() {
 
-            $("form").submit(function(event) {
-                var product_id = $("#exampleInputEmail1").val();
-                var product_name = $("#exampleInputName").val();
-                var exist = false;
-                $("table tbody tr").each(function() {
-                    var id = $(this).find("th:eq(0)").text();
-                    var name = $(this).find("td:eq(0)").text();
-                    if (id == product_id || name == product_name) {
-                        exist = true;
-                        return false;
-                    }
-                });
-                if (exist) {
-                    alert("Product already exists in the table.");
-                    event.preventDefault();
-                }
-            });
-        });
-    </script>
 </head>
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -117,18 +97,19 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
             <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link">Home</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Riwayat Belanja</a>
-                    <a class="nav-item nav-link active" aria-current="page" href="{{route ('product_manage2')}}">Data Barang</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_manage2')}}">Laporan Kriminalitas</a>
-                </div>
+          <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link">Home</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
+          <a class="nav-item nav-link active" aria-current="page" href="{{route ('product_menu2')}}">Data Barang</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas2')}}">Laporan Kriminalitas</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('transaction_list2')}}">Daftar Transaksi</a>
+        </div>
 
-                <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
-                </a>
+
+        <a href="{{route ('shopwithhelp2')}}">
+          <i class="fas fa-comments" style="font-size:30px"></i>
+        </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
-                <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
@@ -149,22 +130,22 @@ $profilePicture = $user->gambar;
     <div class="container" style="margin-top: 30px; margin-bottom: 30px;">
         <div class="row justify-content-center">
             <div class="col-8">
-                <div class="card" >
+                <div class="card">
                     <div class="card-body">
-                    @if ($errors->any())
+                        @if ($errors->any())
                         <div class="alert alert-danger">
                             <ul>
                                 @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
+                                <li>{{ $error }}</li>
                                 @endforeach
                             </ul>
                         </div>
-                    @endif
-                        <form action="/insertproduct" method="POST" enctype="multipart/form-data">
+                        @endif
+                        <form action="/insertproduct2" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Product ID</label>
-                                <input type="number" name="id_barang" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onchange="checkIdLength(this.value)" >
+                                <label for="exampleInputEmail1" class="form-label">ID Barang</label>
+                                <input type="number" name="id_barang" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" onchange="checkIdLength(this.value)">
                                 <script>
                                     function checkIdLength(id) {
                                         if (id.length !== 5) {
@@ -176,8 +157,8 @@ $profilePicture = $user->gambar;
                             </div>
 
                             <div class="mb-3">
-                                <label for="exampleInputName" class="form-label">Product Name</label>
-                                <input type="text" name="namabarang" class="form-control" id="exampleInputName" aria-describedby="nameHelp" onchange="checkNameLength(this.value)" >
+                                <label for="exampleInputName" class="form-label">Nama Barang</label>
+                                <input type="text" name="namabarang" class="form-control" id="exampleInputName" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
                                 <span id="name-error-msg" class="error-msg"></span>
                                 <script>
                                     function checkNameLength(name) {
@@ -194,9 +175,9 @@ $profilePicture = $user->gambar;
 
                             <div class="mb-3">
                                 <label for="exampleInputName" class="form-label">Jenis Barang</label>
-                                <input type="text" name="jenisbarang" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)" >
+                                <input type="text" name="jenisbarang" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
                                 <span id="name-error-msg" class="error-msg"></span>
-                               
+
                             </div>
 
                             <div class="mb-3">
@@ -222,39 +203,39 @@ $profilePicture = $user->gambar;
 
                             <div class="mb-3">
                                 <label for="exampleInputName" class="form-label">Deskripsi</label>
-                                <input type="text" name="deskripsi" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)" >
+                                <input type="text" name="deskripsi" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
                                 <span id="name-error-msg" class="error-msg"></span>
-                               
+
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputName" class="form-label">Komposisi</label>
-                                <input type="text" name="komposisi" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)" >
+                                <input type="text" name="komposisi" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
                                 <span id="name-error-msg" class="error-msg"></span>
-                               
+
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputName" class="form-label">Tanggal Kedaluwarsa</label>
-                                <input type="text" name="tanggalkedaluwarsa" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)" >
+                                <input type="text" name="tanggalkedaluwarsa" class="form-control" id="exampleInputEmail1" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
                                 <span id="name-error-msg" class="error-msg"></span>
-                               
+
                             </div>
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Jumlah Stok Barang</label>
-                                <input type="number" name="jumlahstokbarang" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="1" min="1" >
+                                <input type="number" name="jumlahstokbarang" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="1" min="1">
                             </div>
 
 
 
                             <div class="mb-3">
                                 <label for="exampleInputEmail1" class="form-label">Gambar</label>
-                                <input type="file" name="foto" class="form-control custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" >
+                                <input type="file" name="foto" class="form-control custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                             </div>
 
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Product Category</label>
-                                <select class="form-select" name="kategori_id" aria-label="Default select example" >
-                                    <option value="" selected disabled hidden>Choose a category</option>
+                                <label for="exampleInputEmail1" class="form-label">Kategori</label>
+                                <select class="form-select" name="kategori_id" aria-label="Default select example">
+                                    <option value="" selected disabled hidden>Pilih Kategori</option>
                                     @php
                                     $category = App\Models\Category::all();
                                     @endphp
@@ -323,7 +304,7 @@ $profilePicture = $user->gambar;
                         <td><img src="{{ URL::asset('images/product_pictures/'.$prod->foto) }}" alt="" class="card-img-top"></td>
                         <td>{{ $prod->categories->product_category }}</td>
                         <td style="text-align: center;">
-                            <a href="/showproduct/{{$prod->id_barang}}" class="btn btn-success">Edit</a>
+                            <a href="/showproduct2/{{$prod->id_barang}}" class="btn btn-success">Edit</a>
                             <a href="#" class="btn btn-danger delete" id-data="{{$prod->id_barang}}">Delete</a>
                         </td>
                     </tr>
@@ -348,12 +329,12 @@ $profilePicture = $user->gambar;
         </div>
     </div>
     <!-- Footer End -->
-    
-    
+
+
     <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
-    
-    
+
+
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -367,7 +348,7 @@ $profilePicture = $user->gambar;
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-    
+
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 </body>
@@ -389,7 +370,7 @@ $profilePicture = $user->gambar;
                     swal("Data has been deleted successfully!", {
                         icon: "success",
                     }).then(() => {
-                        window.location = "/deleteproduct/" + stdid;
+                        window.location = "/deleteproduct2/" + stdid;
                     });
                 } else {
                     swal("Data deletion cancelled!");

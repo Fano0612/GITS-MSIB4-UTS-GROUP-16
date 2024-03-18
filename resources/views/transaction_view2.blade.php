@@ -35,7 +35,7 @@
     <div class="background"></div>
     <div class="card">
         <div class="card-header">
-            Detil Transaksi
+            Transaction Details
         </div>
         <div class="card-body">
             <div class="row mb-3">
@@ -81,7 +81,7 @@
 
             <div class="row mb-3">
                 <div class="col-sm-3">
-                    <h6 class="mb-0">Total Transaksi:</h6>
+                    <h6 class="mb-0">Total Transaction:</h6>
                 </div>
                 <div class="col-sm-9 text-secondary">
                     Rp {{ number_format($total, 0, ',', '.') }}.00
@@ -110,7 +110,7 @@
 
             <div class="row mb-3">
                 <div class="col-sm-3">
-                    <a class="btn btn-success" href="{{route ('transaction_list')}}" role="button">Return</a>
+                    <a class="btn btn-success" href="{{route ('transaction_list2')}}" role="button">Return</a>
                 </div>
             </div>
         </div>

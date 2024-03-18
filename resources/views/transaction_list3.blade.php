@@ -1,12 +1,12 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Please login to access the system!');</script>";
+    echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 if (auth()->user()->jabatan != 'pelanggan') {
     echo "<script>alert('Anda Bukan Pelanggan!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardpelanggan'; }, 1000);</script>";
     die();
 }
 
@@ -99,7 +99,7 @@ $profilePicture = $user->gambar;
 
                 <li class="list-group-item d-flex justify-content-center align-items-center">
                     <div class="mb-2">
-                        <div class="fw-bold">{{ $userId }}</div>
+                        <div class="fw-bold">ID Pelanggan: {{ $userId }}</div>
                     </div>
                 </li>
 
@@ -114,7 +114,7 @@ $profilePicture = $user->gambar;
             @endif
             <ul class="list-group">
                 <li class="list-group-item fw-bold">
-                    Transaction ID: {{ $td->transaction_id }}
+                    ID Transaksi: {{ $td->transaction_id }}
                     <span>
                         <a href="{{ route('viewProductTransaction3', ['transactionId' => $td->transaction_id]) }}" class="btn btn-success" style="float:right">
                             View
@@ -129,18 +129,18 @@ $profilePicture = $user->gambar;
                 <li class="list-group-item d-flex flex-wrap justify-content-between align-items-center">
                     <div class="col-12 col-md-6 mb-2 mb-md-0">
                         <div class="mb-2">
-                            Product Name: {{ $td->product_name }}
+                        Nama Produk: {{ $td->product_name }}
                         </div>
                         <div class="mb-2">
-                            Quantity: {{ $td->quantity }}
+                            Kuantitas: {{ $td->quantity }}
                         </div>
                     </div>
                     <div class="col-12 col-md-6">
                         <div class="mb-2">
-                            Price: Rp {{ number_format($td->product_price, 0, ',', '.') }}.00
+                            Harga: Rp {{ number_format($td->product_price, 0, ',', '.') }}.00
                         </div>
                         <div class="mb-2">
-                            Status:
+                            Status Pembayaran:
                             <span class="badge bg-primary rounded-pill">{{ $td->transaction_status }}</span>
                         </div>
                     </div>
@@ -231,5 +231,6 @@ $profilePicture = $user->gambar;
 <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
 <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 <script src="js/main.js"></script>
+
 
 </html>

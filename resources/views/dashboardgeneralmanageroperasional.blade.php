@@ -7,9 +7,10 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 ?>
 
 <?php
-if (auth()->user()->jabatan != 'generalmanageroperasional' && auth()->user()->jabatan != 'karyawan') {
-  echo "<script>alert('Anda Bukan General Manager Operasional/Karyawan!');</script>";
-  echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+if (auth()->user()->jabatan != 'generalmanageroperasional' ) {
+  echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
+  echo "<script>setTimeout(function() { window.location.href = '/dashboardgeneralmanageroperasional'; }, 1000);</script>";
+  
   die();
 }
 $user = auth()->user();

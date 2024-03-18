@@ -1,18 +1,25 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Silakan login untuk mengakses Sistem!');</script>";
+    echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 ?>
 
 <?php
-if (auth()->user()->jabatan != 'generalmanageroperasional') {
-    echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/dashboardgeneralmanageroperasional'; }, 1000);</script>";
-    
+if (auth()->user()->jabatan != 'karyawan') {
+    echo "<script>alert('Anda Bukan Karyawan');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
+    die();
+  }
+
+if (auth()->user()->status_belanja_bantuan_karyawan != 'inactive') {
+    echo "<script>alert('Anda Sedang Membantu Belanja Pelanggan!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/productlist2'; }, 1000);</script>";
     die();
 }
+$user = auth()->user();
+$profilePicture = $user->gambar;
 ?>
 
 <?php
@@ -23,10 +30,6 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
 }
 
 ?>
-<?php
-$user = auth()->user();
-$profilePicture = $user->gambar;
-?>
 
 <!doctype html>
 <html lang="en">
@@ -36,7 +39,7 @@ $profilePicture = $user->gambar;
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <title>Indomaret Self Service System - Data Pelanggan</title>
+    <title>Indomaret Self Service System - Belanja Dengan Bantuan Karyawan</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
     <link href="img/favicon.ico" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -49,7 +52,6 @@ $profilePicture = $user->gambar;
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-
     <style>
         .background {
             position: fixed;
@@ -63,30 +65,68 @@ $profilePicture = $user->gambar;
             filter: blur(5px);
         }
 
-        .table-striped-columns th:not(:last-child),
-        .table-striped-columns td:not(:last-child) {
-            border-right: 1px solid rgba(255, 255, 255, 1);
+
+
+        .carousel {
+            width: 100vw;
+            overflow: hidden;
         }
 
-        .table.table-striped-columns th,
-        .table.table-striped-columns td {
+        .carousel-inner {
             text-align: center;
         }
 
-        .foto {
-            max-width: 200px;
+        .carousel-inner .item img {
+            display: block;
+            margin: auto;
+            padding-bottom: 0;
+        }
+
+        .carousel-control {
+            position: absolute;
+            top: 30%;
+            transform: translateY(-50%);
+        }
+
+        .carousel-control.left {
+            left: 0;
+        }
+
+        .carousel-control.right {
+            right: 0;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            width: 500px;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px;
+            text-shadow: 2px 2px 4px black;
+            color: #ffffff;
+            font-size: 1.75rem;
+            background-color: rgb(255, 255, 255, 0.4);
+        }
+
+        @media (max-width: 767px) {
+            #myCarousel img {
+                max-height: 300px;
+                width: auto;
+            }
         }
     </style>
 
 </head>
-
+<link rel="stylesheet" href="{{ asset('css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
 <body>
+    <!-- Navbar & Hero Start -->
     <div class="background"></div>
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
-        <h1>Data Pelanggan</h1>
+        <h1>Belanja dengan Bantuan Karyawan</h1>
     </div>
-
     <div class="container-fluid position-relative p-0">
         <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: white;">
             <a href="" class="navbar-brand p-0">
@@ -98,18 +138,17 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link ">Home</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link active" aria-current="page" href="{{route ('daftarpelanggan')}}">Data Pelanggan</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
-                </div>
+                <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link ">Home</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Daftar Transaksi</a>
+        </div>
 
 
-                <a href="{{route ('shopwithhelp')}}">
-                    <i class="fas fa-comments" style="font-size:30px"></i>
-                </a>
+        <a href="{{route ('shopwithhelp2')}}">
+          <i class="fas fa-comments" style="font-size:30px"></i>
+        </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
@@ -126,50 +165,38 @@ $profilePicture = $user->gambar;
         </nav>
     </div>
     <!-- Navbar & Hero End -->
-
-
-    <div class="container" style="margin-top:120px;">
+    <div class="container" style="margin-top:30px;">
         <div class="row justify-content-center">
-            <div class="col-10">
+            <div class="col-7">
                 <table class="table table-dark table-striped-columns">
                     <thead>
                         <tr>
-                            <th scope="col">ID Pelanggan</th>
-                            <th scope="col">Nama Pelanggan</th>
-                            <th scope="col">Nomor Telepon</th>
-                            <th scope="col">Email</th>
-                            <th scope="col">Username</th>
-                            <th scope="col">Foto</th>
-                            <th scope="col">Status Belanja dengan Bantuan Karyawan</th>
-                            <th scope="col" style="text-align: center;">Aksi</th>
+                            <th scope="col">Nama User</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Aksi</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         @php
-                        $customer = App\Models\User::where('jabatan', 'pelanggan')->get();
+                        $users = App\Models\User::where('status_belanja_bantuan_karyawan', 'active')->get();
                         @endphp
-                        @foreach($customer as $cust)
+                        @foreach($users as $user)
                         <tr>
-                            <td>{{$cust->id}}</td>
-                            <td>{{$cust->nama}}</td>
-                            <td>{{$cust->nomor_telepon}}</td>
-                            <td>{{$cust->email}}</td>
-                            <td>{{$cust->username}}</td>
-                            <td><img class="foto" src="{{ URL::asset('images/'.$cust->gambar) }}" alt="" class="card-img-top"></td>
-                            <td>{{$cust->status_belanja_bantuan_karyawan}}</td>
-                            <td style="text-align: center;">
-                                <a href="/showProfile/{{$cust->id}}" class="btn btn-success">Edit</a>
-                                <a href="#" class="btn btn-danger delete" id-data="{{$cust->id}}">Hapus</a>
-                            </td>
+                            <td>{{$user->nama}}</td>
+                            <td>{{$user->id}}</td>
+                            <td>
+    <a href="{{ route('product_list6', ['id' => $user->id]) }}" class="btn btn-danger success">Bantu</a>
+</td>
                         </tr>
                         @endforeach
-
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
+
+
 
     <!-- Footer Start -->
     <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
@@ -179,19 +206,15 @@ $profilePicture = $user->gambar;
                     <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
                         &copy; <a class="border-bottom" href="https://www.linkedin.com/in/yonathan-fanuel-mulyadi-08a690231/">2024 Copyright: Yonathan Fanuel Mulyadi</a>
                     </div>
-
                 </div>
             </div>
         </div>
     </div>
+
     <!-- Footer End -->
 
-
-    <!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
-
-    <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/wow/wow.min.js"></script>
@@ -205,35 +228,9 @@ $profilePicture = $user->gambar;
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
-    <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-
-    <script>
-        $('.delete').click(function() {
-            var stdid = $(this).attr('id-data');
-            swal({
-                    title: "Hapus Data?",
-                    text: "Hapus " + stdid + "?\n" + "Apabila data dihapus, maka data tidak dapat dikembalikan!",
-                    icon: "warning",
-                    buttons: true,
-                    dangerMode: true,
-                    closeOnClickOutside: false,
-                    closeOnEsc: false,
-                })
-                .then((willDelete) => {
-                    if (willDelete) {
-                        swal("Data berhasil Dihapus!", {
-                            icon: "success",
-                        }).then(() => {
-                            window.location = "/deleteProfile/" + stdid;
-                        });
-                    } else {
-                        swal("Penghapusan Data dibatalkan!");
-                    }
-                });
-        });
-    </script>
 </body>
+
+
 
 </html>

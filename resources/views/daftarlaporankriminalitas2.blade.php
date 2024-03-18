@@ -7,9 +7,9 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 ?>
 
 <?php
-if (auth()->user()->jabatan != 'pelanggan') {
-    echo "<script>alert('Anda Bukan Pelanggan!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/dashboardpelanggan'; }, 1000);</script>";
+if (auth()->user()->jabatan != 'karyawan') {
+    echo "<script>alert('Anda Bukan Karyawan!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
     die();
 }
 ?>
@@ -97,14 +97,16 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
-                    <a href="{{route ('product_list_front')}}" class="nav-item nav-link">Belanja</a>
-                    <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link active">Laporan Kriminalitas</a>
-                    <a href="{{route ('transaction_list3')}}" class="nav-item nav-link">Riwayat Transaksi</a>
+                <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link ">Home</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu2')}}">Data Barang</a>
+          <a class="nav-item nav-link active" aria-current="page" href="{{route ('daftarlaporankriminalitas2')}}">Laporan Kriminalitas</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('transaction_list2')}}">Daftar Transaksi</a>
                 </div>
 
-                <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+
+                <a href="{{route ('shopwithhelp2')}}">
+                    <i class="fas fa-comments" style="font-size:30px"></i>
                 </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -124,57 +126,18 @@ $profilePicture = $user->gambar;
     <!-- Navbar & Hero End -->
 
 
-    <!-- manage start -->
-    <div class="container" style="margin-top: 30px; margin-bottom: 30px;">
-        <div class="row justify-content-center">
-            <div class="col-8">
-                <div class="card">
-                    <div class="card-body">
-                        @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                        @endif
-                        <form action="{{ route('insertlaporan') }}" method="POST" enctype="multipart/form-data">
-
-                            @csrf
-
-                            <div class="mb-3">
-                                <label for="exampleInputName" class="form-label">Deskripsi</label>
-                                <input type="text" name="deskripsi" class="form-control" id="exampleInputName" aria-describedby="nameHelp" onchange="checkNameLength(this.value)">
-                                <span id="name-error-msg" class="error-msg"></span>
-                            </div>
-
-
-                            <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Foto</label>
-                                <input type="file" name="foto" class="form-control custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
-                            </div>
-
-                            <button type="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-
-    <div class="container">
+    <div class="container" style="margin-top:20px;">
         <div class="row justify-content-center">
             <div class="col-8">
                 <table class="table table-dark table-striped-columns">
                     <thead>
                         <tr>
+                            <th scope="col">ID Pelapor</th>
+                            <th scope="col">Nama Pelapor</th>
                             <th scope="col">Deskripsi</th>
                             <th scope="col">Foto</th>
                             <th scope="col">Status Laporan</th>
-                            
+                            <th scope="col" style="text-align: center;">Aksi</th>
 
                         </tr>
                     </thead>
@@ -183,13 +146,16 @@ $profilePicture = $user->gambar;
                         $laporan = App\Models\LaporanKriminalitas::all();
                         @endphp
                         @foreach($laporan as $item)
-
                         <tr>
+                            <td>{{$item->id_pelaporankegiatankriminalitas}}</td>
+                            <td>{{$item->username}}</td>
                             <td>{{$item->deskripsi}}</td>
-
                             <td><img class="fotolap" src="{{ URL::asset('images/fotolaporan/'.$item->foto) }}" alt="" class="card-img-top"></td>
                             <td>{{$item->statuspelaporan}}</td>
-                            
+                            <td style="text-align: center;">
+                            <a href="/showlaporan2/{{$item->id_pelaporankegiatankriminalitas}}" class="btn btn-success">Edit</a>
+                            <a href="#" class="btn btn-danger delete" id-data="{{$item->id_pelaporankegiatankriminalitas}}">Delete</a>
+                        </td>
                         </tr>
                         @endforeach
 
@@ -200,73 +166,18 @@ $profilePicture = $user->gambar;
     </div>
 
     <!-- Footer Start -->
-
-
-    <footer class="text-center text-lg-start text-white" style="background-color: #1c2331">
-        <section class="d-flex justify-content-between p-4" style="background-color: #006ab4">
-            <div class="me-5">
-                <span>Social Media</span>
-            </div>
-
-            <div>
-                <a href="https://www.facebook.com/IndomaretMudahdanHemat/" class="text-white me-4">
-                    <i class="fab fa-facebook-f"></i>
-                </a>
-                <a href="https://twitter.com/indomaret" class="text-white me-4">
-                    <i class="fab fa-twitter"></i>
-                </a>
-                <a href="https://indomaret.co.id/" class="text-white me-4">
-                    <i class="fab fa-google"></i>
-                </a>
-                <a href="https://www.instagram.com/indomaret/" class="text-white me-4">
-                    <i class="fab fa-instagram"></i>
-                </a>
-                <a href="https://www.youtube.com/indomaretcoid" class="text-white me-4">
-                    <i class="fab fa-youtube"></i>
-                </a>
-
-            </div>
-            <!-- Right -->
-        </section>
-        <!-- Section: Social media -->
-
-        <!-- Section: Links  -->
-        <section class="">
-            <div class="container text-center text-md-start mt-5">
-
-                <div class="row mt-3">
-                    <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
-                        <!-- Content -->
-                        <h6 class="text-uppercase fw-bold" style="color: white">PT. Petrolux Arya Mandala</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: white; height: 2px" />
-                        <p>
-                            Berbekal dedikasi dan inovasi, Indomaret mengukuhkan statusnya sebagai perusahaan waralaba minimarket pertama dan terbesar di Indonesia.
-                        </p>
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="copyright">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        &copy; <a class="border-bottom" href="https://www.linkedin.com/in/yonathan-fanuel-mulyadi-08a690231/">2024 Copyright: Yonathan Fanuel Mulyadi</a>
                     </div>
 
-
-                    <!-- Grid column -->
-                    <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
-                        <!-- Links -->
-                        <h6 class="text-uppercase fw-bold" style="color: white">Contact</h6>
-                        <hr class="mb-4 mt-0 d-inline-block mx-auto" style="width: 60px; background-color: white; height: 2px" />
-                        <p><i class="fas fa-home mr-3"></i> Menara Indomaret:
-                            Jl. Pantai Indah Kapuk Boulevard, No 1,
-                            Pantai Indah Kapuk, Jakarta Utara, 14470</p>
-                        <p><i class="fas fa-envelope mr-3"></i> kontak@indomaret.co.id</p>
-                        <p><i class="fas fa-phone mr-3"></i> +62 21 5089 7400</p>
-                        <p><i class="fas fa-print mr-3"></i> +62 21 5089 7411</p>
-
-                    </div>
                 </div>
-
             </div>
-        </section>
-        <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2)">
-            © 2024 Copyright:
-            <a class="text-white" href="https://www.instagram.com/fano12.m/">Yonathan Fanuel Mulyadi</a>
         </div>
-    </footer>
+    </div>
     <!-- Footer End -->
 
 
@@ -296,8 +207,8 @@ $profilePicture = $user->gambar;
     $('.delete').click(function() {
         var stdid = $(this).attr('id-data');
         swal({
-                title: "Delete Data?",
-                text: "Delete " + stdid + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
+                title: "Hapus Data?",
+                text: "Hapus " + stdid + "?\n" + "Apabila data dihapus, maka data tidak dapat dikembalikan!",
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -306,13 +217,13 @@ $profilePicture = $user->gambar;
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    swal("Data has been deleted successfully!", {
+                    swal("Data berhasil Dihapus!", {
                         icon: "success",
                     }).then(() => {
-                        window.location = "/deleteproduct/" + stdid;
+                        window.location = "/deletelaporan2/" + stdid;
                     });
                 } else {
-                    swal("Data deletion cancelled!");
+                    swal("Penghapusan Data dibatalkan!");
                 }
             });
     });

@@ -83,4 +83,47 @@ class LaporanKriminalitasController extends Controller
         $laporan->delete();
         return redirect()->back()->with('success', 'Laporan kriminalitas berhasil dihapus.');
     }
+
+    public function showlaporan2($id)
+    {
+        $laporan = LaporanKriminalitas::find($id);
+        return view('daftarlaporankriminalitasupdate2', compact('laporan'));
+    }
+
+    public function editlaporan2(Request $request, $id)
+    {
+
+        $laporan = LaporanKriminalitas::find($id);
+        $validatedData = $request->validate([
+            'id_pelaporankegiatankriminalitas' => 'nullable',
+            'username' => 'nullable',
+            'deskripsi' => 'nullable',
+            'statuspelaporan' => 'nullable',
+
+        ]);
+
+
+        if ($laporan) {
+            $laporan->update([
+                'id_pelaporankegiatankriminalitas' => $validatedData['id_pelaporankegiatankriminalitas'],
+                'username' => $validatedData['username'],
+                'deskripsi' => $validatedData['deskripsi'],
+                'statuspelaporan' => $validatedData['statuspelaporan'],
+            ]);
+
+            
+                $laporan->save();
+
+            return redirect()->route('daftarlaporankriminalitas2')->with(['laporan' => $laporan]);
+        } else {
+            return redirect()->route('daftarlaporankriminalitas2')->with('error', 'Data Not Found');
+        }
+    }
+
+    public function deletelaporan2($id)
+    {
+        $laporan = LaporanKriminalitas::findOrFail($id);
+        $laporan->delete();
+        return redirect()->back()->with('success', 'Laporan kriminalitas berhasil dihapus.');
+    }
 }

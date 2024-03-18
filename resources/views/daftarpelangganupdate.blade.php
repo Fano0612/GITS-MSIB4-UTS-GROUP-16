@@ -8,8 +8,9 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 
 <?php
 if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional') {
-    echo "<script>alert('You are not a merchant!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/homepage'; }, 1000);</script>";
+    echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardgeneralmanageroperasional'; }, 1000);</script>";
+    
     die();
 }
 ?>

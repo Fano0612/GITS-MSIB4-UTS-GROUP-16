@@ -3,15 +3,17 @@ if (!auth()->check() || auth()->user()->status != 'active') {
     echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
-  }
+}
 ?>
 
 <?php
 if (auth()->user()->jabatan != 'karyawan') {
     echo "<script>alert('Anda Bukan Karyawan!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/dashboardpelanggan'; }, 1000);</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
     die();
 }
+$user = auth()->user();
+$profilePicture = $user->gambar;
 ?>
 
 <?php
@@ -113,21 +115,19 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
+                    <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link">Home</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu2')}}">Data Barang</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas2')}}">Laporan Kriminalitas</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('transaction_list2')}}">Daftar Transaksi</a>
                 </div>
 
-                <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+                <a href="{{route ('shopwithhelp2')}}">
+                    <i class="fas fa-comments" style="font-size:30px"></i>
                 </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/draft/aku.jpg') }}" alt="" width="48" height="48" style="border-radius: 50%;">
+                        <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())
@@ -158,7 +158,7 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
                             </ul>
                         </div>
                         @endif
-                        <form action="{{ route('category.store') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('category.store2') }}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
                                 <label for="id" class="form-label">ID</label>
@@ -182,8 +182,8 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
 
     <div class="container">
         <div class="row">
-        <table id="example" class="table table-dark table-striped-columns">
-        <thead>
+            <table id="example" class="table table-dark table-striped-columns">
+                <thead>
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Product Category</th>
@@ -196,7 +196,7 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
                         <th scope="row">{{$cat->id}}</th>
                         <td>{{$cat->product_category}}</td>
                         <td style="text-align: center;">
-                            <a href="{{ route('category.edit', ['id' => $cat->id]) }}" class="btn btn-success">Edit</a>
+                            <a href="{{ route('category.edit2', ['id' => $cat->id]) }}" class="btn btn-success">Edit</a>
                             <a href="#" class="btn btn-danger delete" data-id="{{$cat->id}}">Delete</a>
                         </td>
                     </tr>

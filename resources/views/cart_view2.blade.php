@@ -7,14 +7,9 @@ if (!auth()->check() || auth()->user()->status != 'active') {
   }
 if (auth()->user()->jabatan != 'karyawan') {
     echo "<script>alert('Anda Bukan Karyawan!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
     die();
   }
-  if (auth()->user()->id_pelanggan_belanja_bantuan_karyawan == 0) {
-    echo "<script>alert('Anda Tidak Membantu Pelanggan!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
-    die();
-}
 
 
 $user = auth()->user();
@@ -137,12 +132,12 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link active">Home</a>
+                <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link">Home</a>
           <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
-          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Riwayat Belanja</a>
           <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
-         </div>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas2')}}">Laporan Kriminalitas</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Daftar Transaksi</a>
+        </div>
 
                 <a href="{{route ('showProductCart3')}}">
                     <i class="fa fa-shopping-cart" style="font-size:30px"></i>

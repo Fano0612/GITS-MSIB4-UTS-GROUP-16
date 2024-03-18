@@ -9,9 +9,12 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 <?php
 if (auth()->user()->jabatan != 'generalmanageroperasional') {
     echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/dashboardpelanggan'; }, 1000);</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardgeneralmanageroperasional'; }, 1000);</script>";
     die();
 }
+
+$user = auth()->user();
+$profilePicture = $user->gambar;
 ?>
 
 <?php
@@ -113,20 +116,20 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
-                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
+                <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarpelanggan')}}">Data Pelanggan</a>
+          <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
                 </div>
 
-                <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
-                </a>
-                <div class="dropdown ml-auto" style="margin-left: auto;">
+                <a href="{{route ('shopwithhelp')}}">
+          <i class="fas fa-comments" style="font-size:30px"></i>
+        </a>
+        <div class="dropdown ml-auto" style="margin-left: auto;">
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/draft/aku.jpg') }}" alt="" width="48" height="48" style="border-radius: 50%;">
+                        <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())

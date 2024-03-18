@@ -7,9 +7,9 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 ?>
 
 <?php
-if (auth()->user()->jabatan != 'generalmanageroperasional') {
-    echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/dashboardgeneralmanageroperasional'; }, 1000);</script>";
+if (auth()->user()->jabatan != 'karyawan') {
+    echo "<script>alert('Anda Bukan Karyawan!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
     die();
 }
 ?>
@@ -107,7 +107,7 @@ if (auth()->user()->jabatan != 'generalmanageroperasional') {
         <div class="col-md-8">
             <div class="card">
                 <div class="card-body">
-                    <form action="{{ route('category.update', ['id' => $category->id]) }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('category.update2', ['id' => $category->id]) }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">ID</label>

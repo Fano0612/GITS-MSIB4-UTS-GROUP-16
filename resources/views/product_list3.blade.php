@@ -1,12 +1,12 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
+    echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 if (auth()->user()->jabatan != 'pelanggan') {
     echo "<script>alert('Anda Bukan Pelanggan!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardpelanggan'; }, 1000);</script>";
     die();
 }
 if (auth()->user()->status_belanja_bantuan_karyawan != 'inactive') {

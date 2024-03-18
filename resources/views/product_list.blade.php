@@ -1,13 +1,13 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
+    echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 
 if (auth()->user()->jabatan != 'generalmanageroperasional') {
     echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardgeneralmanageroperasional'; }, 1000);</script>";
     die();
 }
 ?>
@@ -188,7 +188,6 @@ $profilePicture = $user->gambar;
     <script src="{{ asset('lib/tempusdominus/js/moment.min.js') }}"></script>
     <script src="{{ asset('lib/tempusdominus/js/moment-timezone.min.js') }}"></script>
     <script src="{{ asset('lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js') }}"></script>
-    <!-- Template Javascript -->
     <script src="{{ asset('js/main.js') }}"></script>
 
     @php

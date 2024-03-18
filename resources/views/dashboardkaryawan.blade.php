@@ -9,7 +9,7 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 <?php
 if (auth()->user()->jabatan != 'karyawan') {
   echo "<script>alert('Anda Bukan Karyawan');</script>";
-  echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+  echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
   die();
 }
 $user = auth()->user();
@@ -122,7 +122,7 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
       }
     }
   </style>
- 
+
 </head>
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -146,19 +146,19 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
         <div class="navbar-nav ms-auto py-0">
           <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link active">Home</a>
           <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
-          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Riwayat Belanja</a>
-          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu2')}}">Data Barang</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas2')}}">Laporan Kriminalitas</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('transaction_list2')}}">Daftar Transaksi</a>
         </div>
 
 
-        <a href="{{route ('showProductCart')}}">
-          <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+        <a href="{{route ('shopwithhelp2')}}">
+          <i class="fas fa-comments" style="font-size:30px"></i>
         </a>
         <div class="dropdown ml-auto" style="margin-left: auto;">
-        <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
-                    </button>
+          <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
+          </button>
           <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
             @if (auth()->check())
             <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
@@ -175,11 +175,11 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
     <div class="carousel-inner">
       <div class="carousel-item active" data-bs-interval="7000">
         <img src="https://quotefancy.com/media/wallpaper/3840x2160/2647324-Barbara-De-Angelis-Quote-A-wise-word-is-more-rare-than-the-green.jpg" class="d-block w-100" alt="" style="width:100%; height:400px; object-fit: cover;">
-  
+
       </div>
       <div class="carousel-item" data-bs-interval="7000">
         <img src="https://quotefancy.com/media/wallpaper/3840x2160/1787147-Lil-Wayne-Quote-My-word-is-my-pride-the-wisdom-is-weak-and-that-s.jpg" class="d-block w-100" alt="" style="width:100%; height:400px; object-fit: cover;">
- 
+
       </div>
       <div class="carousel-item" data-bs-interval="7000">
         <img src="https://quotefancy.com/media/wallpaper/3840x2160/1177465-Barbara-De-Angelis-Quote-A-wise-word-is-more-rare-than-the-green.jpg" class="d-block w-100" alt="" style="width:100%; height:400px; object-fit: cover;">
@@ -205,16 +205,16 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
 
   <!-- Footer Start -->
   <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
-  <div class="container">
-    <div class="copyright">
-      <div class="row">
-        <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
-          &copy; <a class="border-bottom" href="https://www.linkedin.com/in/yonathan-fanuel-mulyadi-08a690231/">2024 Copyright: Yonathan Fanuel Mulyadi</a>
+    <div class="container">
+      <div class="copyright">
+        <div class="row">
+          <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+            &copy; <a class="border-bottom" href="https://www.linkedin.com/in/yonathan-fanuel-mulyadi-08a690231/">2024 Copyright: Yonathan Fanuel Mulyadi</a>
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
 
   <!-- Footer End -->
 

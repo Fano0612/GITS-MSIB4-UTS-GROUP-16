@@ -1,12 +1,12 @@
 <?php
 if (!auth()->check() || auth()->user()->status != 'active') {
-    echo "<script>alert('Silakan Login ke dalam Sistem!');</script>";
+    echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 if (auth()->user()->jabatan != 'karyawan') {
     echo "<script>alert('Anda Bukan Karyawan!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
     die();
 }
 ?>
@@ -26,112 +26,128 @@ $profilePicture = $user->gambar;
     <meta content="" name="description">
     <title>Indomaret Self Service System - Belanja</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
-    <!-- Favicon -->
     <link href="{{ asset('img/favicon.ico') }}" rel="icon">
-    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
-    <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Libraries Stylesheet -->
     <link href="{{ asset('lib/animate/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
-    <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Template Stylesheet -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 </head>
 
 <body>
-    <!-- Navbar & Hero Start -->
-    <!-- <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
-        <h1>Data Barang</h1>
-    </div>
-     -->
-    <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: White; border-bottom: 1px solid black;">
-            <a href="" class="navbar-brand p-0">
-                <img src="    https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png" style="width:150px;height:50px;">
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                <span class="fa fa-bars"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarCollapse">
-            <div class="navbar-nav ms-auto py-0">
-                    <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link">Home</a>
-                    <a class="nav-item nav-link active" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Riwayat Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_manage2')}}">Data Barang</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_manage2')}}">Laporan Kriminalitas</a>
-                </div>
-                <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:36px"></i>
-                </a>
-                &nbsp; &nbsp;
-                <div class="dropdown ml-auto" style="margin-left: auto;">
-                    <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
-                        @if (auth()->check())
-                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
-                        @endif
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
-                    </div>
-                </div>
-            </div>
-        </nav>
-        <div class="container-fluid bg-primary py-5 mb-5 hero-header">
-            <div class="container py-5">
-                <div class="row justify-content-center py-5">
-                    <div class="col-lg-10 pt-lg-5 mt-lg-5 text-center">
-                        <h1 class="display-3 text-white mb-3 animated slideInDown">Belanja Puas Harga Pas</h1>
 
-                    </div>
-                </div>
-            </div>
+<div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: space-between; border-bottom: 0.5px solid black; padding-top:10px;padding-bottom:10px;">
+
+<div style="display: flex; align-items: center;">
+    <a href="" class="navbar-brand p-0">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png" style="width:150px;height:50px;">
+    </a>
+</div>
+
+<form class="d-flex" role="search" style="max-width: 100%; width: 100%;">
+    <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 100%; max-width: 1000px;">
+
+</form>
+<a href="{{route ('showProductCart3')}}" style=" margin-right:10px; padding-top:10px;">
+    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+</a>
+
+<div style="display: inline-block;">
+
+
+    <div class="dropdown" style="display: inline-block;">
+        <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
+        </button>
+        <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
+            @if (auth()->check())
+            <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</b></a>
+            @endif
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
         </div>
     </div>
+</div>
+</div>
+
+
+<div class="container-fluid position-relative p-2">
+<nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: white; border-bottom: 0.5px solid white;">
+
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+        <span class="fa fa-bars"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-center" id="navbarCollapse">
+        <div class="navbar-nav py-0">
+        <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link ">Home</a>
+          <a class="nav-item nav-link active" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu2')}}">Data Barang</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas2')}}">Laporan Kriminalitas</a>
+          <a class="nav-item nav-link" aria-current="page" href="{{route ('transaction_list2')}}">Daftar Transaksi</a>
+
+        </div>
+    </div>
+</nav>
+</div>
+
+
     <!-- Navbar & Hero End -->
+    <button id="categoryDropdownBtn" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top:150px;margin-left:40px; background:black; border-radius: 10px;">
+    Kategori
+</button>
+<ul class="dropdown-menu">
+    @php
+        $categories = App\Models\Category::all();
+    @endphp
+    @foreach($categories as $category)
+        <li><a class="dropdown-item category-item" href="#" data-category-id="{{ $category->id }}">{{ $category->product_category }}</a></li>
+    @endforeach
+</ul>
+
     @php
     $products = App\Models\Barang::all();
     @endphp
 
-    <div class="container-xxl py-5" style="margin-top: 60px;">
-        <div class="container d-flex justify-content-center">
-            <div class="row">
-                @foreach($products as $prod)
-                <div class="col-md-4 mb-4">
-                    <div class="card" style="width: 18rem;">
-                        <img src="{{ asset('images/product_pictures/'.$prod->foto) }}" class="card-img-top" alt="">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $prod->namabarang }}</h5>
-                            <p class="card-text">Rp {{ number_format($prod->harga, 0, ',', '.') }}.00</p>
-                            <p class="card-text">Stock: {{ $prod->jumlahstokbarang }}</p>
-                            <div class="d-flex justify-content-between align-items-center">
-                                @if($prod->jumlahstokbarang > 0)
-                                <form action="{{ route('buyproduct') }}" method="POST">
-                                    @csrf
-                                    <input type="hidden" name="product_id" value="{{ $prod->id_barang }}">
-                                    <button type="submit" class="btn btn-primary">Buy</button>
-                                </form>
-                                @else
-                                <p class="card-text text-danger">Out of stock</p>
+<div class="container-xxl py-3" style="margin-top: 10px;">
+    <div class="container">
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+            @foreach($products as $prod)
+            <div class="col mb-4" data-category-id="{{ $prod->kategori_id }}">
+                <div class="card">
+                    <img src="{{ asset('images/product_pictures/'.$prod->foto) }}" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $prod->namabarang }}</h5>
+                        <p class="card-text">Rp {{ number_format($prod->harga, 0, ',', '.') }}.00</p>
+                        <p class="card-text">Stock: {{ $prod->jumlahstokbarang }}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            @if($prod->jumlahstokbarang > 0)
+                            <form action="{{ route('buyproduct3') }}" method="POST">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $prod->id_barang }}">
+                                @if (auth()->user()->id_pelanggan_belanja_bantuan_karyawan != 0)
+                                <button type="submit" class="btn btn-primary">Beli</button>
                                 @endif
-                                <button type="button" class="btn btn-secondary detail-btn" data-bs-toggle="modal" data-bs-target="#productDetailModal" data-product-id="{{ $prod->id_barang }}">Detil</button>
-
-                            </div>
+                            </form>
+                            @else
+                            <p class="card-text text-danger">Stok Habis</p>
+                            @endif
+                            <button type="button" class="btn btn-secondary detail-btn" data-bs-toggle="modal" data-bs-target="#productDetailModal" data-product-id="{{ $prod->id_barang }}">Detil</button>
                         </div>
                     </div>
                 </div>
-                @endforeach
             </div>
+            @endforeach
         </div>
     </div>
+</div>
+  
+
+
     <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
@@ -176,37 +192,99 @@ $profilePicture = $user->gambar;
     @php
     $categories = App\Models\Category::all()->pluck('product_category', 'id')->toArray();
     $productsJson = json_encode($products);
-@endphp
+    @endphp
+
+    <script>
+        var products = <?php echo $productsJson; ?>;
+        var categories = <?php echo json_encode($categories); ?>;
+
+
+        $(document).ready(function() {
+            $('.detail-btn').click(function() {
+                var productId = $(this).data('product-id');
+                var product = products.find(p => p.id_barang === productId);
+
+                if (product) {
+                    var category = categories[product.kategori_id];
+
+                    $('#productDetailModal .modal-body').html(
+                        `<div class="card">
+        <img src="{{ asset('images/product_pictures/') }}/${product.foto}" class="card-img-top mx-auto d-block" alt="" style="width: 200px; height: 200px;">
+        <div class="card-body">
+
+        <div class="container">
+  <div class="row">
+
+    <div class="col-4">Nama: </div>
+    <div class="col-6">${product.namabarang}</div>
+    <div class="col-4">Jenis: </div>
+    <div class="col-6">${product.jenisbarang}</div>
+    <div class="col-4">Deskripsi: </div>
+    <div class="col-6">${product.deskripsi}</div>
+    <div class="col-4">Komposisi: </div>
+    <div class="col-6">${product.komposisi}</div>
+    <div class="col-4">Kategori: </div>
+    <div class="col-6">${category}}</div>
+    <div class="col-4">Tanggal Kedaluwarsa: </div>
+    <div class="col-6">${product.tanggalkedaluwarsa}</div>
+    <div class="col-4">Jumlah Stok Barang: </div>
+    <div class="col-6">${product.jumlahstokbarang}</div>
+  </div>
+</div>
+ 
+            
+        </div>
+    </div>`
+                    );
+
+                    $('#productDetailModal').modal('show');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        $(document).ready(function() {
+
+            function filterProducts(searchTerm) {
+                searchTerm = searchTerm.toLowerCase();
+                $('.card').each(function() {
+                    var productName = $(this).find('.card-title').text().toLowerCase();
+                    if (productName.includes(searchTerm)) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+
+            $('#searchInput').on('input', function() {
+                var searchTerm = $(this).val();
+                filterProducts(searchTerm);
+            });
+        });
+    </script>
 
 <script>
-    var products = {!! $productsJson !!};
-    var categories = {!! json_encode($categories) !!};
-
     $(document).ready(function() {
-        $('.detail-btn').click(function() {
-            var productId = $(this).data('product-id');
-            var product = products.find(p => p.id_barang === productId);
-
-            if (product) {
-                var category = categories[product.kategori_id];
-
-                $('#productDetailModal .modal-body').html(`
-                    <div class="card">
-                        <img src="{{ asset('images/product_pictures/') }}/${product.foto}" class="card-img-top mx-auto d-block" alt="" style="width: 200px; height: 200px;">
-                        <div class="card-body">
-                            <p class="card-text">Nama: ${product.namabarang}</p>
-                            <p class="card-text">Jenis: ${product.jenisbarang}</p>
-                            <p class="card-text">Deskripsi: ${product.deskripsi}</p>
-                            <p class="card-text">Komposisi: ${product.komposisi}</p>
-                            <p class="card-text">Kategori: ${category}</p>
-                            <p class="card-text">Tanggal Kadaluwarsa: ${product.tanggalkedaluwarsa}</p>
-                            <p class="card-text">Jumlah Stok Barang: ${product.jumlahstokbarang}</p>
-                        </div>
-                    </div>
-                `);
-                $('#productDetailModal').modal('show');
-            }
+        $('.category-item').click(function(e) {
+            e.preventDefault();
+            var categoryId = $(this).data('category-id');
+            var categoryText = $(this).text();
+            $('#categoryDropdownBtn').text(categoryText); 
+            filterProducts(categoryId);
         });
+
+        function filterProducts(categoryId) {
+            $('.col.mb-4').each(function() {
+                var productCategoryId = $(this).data('category-id');
+                if (productCategoryId == categoryId || categoryId == 0) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
     });
 </script>
 

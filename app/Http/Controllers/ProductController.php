@@ -84,6 +84,59 @@ class ProductController extends Controller
 
         return redirect()->route('product_menu')->with('success', 'Data Successfully Added');
     }
+    public function insertproduct2(Request $insertion)
+    {
+        $validatedData = $insertion->validate(
+            [
+                'id_barang' => 'required|unique:barang,id_barang',
+                'namabarang' => 'required',
+                'jenisbarang' => 'required',
+                'harga' => 'required|numeric',
+                'deskripsi' => 'required',
+                'komposisi' => 'required',
+                'tanggalkedaluwarsa' => 'required',
+                'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000',
+                'jumlahstokbarang' => 'required|numeric',
+                'kategori_id' => 'required|numeric',
+            ],
+            [
+                'id_barang.unique' => 'ID Barang sudah terdaftar!',
+                'id_barang.required' => 'ID Barang Kosong!',
+                'namabarang.required' => 'Nama Barang Kosong!',
+                'jenisbarang.required' => 'Jenis Barang Kosong!',
+                'harga.required' => 'Harga Barang Kosong!',
+                'deskripsi.required' => 'Deskripsi Barang Kosong!',
+                'komposisi.required' => 'Komposisi Barang Kosong!',
+                'tanggalkedaluwarsa.required' => 'Tanggal Kedaluwarsa Barang Kosong!',
+                'foto.required' => 'Foto Barang Kosong!',
+                'jumlahstokbarang.required' => 'Jumlah Stok Barang Kosong!',
+                'kategori_id.required' => 'Kategori Barang Kosong!',
+            ]
+        );
+
+        $productPicture = '';
+        if ($insertion->hasFile('foto')) {
+            $productPicture = $insertion->file('foto');
+            $imageName = time() . '.' . $productPicture->getClientOriginalExtension();
+            $productPicture->move(public_path('images/product_pictures'), $imageName);
+            $productPicture = $imageName;
+        }
+
+        Barang::create([
+            'id_barang' => $validatedData['id_barang'],
+            'namabarang' => $validatedData['namabarang'],
+            'jenisbarang' => $validatedData['jenisbarang'],
+            'harga' => $validatedData['harga'],
+            'deskripsi' => $validatedData['deskripsi'],
+            'komposisi' => $validatedData['komposisi'],
+            'tanggalkedaluwarsa' => $validatedData['tanggalkedaluwarsa'],
+            'foto' => $productPicture,
+            'jumlahstokbarang' => $validatedData['jumlahstokbarang'],
+            'kategori_id' => $validatedData['kategori_id'],
+        ]);
+
+        return redirect()->route('product_menu2')->with('success', 'Data Successfully Added');
+    }
 
 
     public function showproduct($id)
@@ -92,6 +145,15 @@ class ProductController extends Controller
         $product_categories = Category::all();
         return view('product_update', compact('productdata', 'product_categories'));
     }
+
+    
+    public function showproduct2($id)
+    {
+        $productdata = Barang::find($id);
+        $product_categories = Category::all();
+        return view('product_update2', compact('productdata', 'product_categories'));
+    }
+
 
 
 
@@ -142,6 +204,53 @@ class ProductController extends Controller
         }
     }
 
+    public function editproduct2(Request $dataupdate, $id)
+    {
+
+        $productData = Barang::find($id);
+        $categories = Category::all();
+        $validatedData = $dataupdate->validate([
+            'id_barang' => 'nullable',
+            'namabarang' => 'nullable',
+            'jenisbarang' => 'nullable',
+            'harga' => 'nullable|numeric',
+            'deskripsi' => 'nullable',
+            'komposisi' => 'nullable',
+            'tanggalkedaluwarsa' => 'nullable',
+            'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000',
+            'jumlahstokbarang' => 'nullable|numeric',
+            'kategori_id' => 'nullable',
+        ]);
+
+        $kategori_id = (int) $validatedData['kategori_id'];
+
+        if ($productData) {
+            $productData->update([
+                'id_barang' => $validatedData['id_barang'],
+                'namabarang' => $validatedData['namabarang'],
+                'jenisbarang' => $validatedData['jenisbarang'],
+                'harga' => $validatedData['harga'],
+                'deskripsi' => $validatedData['deskripsi'],
+                'komposisi' => $validatedData['komposisi'],
+                'tanggalkedaluwarsa' => $validatedData['tanggalkedaluwarsa'],
+                'jumlahstokbarang' => $validatedData['jumlahstokbarang'],
+                'kategori_id' => $validatedData['kategori_id'],
+            ]);
+
+            if ($dataupdate->hasFile('foto')) {
+                $file = $dataupdate->file('foto');
+                $file_name = $file->getClientOriginalName();
+                $file_path = $file->move(public_path('images/product_pictures'), $file_name);
+                $productData->product_picture = $file_name;
+                $productData->save();
+            }
+
+            return redirect()->route('product_menu2')->with(['productdata' => $productData, 'categories' => $categories]);
+        } else {
+            return redirect()->route('product_menu2')->with('error', 'Data Not Found');
+        }
+    }
+
 
 
 
@@ -155,6 +264,18 @@ class ProductController extends Controller
             return redirect()->route('product_menu')->with('error', 'Data Not Found');
         }
     }
+
+    public function deleteProduct2($id)
+    {
+        $productData = Barang::find($id);
+        if ($productData) {
+            $productData->delete();
+            return redirect()->route('product_menu2')->with('success', 'Data Successfully Deleted');
+        } else {
+            return redirect()->route('product_menu2')->with('error', 'Data Not Found');
+        }
+    }
+
     public function buyProduct(Request $request)
     {
         $productId = $request->input('product_id');
@@ -186,6 +307,41 @@ class ProductController extends Controller
     }
 
     public function buyProduct2(Request $request)
+    {
+        $productId = $request->input('product_id');
+
+        $product = Barang::find($productId);
+
+        if (!$product) {
+            return redirect()->back()->with('error', 'Product not found!');
+        }
+
+        $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+
+        if (!$userId) {
+            return redirect()->back()->with('error', 'User not found!');
+        }
+
+        $cartItem = Cart::where('user_id', $userId)->where('product_id', $productId)->first();
+
+        if ($cartItem) {
+            $cartItem->increment('quantity');
+        } else {
+            Cart::create([
+                'user_id' => $userId,
+                'product_id' => $productId,
+                'quantity' => 1,
+                'product_name' => $product->namabarang,
+                'product_picture' => $product->foto,
+                'product_price' => $product->harga,
+            ]);
+        }
+        $product->decrement('jumlahstokbarang', 1);
+
+        return redirect()->back()->with('success', 'Product successfully added to the cart!');
+    }
+
+    public function buyProduct3(Request $request)
     {
         $productId = $request->input('product_id');
 
@@ -642,7 +798,7 @@ class ProductController extends Controller
                 ->update(['status_belanja_bantuan_karyawan' => 'inactive']);
         }
 
-        return redirect()->route('showProductCart2')->with('success', 'Payment successful');
+        return redirect()->route('showProductCart3')->with('success', 'Payment successful');
     }
 
 
@@ -654,6 +810,15 @@ class ProductController extends Controller
 
         return view('transaction_view', compact('transaction', 'products'));
     }
+    public function viewProductTransaction2($transaction_id)
+    {
+        $transaction = Transaction::with('user', 'product')->where('transaction_id', $transaction_id)->firstOrFail();
+        $products = Transaction::where('transaction_id', $transaction_id)->get();
+
+        return view('transaction_view2', compact('transaction', 'products'));
+    }
+
+
     public function viewProductTransaction3($transaction_id)
     {
         $transaction = Transaction::with('user', 'product')->where('transaction_id', $transaction_id)->firstOrFail();
