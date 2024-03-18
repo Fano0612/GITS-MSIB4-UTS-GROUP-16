@@ -10,11 +10,7 @@ if (auth()->user()->jabatan != 'generalmanageroperasional') {
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
-if (auth()->user()->id_pelanggan_belanja_bantuan_karyawan == 0) {
-    echo "<script>alert('Anda Tidak Membantu Pelanggan!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
-    die();
-}
+
 
 
 $user = auth()->user();
@@ -68,14 +64,13 @@ $profilePicture = $user->gambar;
 
         .card-border {
             border-style: solid;
-            flex-wrap: wrap;
-            justify-content: center;
-            width: fit-content;
+            flex-grow: 10;
+            flex-basis: 100%;
             block-size: fit-content;
             margin-top: 30px;
             margin-bottom: 30px;
-            margin-right: auto;
-            margin-left: auto;
+            margin-right: 20px;
+            margin-left: 20px;
         }
 
         .card {
@@ -112,7 +107,7 @@ $profilePicture = $user->gambar;
 
         .Cart-Container {
             display: flex;
-            justify-content: center;
+            justify-content: left;
             align-items: center;
             margin: 30px auto;
             width: 70%;
@@ -142,7 +137,6 @@ $profilePicture = $user->gambar;
 
         </div>
 
-        <h1 style="margin: 0 auto;">Dashboard General Manager Operasional</h1>
 
 
         <div class="dropdown" style="margin-left: auto;">
@@ -201,24 +195,25 @@ $profilePicture = $user->gambar;
                 <?php $total = 0; ?>
 
                 @foreach($cart->where('user_id', auth()->user()->id_pelanggan_belanja_bantuan_karyawan) as $cl)
-                <div class="card" style="width: 18rem;">
-                    <img src="{{ URL::asset('images/product_pictures/'.$cl->product_picture) }}" class="card-img-top" alt="">
-                    <div class="card-body">
+                <div class="card" style="display: flex;">
+                    <img src="{{ URL::asset('images/product_pictures/'.$cl->product_picture) }}" class="card-img-left" alt="" style="width: 50px; height: 50px;">
+                    <div class="card-body" style="flex: 1;">
                         <h5 class="card-title">{{ $cl->product_name }}</h5>
                         <p class="card-text">Rp {{ number_format($cl->product_price, 0, ',', '.') }}.00</p>
-                        <p class="card-text">Quantity:
-
-                            <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
-
-                            <span class="quantity">{{$cl->quantity}}</span>
-                            <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
-                        </p>
-                        <a href="#" class="btn btn-danger delete" data-product-id="{{ $cl->product_id }}">Remove</a>
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; align-items: flex-end;">
                         <form id="delete-form-{{ $cl->product_id }}" action="{{ route('removeProductCart2', $cl->product_id) }}" method="POST" style="display: none;">
                             @csrf
                             @method('DELETE')
                         </form>
+                        <p class="card-text">
+                            <a href="#" class="btn btn-danger delete" data-product-id="{{ $cl->product_id }}" style="margin-right: 10px;">Remove</a>
+                            <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
+                            <span class="quantity">{{$cl->quantity}}</span>
+                            <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
+                        </p>
                     </div>
+
                     <?php $total += $cl->product_price * $cl->quantity; ?>
                 </div>
                 @if(($loop->iteration % 3) == 0)
@@ -228,19 +223,21 @@ $profilePicture = $user->gambar;
             </div>
             <hr style="background-color:rgb(0,0,0); height:20px;">
             <?php $tax = $total * 0.1; ?>
-            <div class="total">
-                <h3>Tax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Rp {{ number_format($tax, 0, ',', '.') }}.00</h3>
+            <div class="total" style="margin-left: 20px;">
+                <h3>Pajak Rp {{ number_format($tax, 0, ',', '.') }}.00</h3>
+
                 <br>
                 <?php $total += $tax; ?>
-                <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
+                <h2>Total Belanja Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
+
                 <form action="{{ route('paymentProductCart2') }}" method="POST" id="payment-form">
                     @csrf
                     <button type="submit" class="btn btn-success mb-3 Payment">Pay</button>
-
                 </form>
             </div>
         </div>
     </div>
+
 
 
 

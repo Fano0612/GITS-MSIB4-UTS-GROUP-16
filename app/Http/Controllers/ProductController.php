@@ -566,7 +566,6 @@ class ProductController extends Controller
             $user->status_belanja_bantuan_karyawan = 'inactive';
             $user->save();
         }
-
         return redirect()->route('showProductCart')->with('success', 'Payment successful');
     }
 }
@@ -650,6 +649,7 @@ class ProductController extends Controller
 
         return redirect()->route('showProductCart2')->with('success', 'Payment successful');
     }
+    
 
 
     public function viewProductTransaction($transaction_id)

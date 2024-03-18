@@ -89,6 +89,7 @@ Route::get('/viewProductTransaction/{transactionId}', [ProductController::class,
 Route::get('/viewProductTransaction3/{transactionId}', [ProductController::class, 'viewProductTransaction3'])->name('viewProductTransaction3');
 Route::post('/update_status', [ProductListController::class, 'updateStatus'])->name('update_status');
 
+
 Route::get('/category', [CategoryController::class, 'create'])->name('category');
 Route::post('/category', [CategoryController::class, 'store'])->name('category.store');
 Route::get('/category/{id}', [CategoryController::class, 'show'])->name('category.show');

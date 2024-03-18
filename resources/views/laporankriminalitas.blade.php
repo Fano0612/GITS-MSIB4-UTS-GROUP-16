@@ -174,6 +174,7 @@ $profilePicture = $user->gambar;
                             <th scope="col">Deskripsi</th>
                             <th scope="col">Foto</th>
                             <th scope="col">Status Laporan</th>
+                            
 
                         </tr>
                     </thead>
@@ -188,7 +189,7 @@ $profilePicture = $user->gambar;
 
                             <td><img class="fotolap" src="{{ URL::asset('images/fotolaporan/'.$item->foto) }}" alt="" class="card-img-top"></td>
                             <td>{{$item->statuspelaporan}}</td>
-
+                            
                         </tr>
                         @endforeach
 

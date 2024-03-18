@@ -134,11 +134,12 @@ $profilePicture = $user->gambar;
                 <table class="table table-dark table-striped-columns">
                     <thead>
                         <tr>
-                        <th scope="col">ID Pelapor</th>
-                        <th scope="col">Nama Pelapor</th>
+                            <th scope="col">ID Pelapor</th>
+                            <th scope="col">Nama Pelapor</th>
                             <th scope="col">Deskripsi</th>
                             <th scope="col">Foto</th>
                             <th scope="col">Status Laporan</th>
+                            <th scope="col">Aksi</th>
 
                         </tr>
                     </thead>
@@ -148,11 +149,12 @@ $profilePicture = $user->gambar;
                         @endphp
                         @foreach($laporan as $item)
                         <tr>
-                        <td>{{$item->id_pelaporankegiatankriminalitas}}</td>
-                        <td>{{$item->username}}</td>
-                        <td>{{$item->deskripsi}}</td>
-                        <td><img class="fotolap" src="{{ URL::asset('images/fotolaporan/'.$item->foto) }}" alt="" class="card-img-top"></td>
-                        <td>{{$item->statuspelaporan}}</td>
+                            <td>{{$item->id_pelaporankegiatankriminalitas}}</td>
+                            <td>{{$item->username}}</td>
+                            <td>{{$item->deskripsi}}</td>
+                            <td><img class="fotolap" src="{{ URL::asset('images/fotolaporan/'.$item->foto) }}" alt="" class="card-img-top"></td>
+                            <td>{{$item->statuspelaporan}}</td>
+                            <td> <a href="" class="btn btn-success">Edit</a></td>
                         </tr>
                         @endforeach
 
