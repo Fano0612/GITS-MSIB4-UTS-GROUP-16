@@ -134,10 +134,9 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
         <div class="navbar-nav ms-auto py-0">
           <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link active">Home</a>
           <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-          <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
           <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
           <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
-          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
+          <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarpelanggan')}}">Data Pelanggan</a>
           <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
         </div>
 

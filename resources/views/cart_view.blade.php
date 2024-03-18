@@ -23,24 +23,18 @@ $profilePicture = $user->gambar;
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Indomaret Self Service System - Keranjang Belanja General Manager Operasional</title>
+    <title>Indomaret Self Service System - Keranjang Belanja Bantuan Karyawan</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
-    <!-- Favicon -->
     <link href="{{ asset('img/favicon.ico') }}" rel="icon">
-    <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600&family=Nunito:wght@600;700;800&display=swap" rel="stylesheet">
-    <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    <!-- Libraries Stylesheet -->
     <link href="{{ asset('lib/animate/animate.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/owlcarousel/assets/owl.carousel.min.css') }}" rel="stylesheet">
     <link href="{{ asset('lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
-    <!-- Customized Bootstrap Stylesheet -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Template Stylesheet -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
 
@@ -64,13 +58,14 @@ $profilePicture = $user->gambar;
 
         .card-border {
             border-style: solid;
-            flex-grow: 10;
-            flex-basis: 100%;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: fit-content;
             block-size: fit-content;
             margin-top: 30px;
             margin-bottom: 30px;
-            margin-right: 20px;
-            margin-left: 20px;
+            margin-right: auto;
+            margin-left: auto;
         }
 
         .card {
@@ -107,7 +102,7 @@ $profilePicture = $user->gambar;
 
         .Cart-Container {
             display: flex;
-            justify-content: left;
+            justify-content: center;
             align-items: center;
             margin: 30px auto;
             width: 70%;
@@ -117,70 +112,56 @@ $profilePicture = $user->gambar;
             box-shadow: 0px 25px 40px #1687d933;
 
         }
+
+        .container-fluid {
+            height: 20vh;
+            overflow-y: auto;
+        }
     </style>
 
 </head>
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
-<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
 
 <body>
     <!-- Navbar & Hero Start -->
 
-    <div class="background"></div>
-    <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: space-between; border-bottom: 0.5px solid black; padding-top:10px;padding-bottom:10px;">
-
-        <div style="display: flex; align-items: center;">
+    <div class="container-fluid position-relative p-0">
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: white;">
             <a href="" class="navbar-brand p-0">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png" style="width:150px;height:50px;">
+                <img src="    https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png" style="width:150px;height:50px;">
+
             </a>
-
-        </div>
-
-
-
-        <div class="dropdown" style="margin-left: auto;">
-            <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
             </button>
-            <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
-                @if (auth()->check())
-                <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</b></a>
-                @endif
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
-            </div>
-        </div>
+            <div class="collapse navbar-collapse" id="navbarCollapse">
+                <div class="navbar-nav ms-auto py-0">
+                <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link ">Home</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarpelanggan')}}">Data Pelanggan</a>
+                    <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
+                </div>
 
-    </div>
-
-
-    <div class="container-fluid" style="background-color: white;">
-        <div class="row justify-content-center">
-            <div class="col-12 col-lg-10 position-relative p-0">
-                <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0">
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-                        <span class="fa fa-bars"></span>
+                <a href="{{route ('showProductCart2')}}">
+                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+                </a>
+                <div class="dropdown ml-auto" style="margin-left: auto;">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
                     </button>
-                    <div class="collapse navbar-collapse" id="navbarCollapse">
-                        <div class="navbar-nav ms-auto py-0">
-                            <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
-                            <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-                            <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
-                            <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-                            <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
-                            <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
-                            <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
-                        </div>
-                        <a href="{{route ('showProductCart2')}}">
-                            <i class="fa fa-shopping-cart" style="font-size:30px"></i>
-                        </a>
+                    <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
+                        @if (auth()->check())
+                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
+                        @endif
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
                     </div>
-                </nav>
+                </div>
             </div>
-        </div>
+        </nav>
     </div>
-
     <!-- Navbar & Hero End -->
 
     @php
@@ -189,31 +170,31 @@ $profilePicture = $user->gambar;
     <div class="background"></div>
 
 
+
     <div class="Cart-Container">
         <div class="Cart-content" style="display:inline-block;">
             <div class="card-border">
                 <?php $total = 0; ?>
 
                 @foreach($cart->where('user_id', auth()->user()->id_pelanggan_belanja_bantuan_karyawan) as $cl)
-                <div class="card" style="display: flex;">
-                    <img src="{{ URL::asset('images/product_pictures/'.$cl->product_picture) }}" class="card-img-left" alt="" style="width: 50px; height: 50px;">
-                    <div class="card-body" style="flex: 1;">
+                <div class="card" style="width: 18rem;">
+                    <img src="{{ URL::asset('images/product_pictures/'.$cl->product_picture) }}" class="card-img-top" alt="">
+                    <div class="card-body">
                         <h5 class="card-title">{{ $cl->product_name }}</h5>
                         <p class="card-text">Rp {{ number_format($cl->product_price, 0, ',', '.') }}.00</p>
-                    </div>
-                    <div style="flex: 1; display: flex; flex-direction: column; align-items: flex-end;">
+                        <p class="card-text">Quantity:
+
+                            <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
+
+                            <span class="quantity">{{$cl->quantity}}</span>
+                            <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
+                        </p>
+                        <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }}">Remove</a>
                         <form id="delete-form-{{ $cl->product_id }}" action="{{ route('removeProductCart2', $cl->product_id) }}" method="POST" style="display: none;">
                             @csrf
                             @method('DELETE')
                         </form>
-                        <p class="card-text">
-                            <a href="#" class="btn btn-danger delete" data-product-id="{{ $cl->product_id }}" style="margin-right: 10px;">Remove</a>
-                            <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
-                            <span class="quantity">{{$cl->quantity}}</span>
-                            <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
-                        </p>
                     </div>
-
                     <?php $total += $cl->product_price * $cl->quantity; ?>
                 </div>
                 @if(($loop->iteration % 3) == 0)
@@ -223,13 +204,11 @@ $profilePicture = $user->gambar;
             </div>
             <hr style="background-color:rgb(0,0,0); height:20px;">
             <?php $tax = $total * 0.1; ?>
-            <div class="total" style="margin-left: 20px;">
-                <h3>Pajak Rp {{ number_format($tax, 0, ',', '.') }}.00</h3>
-
+            <div class="total">
+                <h3>Tax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Rp {{ number_format($tax, 0, ',', '.') }}.00</h3>
                 <br>
                 <?php $total += $tax; ?>
-                <h2>Total Belanja Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
-
+                <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
                 <form action="{{ route('paymentProductCart2') }}" method="POST" id="payment-form">
                     @csrf
                     <button type="submit" class="btn btn-success mb-3 Payment">Pay</button>
@@ -237,7 +216,6 @@ $profilePicture = $user->gambar;
             </div>
         </div>
     </div>
-
 
 
 
@@ -335,7 +313,7 @@ $profilePicture = $user->gambar;
             url: "{{ route('incrementProductCart2') }}",
             data: {
                 _token: '{{ csrf_token() }}',
-                id_barang: productId,
+                id_barang: productId, 
                 increment: 1
             },
             success: function(data) {
@@ -372,7 +350,7 @@ $profilePicture = $user->gambar;
 </script>
 <script>
     $('.delete').click(function() {
-        var productId = $(this).data('product-id');
+        var productId = $(this).data('id');
         swal({
                 title: "Delete Data?",
                 text: "Delete data " + productId + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
@@ -384,7 +362,7 @@ $profilePicture = $user->gambar;
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    $('#delete-form-' + productId).submit();
+                    $('#delete-form-' + productId).submit(); 
                 } else {
                     swal("Data deletion cancelled!");
                 }
@@ -395,5 +373,6 @@ $profilePicture = $user->gambar;
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 
 </html>

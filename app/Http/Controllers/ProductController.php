@@ -560,15 +560,15 @@ class ProductController extends Controller
             ];
 
 
-        Transaction::insert($transactionData);
-        Cart::where('user_id', $userId)->delete();
-        if ($user) {
-            $user->status_belanja_bantuan_karyawan = 'inactive';
-            $user->save();
+            Transaction::insert($transactionData);
+            Cart::where('user_id', $userId)->delete();
+            if ($user) {
+                $user->status_belanja_bantuan_karyawan = 'inactive';
+                $user->save();
+            }
+            return redirect()->route('showProductCart')->with('success', 'Payment successful');
         }
-        return redirect()->route('showProductCart')->with('success', 'Payment successful');
     }
-}
     public function paymentProductCart2()
     {
         $user = Auth::user();
@@ -590,8 +590,6 @@ class ProductController extends Controller
                 'quantity' => $cartItem->quantity,
                 'transaction_status' => 'Paid'
             ];
-
-
         }
 
         Transaction::insert($transactionData);
@@ -602,7 +600,6 @@ class ProductController extends Controller
             $user->id_pelanggan_belanja_bantuan_karyawan = 0;
             $user->save();
 
-            // Update corresponding user's status_belanja_bantuan_karyawan in userlist table
             User::where('id', $userId)
                 ->update(['status_belanja_bantuan_karyawan' => 'inactive']);
         }
@@ -630,8 +627,6 @@ class ProductController extends Controller
                 'quantity' => $cartItem->quantity,
                 'transaction_status' => 'Paid'
             ];
-
-
         }
 
         Transaction::insert($transactionData);
@@ -649,7 +644,7 @@ class ProductController extends Controller
 
         return redirect()->route('showProductCart2')->with('success', 'Payment successful');
     }
-    
+
 
 
     public function viewProductTransaction($transaction_id)

@@ -13,6 +13,6 @@ class User extends Authenticatable
     use HasFactory;
     protected $table = 'userlist';
     protected $primaryKey = 'id';
-    protected $fillable = ['email','nama','nomor_telepon', 'username', 'password','jabatan','status','status_belanja_bantuan_karyawan','gambar'];
+    protected $fillable = ['id','email','nama','nomor_telepon', 'username', 'password','jabatan','status','status_belanja_bantuan_karyawan','gambar'];
 
 }

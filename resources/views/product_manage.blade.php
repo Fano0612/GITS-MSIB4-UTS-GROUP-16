@@ -72,6 +72,7 @@ $profilePicture = $user->gambar;
             background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
             filter: blur(5px);
         }
+        
     </style>
 
 </head>
@@ -98,10 +99,9 @@ $profilePicture = $user->gambar;
                 <div class="navbar-nav ms-auto py-0">
                     <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link">Home</a>
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
                     <a class="nav-item nav-link active" aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
                     <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarpelanggan')}}">Data Pelanggan</a>
                     <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
                 </div>
 

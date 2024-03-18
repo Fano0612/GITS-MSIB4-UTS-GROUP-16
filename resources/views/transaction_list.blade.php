@@ -64,10 +64,9 @@ $profilePicture = $user->gambar;
                 <div class="navbar-nav ms-auto py-0">
                     <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link ">Home</a>
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Riwayat Belanja</a>
                     <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
                     <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Pelanggan</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarpelanggan')}}">Data Pelanggan</a>
                     <a href="{{route ('transaction_list')}}" class="nav-item nav-link active">Daftar Transaksi</a>
                 </div>
                 <a href="{{route ('shopwithhelp')}}">

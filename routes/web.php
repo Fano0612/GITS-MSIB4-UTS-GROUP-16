@@ -43,7 +43,9 @@ Route::get('/daftarlaporankriminalitas', function () {
 Route::get('/shopwithhelp', function () {
     return view('shopwithhelp');
 })->name('shopwithhelp');
-
+Route::get('/daftarpelanggan', function () {
+    return view('daftarpelanggan');
+})->name('daftarpelanggan');
 
 
 Route::get('/productlist', [ProductListController::class, 'index'])->name('productlist');
@@ -101,9 +103,9 @@ Route::delete('/category/{id}', [CategoryController::class, 'destroy'])->name('c
 
 Route::get('/laporankriminalitas', [LaporanKriminalitasController::class, 'index'])->name('laporankriminalitas');
 Route::post('/laporankriminalitas/insert', [LaporanKriminalitasController::class, 'insertlaporan'])->name('insertlaporan');
-
-
-
+Route::post('/editlaporan/{id_pelaporankegiatankriminalitas}', [LaporanKriminalitasController::class, 'editlaporan'])->name('editlaporan');
+Route::get('/showlaporan/{id_pelaporankegiatankriminalitas}', [LaporanKriminalitasController::class, 'showlaporan'])->name('showlaporan');
+Route::get('/deletelaporan/{id_pelaporankegiatankriminalitas}', [LaporanKriminalitasController::class, 'deletelaporan'])->name('deletelaporan');
 
 Route::get('', function () {
     return view('login');
@@ -146,3 +148,8 @@ Route::get('/password', function () {
     return view('password');
 });
 Route::post('/check-password', [PasscodeController::class, 'checkPassword'])->name('checkPassword');
+
+
+Route::post('/editProfile/{id}', [UserController::class, 'editProfile'])->name('editProfile');
+Route::get('/showProfile/{id}', [UserController::class, 'showProfile'])->name('showProfile');
+Route::get('/deleteProfile/{id}', [UserController::class, 'deleteProfile'])->name('deleteProfile');

@@ -35,7 +35,7 @@ $profilePicture = $user->gambar;
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-    <title>Indomaret Self Service System - Laporan Kriminalitas</title>
+    <title>Indomaret Self Service System - Data Pelanggan</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
     <link href="img/favicon.ico" rel="icon">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -48,6 +48,7 @@ $profilePicture = $user->gambar;
     <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
+
     <style>
         .background {
             position: fixed;
@@ -71,19 +72,18 @@ $profilePicture = $user->gambar;
             text-align: center;
         }
 
-        .fotolap {
+        .foto {
             max-width: 200px;
         }
     </style>
 
 </head>
-<link rel="stylesheet" href="{{ asset('css/style.css') }}">
-<link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
+
 
 <body>
     <div class="background"></div>
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
-        <h1>Laporan Kriminalitas</h1>
+        <h1>Data Pelanggan</h1>
     </div>
 
     <div class="container-fluid position-relative p-0">
@@ -100,8 +100,8 @@ $profilePicture = $user->gambar;
                     <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link ">Home</a>
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
                     <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-                    <a class="nav-item nav-link active" aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarpelanggan')}}">Data Pelanggan</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
+                    <a class="nav-item nav-link active" aria-current="page" href="{{route ('daftarpelanggan')}}">Data Pelanggan</a>
                     <a href="{{route ('transaction_list')}}" class="nav-item nav-link">Daftar Transaksi</a>
                 </div>
 
@@ -127,36 +127,40 @@ $profilePicture = $user->gambar;
     <!-- Navbar & Hero End -->
 
 
-    <div class="container" style="margin-top:20px;">
+    <div class="container" style="margin-top:120px;">
         <div class="row justify-content-center">
-            <div class="col-8">
+            <div class="col-10">
                 <table class="table table-dark table-striped-columns">
                     <thead>
                         <tr>
-                            <th scope="col">ID Pelapor</th>
-                            <th scope="col">Nama Pelapor</th>
-                            <th scope="col">Deskripsi</th>
+                            <th scope="col">ID Pelanggan</th>
+                            <th scope="col">Nama Pelanggan</th>
+                            <th scope="col">Nomor Telepon</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Username</th>
                             <th scope="col">Foto</th>
-                            <th scope="col">Status Laporan</th>
+                            <th scope="col">Status Belanja dengan Bantuan Karyawan</th>
                             <th scope="col" style="text-align: center;">Aksi</th>
 
                         </tr>
                     </thead>
                     <tbody>
                         @php
-                        $laporan = App\Models\LaporanKriminalitas::all();
+                        $customer = App\Models\User::where('jabatan', 'pelanggan')->get();
                         @endphp
-                        @foreach($laporan as $item)
+                        @foreach($customer as $cust)
                         <tr>
-                            <td>{{$item->id_pelaporankegiatankriminalitas}}</td>
-                            <td>{{$item->username}}</td>
-                            <td>{{$item->deskripsi}}</td>
-                            <td><img class="fotolap" src="{{ URL::asset('images/fotolaporan/'.$item->foto) }}" alt="" class="card-img-top"></td>
-                            <td>{{$item->statuspelaporan}}</td>
+                            <td>{{$cust->id}}</td>
+                            <td>{{$cust->nama}}</td>
+                            <td>{{$cust->nomor_telepon}}</td>
+                            <td>{{$cust->email}}</td>
+                            <td>{{$cust->username}}</td>
+                            <td><img class="foto" src="{{ URL::asset('images/'.$cust->gambar) }}" alt="" class="card-img-top"></td>
+                            <td>{{$cust->status_belanja_bantuan_karyawan}}</td>
                             <td style="text-align: center;">
-                            <a href="/showlaporan/{{$item->id_pelaporankegiatankriminalitas}}" class="btn btn-success">Edit</a>
-                            <a href="#" class="btn btn-danger delete" id-data="{{$item->id_pelaporankegiatankriminalitas}}">Delete</a>
-                        </td>
+                                <a href="/showProfile/{{$cust->id}}" class="btn btn-success">Edit</a>
+                                <a href="#" class="btn btn-danger delete" id-data="{{$cust->id}}">Hapus</a>
+                            </td>
                         </tr>
                         @endforeach
 
@@ -202,32 +206,33 @@ $profilePicture = $user->gambar;
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-</body>
 
-<script>
-    $('.delete').click(function() {
-        var stdid = $(this).attr('id-data');
-        swal({
-                title: "Hapus Data?",
-                text: "Hapus " + stdid + "?\n" + "Apabila data dihapus, maka data tidak dapat dikembalikan!",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-                closeOnClickOutside: false,
-                closeOnEsc: false,
-            })
-            .then((willDelete) => {
-                if (willDelete) {
-                    swal("Data berhasil Dihapus!", {
-                        icon: "success",
-                    }).then(() => {
-                        window.location = "/deletelaporan/" + stdid;
-                    });
-                } else {
-                    swal("Penghapusan Data dibatalkan!");
-                }
-            });
-    });
-</script>
+
+    <script>
+        $('.delete').click(function() {
+            var stdid = $(this).attr('id-data');
+            swal({
+                    title: "Hapus Data?",
+                    text: "Hapus " + stdid + "?\n" + "Apabila data dihapus, maka data tidak dapat dikembalikan!",
+                    icon: "warning",
+                    buttons: true,
+                    dangerMode: true,
+                    closeOnClickOutside: false,
+                    closeOnEsc: false,
+                })
+                .then((willDelete) => {
+                    if (willDelete) {
+                        swal("Data berhasil Dihapus!", {
+                            icon: "success",
+                        }).then(() => {
+                            window.location = "/deleteProfile/" + stdid;
+                        });
+                    } else {
+                        swal("Penghapusan Data dibatalkan!");
+                    }
+                });
+        });
+    </script>
+</body>
 
 </html>

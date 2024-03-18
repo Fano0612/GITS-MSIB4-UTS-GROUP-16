@@ -259,63 +259,54 @@ class UserController extends Controller
         }
     }
 
-    public function editProfile()
+   
+    public function showProfile($id)
     {
-        $data['title'] = "Edit Profile";
-        $user = Auth::user();
-        $data['user'] = $user;
-        return view('edit_profile', $data);
+        $user = User::find($id);
+        return view('daftarpelangganupdate', compact('user'));
     }
-
-    public function updateProfile(Request $request)
+    public function editProfile(Request $request, $id)
     {
-        $request->validate([
-            'username' => 'required|unique:userlist,username,' . Auth::user()->id,
-            'email' => 'required|unique:userlist,email,' . Auth::user()->id,
-            'password' => 'nullable|min:6',
-            'password_confirmation' => 'nullable|same:password',
-            'picture' => 'nullable|image|max:2048',
-        ], [
-            'username.required' => 'Username is required',
-            'username.unique' => 'Username already exists',
-            'email.required' => 'Email is required',
-            'email.unique' => 'Email already exists',
-            'password.min' => 'Password must be at least 6 characters',
-            'password_confirmation.same' => 'Passwords do not match',
+
+        $user = User::find($id);
+        $validatedData = $request->validate([
+            'id' => 'nullable',           
+            'email' => 'nullable',
+            'nama' => 'nullable',
+            'nomor_telepon' => 'nullable',
+            'username' => 'nullable',
+            'status_belanja_bantuan_karyawan' => 'nullable',
+
         ]);
 
-        $existing_user = User::where('username', $request->username)
-            ->orWhere('email', $request->email)
-            ->first();
 
-        if ($existing_user) {
-            if ($existing_user->id != Auth::user()->id) {
-                if ($existing_user->username == $request->username) {
-                    return redirect()->back()->withErrors(['username' => 'Username already exists'])->withInput();
-                }
-                if ($existing_user->email == $request->email) {
-                    return redirect()->back()->withErrors(['email' => 'Email already exists'])->withInput();
-                }
-            }
+        if ($user) {
+            $user->update([
+                'id' => $validatedData['id'],
+                'email' => $validatedData['email'],
+                'nama' => $validatedData['nama'],
+                'nomor_telepon' => $validatedData['nomor_telepon'],
+                'username' => $validatedData['username'],
+                'status_belanja_bantuan_karyawan' => $validatedData['status_belanja_bantuan_karyawan'],
+
+
+            ]);
+
+            
+                $user->save();
+
+            return redirect()->route('daftarpelanggan')->with(['laporan' => $user]);
+        } else {
+            return redirect()->route('daftarpelanggan')->with('error', 'Data Not Found');
         }
-
-        $user = Auth::user();
-        $user->username = $request->username;
-        $user->email = $request->email;
-
-        if ($request->filled('password')) {
-            $user->password = Hash::make($request->password);
-        }
-
-        if ($request->hasFile('picture')) {
-            $picture = $request->file('picture');
-            $file_name = $picture->getClientOriginalName();
-            $file_path = $picture->move(public_path('images'), $file_name);
-            $user->picture = $file_name;
-        }
-
-        $user->save();
-
-        return redirect()->route('homepage')->with('success', 'Profile updated successfully');
     }
+
+    public function deleteProfile($id)
+    {
+        $user = User::findOrFail($id);
+        $user->delete();
+        return redirect()->back()->with('success', 'Laporan kriminalitas berhasil dihapus.');
+    }
+
+
 }
