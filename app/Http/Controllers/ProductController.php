@@ -714,7 +714,7 @@ class ProductController extends Controller
                 'quantity' => $cartItem->quantity,
                 'transaction_status' => 'Paid'
             ];
-
+        }
 
             Transaction::insert($transactionData);
             Cart::where('user_id', $userId)->delete();
@@ -723,7 +723,7 @@ class ProductController extends Controller
                 $user->save();
             }
             return redirect()->route('showProductCart')->with('success', 'Payment successful');
-        }
+        
     }
     public function paymentProductCart2()
     {
@@ -825,5 +825,29 @@ class ProductController extends Controller
         $products = Transaction::where('transaction_id', $transaction_id)->get();
 
         return view('transaction_view3', compact('transaction', 'products'));
+    }
+
+    public function printTransaction($transaction_id)
+    {
+        $transaction = Transaction::with('user', 'product')->where('transaction_id', $transaction_id)->firstOrFail();
+        $products = Transaction::where('transaction_id', $transaction_id)->get();
+
+        return view('printtransaction', compact('transaction', 'products'));
+    }
+    public function printTransaction2($transaction_id)
+    {
+        $transaction = Transaction::with('user', 'product')->where('transaction_id', $transaction_id)->firstOrFail();
+        $products = Transaction::where('transaction_id', $transaction_id)->get();
+
+        return view('printtransaction2', compact('transaction', 'products'));
+    }
+
+
+    public function printTransaction3($transaction_id)
+    {
+        $transaction = Transaction::with('user', 'product')->where('transaction_id', $transaction_id)->firstOrFail();
+        $products = Transaction::where('transaction_id', $transaction_id)->get();
+
+        return view('printtransaction3', compact('transaction', 'products'));
     }
 }

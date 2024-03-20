@@ -23,7 +23,6 @@
             z-index: -1;
             width: 100%;
             height: 100%;
-            background-image: url('https://media-cldnry.s-nbcnews.com/image/upload/newscms/2023_05/1963490/puff-pastry-beef-wellington-valentines-day-2x1-zz-230201.jpg');
             filter: blur(5px);
         }
     </style>
@@ -35,7 +34,7 @@
     <div class="background"></div>
     <div class="card">
         <div class="card-header">
-            Detil Transaksi
+            <h1>Detil Transaksi</h1>
         </div>
         <div class="card-body">
             <div class="row mb-3">
@@ -78,8 +77,7 @@
             $total += $tax;
             ?>
 
-
-            <div class="row mb-3">
+<div class="row mb-3">
                 <div class="col-sm-3">
                     <h6 class="mb-0">Total Transaksi:</h6>
                 </div>
@@ -88,29 +86,43 @@
                 </div>
             </div>
 
-
-
-            @foreach(\App\Models\Transaction::where('transaction_id', $transaction->transaction_id)->get() as $transaction)
-            <div class="card" style="width: 18rem; margin-bottom: 9px;">
-                <img src="{{ URL::asset('images/product_pictures/'.$transaction->product_picture)  }}" class="card-img-top" alt="">
-                <div class="card-body">
-                    <h5 class="card-title">{{ $transaction->product_name }}</h5>
-                    <p class="card-text">ID Produk: {{ $transaction->product_id }}</p>
+            <div class="d-flex justify-content-center">
+                @php $transactionsChunked = $transactions->chunk(4); @endphp
+                @foreach($transactionsChunked[0] as $transaction)
+                <div class="card mx-1" style="width: 18rem; margin-bottom: 9px;">
+                    <img src="{{ URL::asset('images/product_pictures/'.$transaction->product_picture)  }}" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $transaction->product_name }}</h5>
+                        <p class="card-text">ID Produk: {{ $transaction->product_id }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Kuantitas: {{ $transaction->quantity }}</li>
+                        <li class="list-group-item">Total Harga: Rp {{ number_format($transaction->product_price* $transaction->quantity, 0, ',', '.') }}.00</li>
+                    </ul>
                 </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item">ID Transaksi: {{ $transaction->transaction_id }}</li>
-                    <li class="list-group-item">Status Transaksi: {{ $transaction->transaction_status }}</li>
-                    <li class="list-group-item">Kuantitas: {{ $transaction->quantity }}</li>
-                    <li class="list-group-item">Total Harga: Rp {{ number_format($transaction->product_price* $transaction->quantity, 0, ',', '.') }}.00</li>
-                </ul>
+                @endforeach
             </div>
-            @endforeach
-
-
+            @if($transactionsChunked->count() > 1)
+            <div class="row justify-content-center">
+                @foreach($transactionsChunked[1] as $transaction)
+                <div class="card mx-1" style="width: 18rem; margin-bottom: 9px;">
+                    <img src="{{ URL::asset('images/product_pictures/'.$transaction->product_picture)  }}" class="card-img-top" alt="">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $transaction->product_name }}</h5>
+                        <p class="card-text">ID Produk: {{ $transaction->product_id }}</p>
+                    </div>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item">Kuantitas: {{ $transaction->quantity }}</li>
+                        <li class="list-group-item">Total Harga: Rp {{ number_format($transaction->product_price* $transaction->quantity, 0, ',', '.') }}.00</li>
+                    </ul>
+                </div>
+                @endforeach
+            </div>
+            @endif
 
             <div class="row mb-3">
                 <div class="col-sm-3">
-                    <a class="btn btn-success" href="{{route ('transaction_list')}}" role="button">Return</a>
+                    <a class="btn btn-success" href="{{route ('transaction_list')}}" role="button">Kembali</a>
                 </div>
             </div>
         </div>

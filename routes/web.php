@@ -69,6 +69,7 @@ Route::get('/showlaporan/{id_pelaporankegiatankriminalitas}', [LaporanKriminalit
 Route::get('/deletelaporan/{id_pelaporankegiatankriminalitas}', [LaporanKriminalitasController::class, 'deletelaporan'])->name('deletelaporan');
 
 Route::get('/viewProductTransaction/{transactionId}', [ProductController::class, 'viewProductTransaction'])->name('viewProductTransaction');
+Route::get('/printTransaction/{transactionId}', [ProductController::class, 'printTransaction'])->name('printTransaction');
 Route::post('/paymentProductCart', [App\Http\Controllers\ProductController::class, 'paymentProductCart'])->name('paymentProductCart');
 Route::post('/incrementProductCart', [App\Http\Controllers\ProductController::class, 'incrementProductCart'])->name('incrementProductCart');
 Route::post('/decrementProductCart', [App\Http\Controllers\ProductController::class, 'decrementProductCart'])->name('decrementProductCart');
@@ -118,6 +119,8 @@ Route::post('/category2/{id}', [CategoryController::class, 'update2'])->name('ca
 Route::delete('/category2/{id}', [CategoryController::class, 'destroy2'])->name('category.destroy2');
 
 Route::get('/viewProductTransaction2/{transactionId}', [ProductController::class, 'viewProductTransaction2'])->name('viewProductTransaction2');
+Route::get('/printTransaction2/{transactionId}', [ProductController::class, 'printTransaction2'])->name('printTransaction2');
+
 Route::post('/paymentProductCart2', [App\Http\Controllers\ProductController::class, 'paymentProductCart2'])->name('paymentProductCart2');
 Route::post('/incrementProductCart2', [App\Http\Controllers\ProductController::class, 'incrementProductCart2'])->name('incrementProductCart2');
 Route::post('/decrementProductCart2', [App\Http\Controllers\ProductController::class, 'decrementProductCart2'])->name('decrementProductCart2');
@@ -159,6 +162,8 @@ Route::get('/laporankriminalitas', [LaporanKriminalitasController::class, 'index
 Route::post('/laporankriminalitas/insert', [LaporanKriminalitasController::class, 'insertlaporan'])->name('insertlaporan');
 
 Route::get('/viewProductTransaction3/{transactionId}', [ProductController::class, 'viewProductTransaction3'])->name('viewProductTransaction3');
+Route::get('/printTransaction3/{transactionId}', [ProductController::class, 'printTransaction3'])->name('printTransaction3');
+
 Route::post('/paymentProductCart3', [App\Http\Controllers\ProductController::class, 'paymentProductCart3'])->name('paymentProductCart3');
 Route::post('/incrementProductCart3', [App\Http\Controllers\ProductController::class, 'incrementProductCart3'])->name('incrementProductCart3');
 Route::post('/decrementProductCart3', [App\Http\Controllers\ProductController::class, 'decrementProductCart3'])->name('decrementProductCart3');

@@ -72,7 +72,6 @@ $profilePicture = $user->gambar;
             background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
             filter: blur(5px);
         }
-        
     </style>
 
 </head>

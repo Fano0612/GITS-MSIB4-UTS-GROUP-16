@@ -127,10 +127,15 @@ $profilePicture = $user->gambar;
                         <li class="list-group-item fw-bold">
                             ID Transaksi: {{ $td->transaction_id }}
                             <span>
-                                <a href="{{ route('viewProductTransaction', ['transactionId' => $td->transaction_id]) }}" class="btn btn-success" style="float:right">
-                                    View
+                                <a href="{{ route('viewProductTransaction', ['transactionId' => $td->transaction_id]) }}" class="btn btn-primary" style="float:right;">
+                                    Detil
                                 </a>
+                                <a href="{{ route('printTransaction', ['transactionId' => $td->transaction_id]) }}" class="btn btn-warning" style="float:right;">
+                                    Print
+                                </a>
+
                             </span>
+
                         </li>
                         @php
                         $prevTransactionId = $td->transaction_id;
@@ -152,10 +157,11 @@ $profilePicture = $user->gambar;
                             </div>
                             <div class="mb-2">
                                 Status Pembayaran:
-                                <span class="badge bg-primary rounded-pill">{{ $td->transaction_status }}</span>
+                                <span class="badge bg-success rounded-pill">{{ $td->transaction_status }}</span>
                             </div>
                         </div>
                     </li>
+
                     @php
                     $itemCount++;
                     @endphp

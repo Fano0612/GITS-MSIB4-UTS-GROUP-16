@@ -25,6 +25,7 @@
             height: 100%;
             filter: blur(5px);
         }
+
     </style>
 
 </head>
@@ -34,7 +35,7 @@
     <div class="background"></div>
     <div class="card">
         <div class="card-header">
-            <h1>Detil Transaksi</h1>
+            <h1>Transaksi</h1>
         </div>
         <div class="card-body">
             <div class="row mb-3">
@@ -78,7 +79,7 @@
             ?>
 
 
-<div class="row mb-3">
+            <div class="row mb-3">
                 <div class="col-sm-3">
                     <h6 class="mb-0">Total Transaksi:</h6>
                 </div>
@@ -123,16 +124,24 @@
 
             <div class="row mb-3">
                 <div class="col-sm-3">
-                    <a class="btn btn-success" href="{{route ('transaction_list2')}}" role="button">Kembali</a>
+                    <a class="btn btn-success" href="{{route ('transaction_list3')}}" role="button">Kembali</a>
                 </div>
             </div>
         </div>
     </div>
 
-
-
-
-</body>
+        </body>
+        <script>
+    function handlePrintAndRedirect() {
+        window.print();
+        window.onafterprint = function() {
+            window.location.href = '/transaction_list3';
+        };
+    }
+    window.onload = function() {
+        handlePrintAndRedirect();
+    };
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
