@@ -184,7 +184,7 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
                 <table class="table table-dark table-striped-columns">
                     <thead>
                         <tr>
-                            <th scope="col">Nama User</th>
+                            <th scope="col">Nama Pelanggan</th>
                             <th scope="col">ID</th>
                             <th scope="col">Aksi</th>
 

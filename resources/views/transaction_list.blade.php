@@ -93,96 +93,99 @@ $profilePicture = $user->gambar;
 
     <!-- transaction start -->
     <div class="mt-5 mb-5 text-center">
-    <div class="container" style="width: 1200px; display: inline-block;">
-        @php
-        $transactionData = App\Models\Transaction::all()->groupBy('user_id');
-        $userIdCount = 0;
-        @endphp
+        <div class="container" style="width: 1200px; display: inline-block;">
+            @php
+            $transactionData = App\Models\Transaction::all()->groupBy('user_id');
+            $userIdCount = 0;
+            @endphp
 
-        @foreach($transactionData as $userId => $transactions)
-        @if($userIdCount % 3 == 0)
-        <div class="row">
-        @endif
+            @foreach($transactionData as $userId => $transactions)
+            @if($userIdCount % 3 == 0)
+            <div class="row">
+                @endif
 
-        <div class="col-md-4">
-            <div class="transaction-box" style="max-height: 300px; overflow-y: auto;">
-                <ul class="list-group">
-                    <li class="list-group-item d-flex justify-content-center align-items-center">
-                        <div class="mb-2">
-                            <div class="fw-bold">ID Pelanggan: {{ $userId }}</div>
-                        </div>
-                    </li>
+                <div class="col-md-4">
+                    <div class="transaction-box" style="max-height: 300px; overflow-y: auto;">
+                        <ul class="list-group">
+                            <li class="list-group-item d-flex justify-content-center align-items-center">
+                                <div class="mb-2">
+                                    <div class="fw-bold">ID Pelanggan: {{ $userId }}</div>
+                                </div>
+                            </li>
 
-                    @php
-                    $prevTransactionId = null;
-                    $itemCount = 0;
-                    @endphp
+                            @php
+                            $prevTransactionId = null;
+                            $itemCount = 0;
+                            @endphp
 
-                    @foreach($transactions as $td)
-                    @if($td->transaction_id != $prevTransactionId)
-                    @if(!is_null($prevTransactionId))
-                    </ul>
-                    @endif
-                    <ul class="list-group">
-                        <li class="list-group-item fw-bold">
-                            ID Transaksi: {{ $td->transaction_id }}
-                            <span>
-                                <a href="{{ route('viewProductTransaction', ['transactionId' => $td->transaction_id]) }}" class="btn btn-primary" style="float:right;">
-                                    Detil
-                                </a>
-                                <a href="{{ route('printTransaction', ['transactionId' => $td->transaction_id]) }}" class="btn btn-warning" style="float:right;">
-                                    Print
-                                </a>
+                            @foreach($transactions as $td)
+                            @if($td->transaction_id != $prevTransactionId)
+                            @if(!is_null($prevTransactionId))
+                        </ul>
+                        @endif
+                        <ul class="list-group">
+                            <li class="list-group-item fw-bold">
+                                ID Transaksi: {{ $td->transaction_id }}
+                                <span>
+                                    <a href="{{ route('viewProductTransaction', ['transactionId' => $td->transaction_id]) }}" class="btn btn-primary" style="float:right;">
+                                        Detil
+                                    </a>
+                                    <a href="#" style="float:right; opacity: 0;">
+                                        a
+                                    </a>
+                                    <a href="{{ route('printTransaction', ['transactionId' => $td->transaction_id]) }}" class="btn btn-warning" style="float:right;">
+                                        Print
+                                    </a>
 
-                            </span>
+                                </span>
 
-                        </li>
-                        @php
-                        $prevTransactionId = $td->transaction_id;
-                        @endphp
-                    @endif
+                            </li>
+                            @php
+                            $prevTransactionId = $td->transaction_id;
+                            @endphp
+                            @endif
 
-                    <li class="list-group-item d-flex flex-wrap justify-content-between align-items-center">
-                        <div class="col-12 col-md-6 mb-2 mb-md-0">
-                            <div class="mb-2">
-                                Nama Produk: {{ $td->product_name }}
-                            </div>
-                            <div class="mb-2">
-                                Kuantitas: {{ $td->quantity }}
-                            </div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="mb-2">
-                                Harga: Rp {{ number_format($td->product_price, 0, ',', '.') }}.00
-                            </div>
-                            <div class="mb-2">
-                                Status Pembayaran:
-                                <span class="badge bg-success rounded-pill">{{ $td->transaction_status }}</span>
-                            </div>
-                        </div>
-                    </li>
+                            <li class="list-group-item d-flex flex-wrap justify-content-between align-items-center">
+                                <div class="col-12 col-md-6 mb-2 mb-md-0">
+                                    <div class="mb-2">
+                                        Nama Produk: {{ $td->product_name }}
+                                    </div>
+                                    <div class="mb-2">
+                                        Kuantitas: {{ $td->quantity }}
+                                    </div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="mb-2">
+                                        Harga: Rp {{ number_format($td->product_price, 0, ',', '.') }}.00
+                                    </div>
+                                    <div class="mb-2">
+                                        Status Pembayaran:
+                                        <span class="badge bg-success rounded-pill">{{ $td->transaction_status }}</span>
+                                    </div>
+                                </div>
+                            </li>
 
-                    @php
-                    $itemCount++;
-                    @endphp
+                            @php
+                            $itemCount++;
+                            @endphp
 
-                    @endforeach
-                </ul>
+                            @endforeach
+                        </ul>
+                    </div>
+                </div>
+
+                @if($userIdCount % 3 == 2 || $loop->last)
             </div>
-        </div>
+            @endif
 
-        @if($userIdCount % 3 == 2 || $loop->last)
+            @php
+            $userIdCount++;
+            @endphp
+            @endforeach
         </div>
-        @endif
-
-        @php
-        $userIdCount++;
-        @endphp
-        @endforeach
     </div>
-</div>
 
-<div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
+    <div class="container-fluid bg-dark text-light footer pt-5 mt-5 wow fadeIn" data-wow-delay="0.1s">
         <div class="container">
             <div class="copyright">
                 <div class="row">

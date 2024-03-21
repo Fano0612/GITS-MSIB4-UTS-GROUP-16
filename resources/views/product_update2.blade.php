@@ -12,6 +12,8 @@ if (!auth()->user()->jabatan != 'karyawan') {
     echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
     die();
 }
+$user = auth()->user();
+$profilePicture = $user->gambar;
 ?>
 
 <!doctype html>
@@ -87,6 +89,18 @@ if (!auth()->user()->jabatan != 'karyawan') {
                     </div>
                 </nav>
             </div>
+            <div class="dropdown ml-auto" style="margin-left: auto;">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
+                        @if (auth()->check())
+                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
+                        @endif
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
+                    </div>
+                </div>
         </div>
     </nav>
 
@@ -137,11 +151,11 @@ if (!auth()->user()->jabatan != 'karyawan') {
                                 <input type="number" name="jumlahstokbarang" class="form-control input-number" id="exampleInputEmail1" value="{{ $productdata->jumlahstokbarang }}" min="1" aria-describedby="emailHelp">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Picture</label>
+                                <label for="exampleInputEmail1" class="form-label">Foto</label>
                                 <input type="file" name="foto" class="form-control custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" value="">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Product Category</label>
+                                <label for="exampleInputEmail1" class="form-label">Kategori</label>
                                 <select class="form-select" name="kategori_id" aria-label="Default select example">
                                     <option value="{{$productdata->kategori_id}}" selected>{{$productdata->categories->product_category }}</option>
                                     @php
@@ -154,7 +168,7 @@ if (!auth()->user()->jabatan != 'karyawan') {
                                 </select>
                             </div>
 
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary" style="float:right">Submit</button>
                         </form>
 
 

@@ -179,14 +179,14 @@ $profilePicture = $user->gambar;
                     <div class="card-body">
                         <h5 class="card-title">{{ $cl->product_name }}</h5>
                         <p class="card-text">Rp {{ number_format($cl->product_price, 0, ',', '.') }}.00</p>
-                        <p class="card-text">Quantity:
+                        <p class="card-text">Kuantitas:
 
                             <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
 
                             <span class="quantity">{{$cl->quantity}}</span>
                             <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
                         </p>
-                        <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }}">Remove</a>
+                        <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }}">Hapus</a>
                         <form id="delete-form-{{ $cl->product_id }}" action="{{ route('removeProductCart', $cl->product_id) }}" method="POST" style="display: none;">
                             @csrf
                             @method('DELETE')
@@ -202,7 +202,7 @@ $profilePicture = $user->gambar;
             <hr style="background-color:rgb(0,0,0); height:20px;">
             <?php $tax = $total * 0.1; ?>
             <div class="total">
-                <h3>Tax&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;= Rp {{ number_format($tax, 0, ',', '.') }}.00</h3>
+                <h3>Pajak&nbsp;&nbsp;= Rp {{ number_format($tax, 0, ',', '.') }}.00</h3>
                 <br>
                 <?php $total += $tax; ?>
                 <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>

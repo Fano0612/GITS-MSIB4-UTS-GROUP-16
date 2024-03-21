@@ -11,7 +11,7 @@ if (auth()->user()->jabatan != 'karyawan') {
     echo "<script>alert('Anda Bukan Karyawan');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
     die();
-  }
+}
 
 if (auth()->user()->status_belanja_bantuan_karyawan != 'inactive') {
     echo "<script>alert('Anda Sedang Membantu Belanja Pelanggan!');</script>";
@@ -138,17 +138,17 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link ">Home</a>
-          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
-          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
-          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Daftar Transaksi</a>
-        </div>
+                    <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link ">Home</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Laporan Kriminalitas</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Daftar Transaksi</a>
+                </div>
 
 
-        <a href="{{route ('shopwithhelp2')}}">
-          <i class="fas fa-comments" style="font-size:30px"></i>
-        </a>
+                <a href="{{route ('shopwithhelp2')}}">
+                    <i class="fas fa-comments" style="font-size:30px"></i>
+                </a>
                 <div class="dropdown ml-auto" style="margin-left: auto;">
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
@@ -171,7 +171,7 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
                 <table class="table table-dark table-striped-columns">
                     <thead>
                         <tr>
-                            <th scope="col">Nama User</th>
+                            <th scope="col">Nama Pelanggan</th>
                             <th scope="col">ID</th>
                             <th scope="col">Aksi</th>
 
@@ -186,8 +186,8 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
                             <td>{{$user->nama}}</td>
                             <td>{{$user->id}}</td>
                             <td>
-    <a href="{{ route('product_list6', ['id' => $user->id]) }}" class="btn btn-danger success">Bantu</a>
-</td>
+                                <a href="{{ route('product_list6', ['id' => $user->id]) }}" class="btn btn-danger success">Bantu</a>
+                            </td>
                         </tr>
                         @endforeach
                     </tbody>

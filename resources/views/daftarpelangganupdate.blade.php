@@ -13,6 +13,7 @@ if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional') 
     
     die();
 }
+
 ?>
 
 <!doctype html>

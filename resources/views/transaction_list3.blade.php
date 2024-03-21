@@ -40,7 +40,19 @@ $profilePicture = $user->gambar;
     <link href="css/bootstrap.min.css" rel="stylesheet">
 
     <link href="css/style.css" rel="stylesheet">
-
+    <style>
+        .background {
+            position: fixed;
+            background-size: cover;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
+            filter: blur(5px);
+        }
+    </style>
 </head>
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
@@ -48,10 +60,16 @@ $profilePicture = $user->gambar;
 
 <body>
     <!-- Navbar & Hero Start -->
+    <div class="background"></div>
+    <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
+        <h1>Laporan Kriminalitas</h1>
+    </div>
+
     <div class="container-fluid position-relative p-0">
-        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: White; border-bottom: 1px solid black;">
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: white;">
             <a href="" class="navbar-brand p-0">
                 <img src="    https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png" style="width:150px;height:50px;">
+
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                 <span class="fa fa-bars"></span>
@@ -60,14 +78,13 @@ $profilePicture = $user->gambar;
                 <div class="navbar-nav ms-auto py-0">
                     <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
                     <a href="{{route ('product_list_front')}}" class="nav-item nav-link">Belanja</a>
-                    <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link">Laporan Kriminalitas</a>
-                    <a href="{{route ('transaction_list3')}}" class="nav-item nav-link active">Riwayat Transaksi</a>
-
+                    <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link ">Laporan Kriminalitas</a>
+                    <a href="{{route ('transaction_list3')}}" class="nav-item nav-link active">Riwayat Belanja</a>
                 </div>
+
                 <a href="{{route ('showProductCart')}}">
-                    <i class="fa fa-shopping-cart" style="font-size:36px"></i>
+                    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
                 </a>
-                &nbsp; &nbsp;
                 <div class="dropdown ml-auto" style="margin-left: auto;">
                     <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
@@ -82,7 +99,6 @@ $profilePicture = $user->gambar;
                 </div>
             </div>
         </nav>
-
     </div>
     <!-- Navbar & Hero End -->
 
@@ -116,12 +132,17 @@ $profilePicture = $user->gambar;
                 <li class="list-group-item fw-bold">
                     ID Transaksi: {{ $td->transaction_id }}
                     <span>
-                    <a href="{{ route('viewProductTransaction3', ['transactionId' => $td->transaction_id]) }}" class="btn btn-primary" style="float:right;">
-                                    Detil
-                                </a>
-                                <a href="{{ route('printTransaction3', ['transactionId' => $td->transaction_id]) }}" class="btn btn-warning" style="float:right;">
-                                    Print
-                                </a>
+                        <a href="{{ route('viewProductTransaction3', ['transactionId' => $td->transaction_id]) }}" class="btn btn-primary" style="float:right; border-radius:10px;">
+                            Detil
+                        </a>
+                        <a href="#" style="float:right; opacity: 0;">
+                            a
+                        </a>
+
+                        <a href="{{ route('printTransaction3', ['transactionId' => $td->transaction_id]) }}" class="btn btn-warning" style="float:right;border-radius:10px;">
+                            Print
+                        </a>
+                        &nbsp;
                     </span>
                 </li>
 
@@ -132,7 +153,7 @@ $profilePicture = $user->gambar;
                 <li class="list-group-item d-flex flex-wrap justify-content-between align-items-center">
                     <div class="col-12 col-md-6 mb-2 mb-md-0">
                         <div class="mb-2">
-                        Nama Produk: {{ $td->product_name }}
+                            Nama Produk: {{ $td->product_name }}
                         </div>
                         <div class="mb-2">
                             Kuantitas: {{ $td->quantity }}

@@ -83,7 +83,7 @@ $profilePicture = $user->gambar;
 <body>
     <div class="background"></div>
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
-        <h1>Laporan Kriminalitas</h1>
+        <h1>PeLaporan Kegiatan Kriminalitas</h1>
     </div>
 
     <div class="container-fluid position-relative p-0">
@@ -100,7 +100,7 @@ $profilePicture = $user->gambar;
                     <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link">Home</a>
                     <a href="{{route ('product_list_front')}}" class="nav-item nav-link">Belanja</a>
                     <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link active">Laporan Kriminalitas</a>
-                    <a href="{{route ('transaction_list3')}}" class="nav-item nav-link">Riwayat Transaksi</a>
+                    <a href="{{route ('transaction_list3')}}" class="nav-item nav-link">Riwayat Belanja</a>
                 </div>
 
                 <a href="{{route ('showProductCart')}}">

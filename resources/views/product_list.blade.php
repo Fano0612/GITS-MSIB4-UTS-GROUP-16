@@ -38,10 +38,13 @@ $profilePicture = $user->gambar;
     <link href="{{ asset('lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css') }}" rel="stylesheet" />
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+   
 </head>
 
 <body>
     <!-- Navbar & Hero Start -->
+
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: space-between; border-bottom: 0.5px solid black; padding-top:10px;padding-bottom:10px;">
 
         <div style="display: flex; align-items: center;">
@@ -51,7 +54,7 @@ $profilePicture = $user->gambar;
         </div>
 
         <form class="d-flex" role="search" style="max-width: 100%; width: 100%;">
-            <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 100%; max-width: 1000px;">
+            <input id="searchInput" class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" style="width: 100%; max-width: 1200px;border-radius:20px;">
 
         </form>
         <a href="{{route ('showProductCart2')}}" style=" margin-right:10px; padding-top:10px;">

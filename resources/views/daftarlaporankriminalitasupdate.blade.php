@@ -12,6 +12,8 @@ if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional') 
     echo "<script>setTimeout(function() { window.location.href = '/dashboardgeneralmanageroperasional'; }, 1000);</script>";
     die();
 }
+$user = auth()->user();
+$profilePicture = $user->gambar;
 ?>
 
 <!doctype html>
@@ -96,6 +98,18 @@ if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional') 
                     </div>
                 </nav>
             </div>
+            <div class="dropdown ml-auto" style="margin-left: auto;">
+                    <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
+                        @if (auth()->check())
+                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
+                        @endif
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
+                    </div>
+                </div>
         </div>
     </nav>
 
@@ -149,7 +163,7 @@ if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional') 
                                 @endforeach
                             </div>
                             @endif
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
                         </form>
                         @if($errors->has('error'))
                         <div class="alert alert-danger mt-2" role="alert">

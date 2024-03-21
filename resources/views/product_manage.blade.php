@@ -228,7 +228,7 @@ $profilePicture = $user->gambar;
 
 
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Gambar</label>
+                                <label for="exampleInputEmail1" class="form-label">Foto</label>
                                 <input type="file" name="foto" class="form-control custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
                             </div>
 
@@ -263,7 +263,7 @@ $profilePicture = $user->gambar;
                                     });
                                 </script>
                             </div>
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" class="btn btn-primary" style="float:right">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -287,7 +287,7 @@ $profilePicture = $user->gambar;
                         <th scope="col">Jumlah Stok Barang</th>
                         <th scope="col">Gambar</th>
                         <th scope="col">Kategori</th>
-                        <th scope="col" style="text-align: center;">Action</th>
+                        <th scope="col" style="text-align: center;">Aksi</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -305,7 +305,7 @@ $profilePicture = $user->gambar;
                         <td>{{ $prod->categories->product_category }}</td>
                         <td style="text-align: center;">
                             <a href="/showproduct/{{$prod->id_barang}}" class="btn btn-success">Edit</a>
-                            <a href="#" class="btn btn-danger delete" id-data="{{$prod->id_barang}}">Delete</a>
+                            <a href="#" class="btn btn-danger delete" id-data="{{$prod->id_barang}}">Hapus</a>
                         </td>
                     </tr>
                     @endforeach
@@ -358,7 +358,7 @@ $profilePicture = $user->gambar;
         var stdid = $(this).attr('id-data');
         swal({
                 title: "Delete Data?",
-                text: "Delete " + stdid + "?\n" + "Once it's deleted, you won't be able to recover this data anymore",
+                text: "Apakah Anda Yakin Menghapus Barang " + stdid + "?\n" ,
                 icon: "warning",
                 buttons: true,
                 dangerMode: true,
@@ -367,13 +367,13 @@ $profilePicture = $user->gambar;
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    swal("Data has been deleted successfully!", {
+                    swal("Data Berhasil Dihapus!", {
                         icon: "success",
                     }).then(() => {
                         window.location = "/deleteproduct/" + stdid;
                     });
                 } else {
-                    swal("Data deletion cancelled!");
+                    swal("Penghapusan Data Dibatalkan!");
                 }
             });
     });

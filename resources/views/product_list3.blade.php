@@ -49,10 +49,25 @@ $profilePicture = $user->gambar;
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Template Stylesheet -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <style>
+            .background {
+            position: fixed;
+            background-size: cover;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
+            filter: blur(5px);
+        }
+    </style>
 </head>
 
 <body>
+<div class="background">
 
+</div>
 <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: space-between; border-bottom: 0.5px solid black; padding-top:10px;padding-bottom:10px;">
 
 <div style="display: flex; align-items: center;">
@@ -62,9 +77,9 @@ $profilePicture = $user->gambar;
 </div>
 
 <form class="d-flex" role="search" style="max-width: 100%; width: 100%;">
-    <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 100%; max-width: 1000px;">
-
+    <input id="searchInput" class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" style="width: calc(100% - 30px); max-width: 1200px; border-radius:20px;">
 </form>
+
 <a href="{{route ('showProductCart')}}" style=" margin-right:10px; padding-top:10px;">
     <i class="fa fa-shopping-cart" style="font-size:30px"></i>
 </a>
@@ -99,7 +114,7 @@ $profilePicture = $user->gambar;
         <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link ">Home</a>
                     <a href="{{route ('product_list_front')}}" class="nav-item nav-link active">Belanja</a>
                     <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link">Laporan Kriminalitas</a>
-                    <a href="{{route ('transaction_list3')}}" class="nav-item nav-link">Riwayat Transaksi</a>
+                    <a href="{{route ('transaction_list3')}}" class="nav-item nav-link">Riwayat Belanja</a>
 
         </div>
     </div>
@@ -107,9 +122,11 @@ $profilePicture = $user->gambar;
 </div>
 
 <!-- Navbar & Hero End -->
-<button id="categoryDropdownBtn" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top:150px;margin-left:40px; background:black; border-radius: 10px;">
-Kategori
+<button id="categoryDropdownBtn" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top:150px;margin-left:40px; background:white; border-radius: 10px; color: black;">
+  Kategori <span class="caret" style="color: black;"></span>
 </button>
+
+
 <ul class="dropdown-menu">
 @php
 $categories = App\Models\Category::all();

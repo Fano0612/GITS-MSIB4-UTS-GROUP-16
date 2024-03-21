@@ -50,7 +50,7 @@ $profilePicture = $user->gambar;
 </div>
 
 <form class="d-flex" role="search" style="max-width: 100%; width: 100%;">
-    <input id="searchInput" class="form-control me-2" type="search" placeholder="Search" aria-label="Search" style="width: 100%; max-width: 1000px;">
+    <input id="searchInput" class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" style="width: 100%; max-width: 1200px;border-radius:20px;">
 
 </form>
 <a href="{{route ('showProductCart3')}}" style=" margin-right:10px; padding-top:10px;">
