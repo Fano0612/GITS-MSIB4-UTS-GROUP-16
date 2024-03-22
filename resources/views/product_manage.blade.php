@@ -80,7 +80,7 @@ $profilePicture = $user->gambar;
 
 <body>
     <!-- Navbar & Hero Start -->
-    <div class="background"></div>
+    <!-- <div class="background"></div> -->
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
         <h1>Data Barang</h1>
     </div>
@@ -114,7 +114,7 @@ $profilePicture = $user->gambar;
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())
-                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
+                        <a class="dropdown-item" href="/showAccount/{{$user->id}}">Hello <b>{{ auth()->user()->username }}</a>
                         @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
@@ -247,7 +247,7 @@ $profilePicture = $user->gambar;
                                 <script>
                                     function checkCategory(category) {
                                         if (category === "") {
-                                            document.getElementById("category-error-msg").textContent = "Please choose a category";
+                                            document.getElementById("category-error-msg").textContent = "Silakan Pilih Kategori";
                                             return false;
                                         } else {
                                             document.getElementById("category-error-msg").textContent = "";

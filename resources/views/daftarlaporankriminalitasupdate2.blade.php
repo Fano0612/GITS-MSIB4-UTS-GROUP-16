@@ -73,7 +73,7 @@ $profilePicture = $user->gambar;
 
 <body>
 
-    <div class="background"></div>
+    <!-- <div class="background"></div> -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
         <div class="container-fluid">
 
@@ -105,7 +105,7 @@ $profilePicture = $user->gambar;
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())
-                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
+                        <a class="dropdown-item" href="/showAccount2/{{$user->id}}">Hello <b>{{ auth()->user()->username }}</a>
                         @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>

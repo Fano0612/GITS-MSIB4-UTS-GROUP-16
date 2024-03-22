@@ -38,21 +38,23 @@ class UserController extends Controller
             'username' => 'required|unique:karyawan,username|unique:pelanggan,username|unique:generalmanageroperasional,username',
             'password' => 'required|min:6',
             'password_confirmation' => 'required|same:password',
-            'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+            'gambar' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048'
         ], [
-            'email.required' => 'Email is required',
+            'email.required' => 'Email kosong, silakan memasukkan alamat email!',
             'email.unique' => 'Email terdaftar, silakan pilih Email yang lain!',
-            'nomor_telepon.required' => 'Nomor Telepon is required',
+            'nama.required' => 'Nama kosong, silakan memasukkan Nama!',
+            'nomor_telepon.required' => 'Nomor Telepon kosong, silakan memasukkan Nomor Telepon!',
             'nomor_telepon.unique' => 'Nomor Telepon terdaftar, silakan pilih Nomor Telepon yang lain!',
-            'username.required' => 'Username is required',
+            'username.required' => 'Username kosong, silakan memasukkan Username!',
             'username.unique' => 'Username terdaftar, silakan pilih Username yang lain!',
-            'password.required' => 'Password is required',
+            'password.required' => 'Password kosong, silakan memasukkan Password!',
             'password.min' => 'Silakan memasukkan password dengan minimal 6 karakter!',
-            'password_confirmation.required' => 'Confirm Password is required',
+            'password_confirmation.required' => 'Konfirmasi Password kosong, silakan memasukkan Konfirmasi Password!',
             'password_confirmation.same' => 'Password tidak sesuai',
-            'gambar.image' => 'The file must be an image',
-            'gambar.mimes' => 'Only JPEG, PNG, JPG, and GIF images are allowed',
-            'gambar.max' => 'The image size should not exceed 2048 KB'
+            'gambar.required' => 'Gambar kosong, silakan memasukkan Gambar!',
+            'gambar.image' => 'Tipe file harus gambar!',
+            'gambar.mimes' => 'Hanya tipe gambar JPEG, PNG, JPG, dan GIF yang diperbolehkan!',
+            'gambar.max' => 'Ukuran file gambar tidak boleh melebihi 2048 KB/2MB!'
         ]);
 
         $user = new Pelanggan([
@@ -94,7 +96,7 @@ class UserController extends Controller
         ]);
     
         $userlist->save();
-        return redirect()->route('login')->with('success', 'Data Successfully Registered');
+        return redirect()->route('login')->with('success', 'Data Berhasil Diregistrasi!');
     }
     public function registeraccstaff(Request $request)
     {
@@ -108,20 +110,22 @@ class UserController extends Controller
             'jabatan' => 'required',
             'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ], [
-            'email.required' => 'Email is required',
+            'email.required' => 'Email kosong, silakan memasukkan alamat email!',
             'email.unique' => 'Email terdaftar, silakan pilih Email yang lain!',
-            'nomor_telepon.required' => 'Nomor Telepon is required',
+            'nama.required' => 'Nama kosong, silakan memasukkan Nama!',
+            'nomor_telepon.required' => 'Nomor Telepon kosong, silakan memasukkan Nomor Telepon!',
             'nomor_telepon.unique' => 'Nomor Telepon terdaftar, silakan pilih Nomor Telepon yang lain!',
-            'username.required' => 'Username is required',
+            'username.required' => 'Username kosong, silakan memasukkan Username!',
             'username.unique' => 'Username terdaftar, silakan pilih Username yang lain!',
-            'password.required' => 'Password is required',
+            'password.required' => 'Password kosong, silakan memasukkan Password!',
             'password.min' => 'Silakan memasukkan password dengan minimal 6 karakter!',
-            'password_confirmation.required' => 'Confirm Password is required',
+            'password_confirmation.required' => 'Konfirmasi Password kosong, silakan memasukkan Konfirmasi Password!',
             'password_confirmation.same' => 'Password tidak sesuai',
-            'jabatan.required' => 'Jabatan is required',
-            'gambar.image' => 'The file must be an image',
-            'gambar.mimes' => 'Only JPEG, PNG, JPG, and GIF images are allowed',
-            'gambar.max' => 'The image size should not exceed 2048 KB'
+            'jabatan.required' => 'Silakan pilih jabatan!',
+            'gambar.required' => 'Gambar kosong, silakan memasukkan Gambar!',
+            'gambar.image' => 'Tipe file harus gambar!',
+            'gambar.mimes' => 'Hanya tipe gambar JPEG, PNG, JPG, dan GIF yang diperbolehkan!',
+            'gambar.max' => 'Ukuran file gambar tidak boleh melebihi 2048 KB/2MB!'
         ]);
 
         if ($request->jabatan == 'karyawan') {
@@ -193,6 +197,10 @@ class UserController extends Controller
         $request->validate([
             'username' => 'required|username',
             'password' => 'required',
+        ],[ 
+            'username.required' => 'Username kosong, silakan memasukkan Username!',
+            'password.required' => 'Password kosong, silakan memasukkan Password!',
+
         ]);
     
         $credentials = $request->only(['username', 'password']);
@@ -220,7 +228,7 @@ class UserController extends Controller
         }
     
         return back()->withErrors([
-            'email' => 'Username dan/atau password salah, silakan masukkan username/password yang benar!',
+            'email' => 'Username dan/atau Password salah, silakan memasukkan Username/Password yang benar!',
         ]);
     }
 
@@ -258,6 +266,189 @@ class UserController extends Controller
             return redirect()->back()->withErrors(['email' => 'Email not found']);
         }
     }
+
+
+public function showAccount($id)
+    {
+        $user = User::find($id);
+        return view('editprofile', compact('user'));
+    }
+    public function showAccount2($id)
+    {
+        $user = User::find($id);
+        return view('editprofile2', compact('user'));
+    }
+    public function showAccount3($id)
+    {
+        $user = User::find($id);
+        return view('editprofile3', compact('user'));
+    }
+    public function editAccount(Request $request, $id)
+    {
+        $user = User::find($id);
+    
+        if (!$user) {
+            return redirect()->route('dashboardgeneralmanageroperasional')->with('error', 'Data Tidak Ditemukan!');
+        }
+    
+        $rules = [
+            'nama' => 'required',
+            'nomor_telepon' => 'required',
+            'username' => 'required',
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|same:password',
+            'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ];
+    
+        // Check if the email is changed
+        if ($request->email !== $user->email) {
+            $rules['email'] = 'required|unique:userlist,email';
+        }
+    
+        // Check if the nomor_telepon is changed
+        if ($request->nomor_telepon !== $user->nomor_telepon) {
+            $rules['nomor_telepon'] = 'required|unique:userlist,nomor_telepon';
+        }
+    
+        // Check if the username is changed
+        if ($request->username !== $user->username) {
+            $rules['username'] = 'required|unique:userlist,username';
+        }
+    
+        $validatedData = $request->validate($rules, [
+            // Your custom validation messages here
+        ]);
+    
+        $user->update([
+            'email' => $validatedData['email'] ?? $user->email,
+            'nama' => $validatedData['nama'],
+            'nomor_telepon' => $validatedData['nomor_telepon'],
+            'password' => Hash::make($request->password),
+            'username' => $validatedData['username'],
+        ]);
+    
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $file_name = $file->getClientOriginalName();
+            $file_path = $file->move(public_path('images'), $file_name);
+            $user->gambar = $file_name;
+            $user->save();
+        }
+    
+        return redirect()->route('dashboardgeneralmanageroperasional')->with(['laporan' => $user]);
+    }
+    
+    public function editAccount2(Request $request, $id)
+    {
+
+        $user = User::find($id);
+    
+        if (!$user) {
+            return redirect()->route('dashboardkaryawan')->with('error', 'Data Tidak Ditemukan!');
+        }
+    
+        $rules = [
+            'nama' => 'required',
+            'nomor_telepon' => 'required',
+            'username' => 'required',
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|same:password',
+            'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ];
+    
+        // Check if the email is changed
+        if ($request->email !== $user->email) {
+            $rules['email'] = 'required|unique:userlist,email';
+        }
+    
+        // Check if the nomor_telepon is changed
+        if ($request->nomor_telepon !== $user->nomor_telepon) {
+            $rules['nomor_telepon'] = 'required|unique:userlist,nomor_telepon';
+        }
+    
+        // Check if the username is changed
+        if ($request->username !== $user->username) {
+            $rules['username'] = 'required|unique:userlist,username';
+        }
+    
+        $validatedData = $request->validate($rules, [
+            // Your custom validation messages here
+        ]);
+    
+        $user->update([
+            'email' => $validatedData['email'] ?? $user->email,
+            'nama' => $validatedData['nama'],
+            'nomor_telepon' => $validatedData['nomor_telepon'],
+            'password' => Hash::make($request->password),
+            'username' => $validatedData['username'],
+        ]);
+    
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $file_name = $file->getClientOriginalName();
+            $file_path = $file->move(public_path('images'), $file_name);
+            $user->gambar = $file_name;
+            $user->save();
+        }
+    
+        return redirect()->route('dashboardkaryawan')->with(['laporan' => $user]);
+    }
+    public function editAccount3(Request $request, $id)
+    {
+
+        $user = User::find($id);
+    
+        if (!$user) {
+            return redirect()->route('dashboardpelanggan')->with('error', 'Data Tidak Ditemukan!');
+        }
+    
+        $rules = [
+            'nama' => 'required',
+            'nomor_telepon' => 'required',
+            'username' => 'required',
+            'password' => 'required|min:6',
+            'password_confirmation' => 'required|same:password',
+            'gambar' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ];
+    
+        // Check if the email is changed
+        if ($request->email !== $user->email) {
+            $rules['email'] = 'required|unique:userlist,email';
+        }
+    
+        // Check if the nomor_telepon is changed
+        if ($request->nomor_telepon !== $user->nomor_telepon) {
+            $rules['nomor_telepon'] = 'required|unique:userlist,nomor_telepon';
+        }
+    
+        // Check if the username is changed
+        if ($request->username !== $user->username) {
+            $rules['username'] = 'required|unique:userlist,username';
+        }
+    
+        $validatedData = $request->validate($rules, [
+            // Your custom validation messages here
+        ]);
+    
+        $user->update([
+            'email' => $validatedData['email'] ?? $user->email,
+            'nama' => $validatedData['nama'],
+            'nomor_telepon' => $validatedData['nomor_telepon'],
+            'password' => Hash::make($request->password),
+            'username' => $validatedData['username'],
+        ]);
+    
+        if ($request->hasFile('gambar')) {
+            $file = $request->file('gambar');
+            $file_name = $file->getClientOriginalName();
+            $file_path = $file->move(public_path('images'), $file_name);
+            $user->gambar = $file_name;
+            $user->save();
+        }
+    
+        return redirect()->route('dashboardpelanggan')->with(['laporan' => $user]);
+    }
+
 
    
     public function showProfile($id)

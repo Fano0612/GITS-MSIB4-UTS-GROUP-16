@@ -7,10 +7,10 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 ?>
 
 <?php
-if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional') {
-    echo "<script>alert('Anda Bukan General Manager Operasional!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/dashboardgeneralmanageroperasional'; }, 1000);</script>";
-    
+if (!auth()->check() || auth()->user()->jabatan != 'karyawan') {
+    echo "<script>alert('Anda Bukan Karyawan!');</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
+
     die();
 }
 
@@ -22,7 +22,7 @@ if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional') 
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Indomaret Self Service System - Data Pelanggan</title>
+    <title>Indomaret Self Service System</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -88,7 +88,7 @@ if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional') 
 
 
 
-                <h1 class="position-absolute top-50 start-50 translate-middle">Data Pelanggan</h1>
+                <h1 class="position-absolute top-50 start-50 translate-middle">Data Diri</h1>
 
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     &nbsp; &nbsp;
@@ -108,47 +108,52 @@ if (!auth()->check() || auth()->user()->jabatan != 'generalmanageroperasional') 
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                    <form action="/editProfile/{{$user->id}}" method="POST" enctype="multipart/form-data">
+                        <form action="/editAccount2/{{$user->id}}" method="POST" enctype="multipart/form-data">
                             @csrf
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">ID Pelanggan</label>
+                                <label for="exampleInputEmail1" class="form-label">ID</label>
                                 <input type="number" name="id" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="{{$user->id}}" onchange="checkIdLength(this.value)" readonly>
                             </div>
 
                             <div class="mb-3">
-                                <label for="exampleInputName" class="form-label">Nama Pelanggan</label>
-                                <input type="text" name="nama" class="form-control" id="exampleInputName" aria-describedby="nameHelp" value="{{$user->nama}}" onchange="checkNameLength(this.value)" readonly>
+                                <label for="exampleInputName" class="form-label">Nama</label>
+                                <input type="text" name="nama" class="form-control" id="exampleInputName" aria-describedby="nameHelp" value="{{$user->nama}}" onchange="checkNameLength(this.value)">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputName" class="form-label">Nomor Telepon</label>
-                                <input type="text" name="nomor_telepon" class="form-control" id="exampleInputName" aria-describedby="nameHelp" value="{{$user->nomor_telepon}}" onchange="checkNameLength(this.value)" readonly>
+                                <input type="text" name="nomor_telepon" class="form-control" id="exampleInputName" aria-describedby="nameHelp" value="{{$user->nomor_telepon}}" onchange="checkNameLength(this.value)">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputName" class="form-label">Email</label>
-                                <input type="text" name="email" class="form-control" id="exampleInputName" aria-describedby="nameHelp" value="{{$user->email}}" onchange="checkNameLength(this.value)" readonly>
+                                <input type="text" name="email" class="form-control" id="exampleInputName" aria-describedby="nameHelp" value="{{$user->email}}" onchange="checkNameLength(this.value)">
                             </div>
                             <div class="mb-3">
                                 <label for="exampleInputName" class="form-label">Username</label>
-                                <input type="text" name="username" class="form-control" id="exampleInputName" aria-describedby="nameHelp" value="{{$user->username}}" onchange="checkNameLength(this.value)" readonly>
+                                <input type="text" name="username" class="form-control" id="exampleInputName" aria-describedby="nameHelp" value="{{$user->username}}" onchange="checkNameLength(this.value)">
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Foto</label>
+                                <label for="password" class="form-label">Password</label>
+                                <input type="password" name="password" class="form-control" id="password" aria-describedby="nameHelp" value="{{$user->password}}" onchange="checkNameLength(this.value)">
+                            </div>
+                            <div class="mb-3">
+                                <label for="password_confirmation" class="form-label">Confirm Password</label>
+                                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" aria-describedby="nameHelp" value="{{$user->password}}" onchange="checkNameLength(this.value)">
+                            </div>
+                            <div class="mb-3">
+                                <label for="exampleInputEmail1" class="form-label"></label>
                                 @if($user->gambar)
                                 <img src="{{ URL::asset('images/'.$user->gambar) }}" class="img-fluid mb-2" alt="Current Picture">
                                 @else
-                                <p>No picture available</p>
+                                <p>Tidak Ada Gambar!</p>
                                 @endif
                             </div>
-
-
                             <div class="mb-3">
-                                <label for="exampleInputEmail1" class="form-label">Status Belanja dengan Bantuan Karyawan</label>
-                                <select class="form-select" name="status_belanja_bantuan_karyawan" aria-label="Default select example">
-                                    <option value="{{$user->status_belanja_bantuan_karyawan}}" selected>{{$user->status_belanja_bantuan_karyawan}}</option>
-                                    <option value="active">Active</option>
-                                    <option value="inactive">Inactive</option>
-                                </select>
+                                <label for="gambar" class="form-label">Gambar</label>
+                                <input type="file" name="gambar" class="form-control" id="gambar" aria-describedby="nameHelp" value="{{$user->gambar}}" onchange="checkNameLength(this.value)">
                             </div>
+
+
+
 
                             @if($errors->any())
                             <div class="alert alert-danger" role="alert">

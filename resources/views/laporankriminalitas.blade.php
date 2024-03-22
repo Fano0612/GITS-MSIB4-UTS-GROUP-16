@@ -112,7 +112,7 @@ $profilePicture = $user->gambar;
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())
-                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
+                        <a class="dropdown-item" href="/showAccount3/{{$user->id}}">Hello <b>{{ auth()->user()->username }}</a>
                         @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>

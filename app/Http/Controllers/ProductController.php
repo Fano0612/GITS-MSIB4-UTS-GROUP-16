@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Category;
 use App\Models\Cart;
 use App\Models\Transaction;
+use App\Models\MetodePembayaran;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
@@ -42,7 +43,7 @@ class ProductController extends Controller
                 'deskripsi' => 'required',
                 'komposisi' => 'required',
                 'tanggalkedaluwarsa' => 'required',
-                'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000',
+                'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10000',
                 'jumlahstokbarang' => 'required|numeric',
                 'kategori_id' => 'required|numeric',
             ],
@@ -95,7 +96,7 @@ class ProductController extends Controller
                 'deskripsi' => 'required',
                 'komposisi' => 'required',
                 'tanggalkedaluwarsa' => 'required',
-                'foto' => 'image|mimes:jpeg,png,jpg,gif,svg|max:10000',
+                'foto' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:10000',
                 'jumlahstokbarang' => 'required|numeric',
                 'kategori_id' => 'required|numeric',
             ],
@@ -146,7 +147,7 @@ class ProductController extends Controller
         return view('product_update', compact('productdata', 'product_categories'));
     }
 
-    
+
     public function showproduct2($id)
     {
         $productdata = Barang::find($id);
@@ -387,27 +388,30 @@ class ProductController extends Controller
     public function showProductCart()
     {
         $userId = auth()->user()->id;
+        $metode_pembayaran = MetodePembayaran::all();
 
         $cart = Cart::where('user_id', $userId)->get();
-        return view('cart_view3', compact('cart'));
+        return view('cart_view3', compact('cart', 'metode_pembayaran'));
     }
 
     public function showProductCart2()
     {
         $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+        $metode_pembayaran = MetodePembayaran::all();
 
 
         $cart2 = Cart::where('user_id', $userId)->get();
-        return view('cart_view', compact('cart2'));
+        return view('cart_view', compact('cart2', 'metode_pembayaran'));
     }
 
     public function showProductCart3()
     {
         $userId = auth()->user()->id_pelanggan_belanja_bantuan_karyawan;
+        $metode_pembayaran = MetodePembayaran::all();
 
 
         $cart2 = Cart::where('user_id', $userId)->get();
-        return view('cart_view2', compact('cart2'));
+        return view('cart_view2', compact('cart2', 'metode_pembayaran'));
     }
 
     public function incrementProductCart(Request $request)
@@ -716,15 +720,15 @@ class ProductController extends Controller
             ];
         }
 
-            Transaction::insert($transactionData);
-            Cart::where('user_id', $userId)->delete();
-            if ($user) {
-                $user->status_belanja_bantuan_karyawan = 'inactive';
-                $user->save();
-            }
-            return redirect()->route('showProductCart')->with('success', 'Payment successful');
-        
+        Transaction::insert($transactionData);
+        Cart::where('user_id', $userId)->delete();
+        if ($user) {
+            $user->status_belanja_bantuan_karyawan = 'inactive';
+            $user->save();
+        }
+        return redirect()->route('showProductCart')->with('success', 'Payment successful');
     }
+
     public function paymentProductCart2()
     {
         $user = Auth::user();

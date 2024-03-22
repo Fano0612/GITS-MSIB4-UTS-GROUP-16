@@ -81,7 +81,7 @@ $profilePicture = $user->gambar;
 <link rel="stylesheet" href="{{ asset('css/bootstrap.min.css') }}">
 
 <body>
-    <div class="background"></div>
+    <!-- <div class="background"></div> -->
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
         <h1>Laporan Kriminalitas</h1>
     </div>
@@ -114,7 +114,7 @@ $profilePicture = $user->gambar;
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())
-                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
+                        <a class="dropdown-item" href="/showAccount2/{{$user->id}}">Hello <b>{{ auth()->user()->username }}</a>
                         @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>

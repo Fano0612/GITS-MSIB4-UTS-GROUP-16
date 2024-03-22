@@ -37,30 +37,30 @@
             @csrf
             <div class="mb-3">
                 <label for="email" class="form-label">Email</label>
-                <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" required>
+                <input type="email" name="email" class="form-control" id="email" aria-describedby="emailHelp" >
             </div>
             <div class="mb-3">
                 <label for="nama" class="form-label">Nama</label>
-                <input type="text" name="nama" class="form-control" id="nama" aria-describedby="emailHelp" required>
+                <input type="text" name="nama" class="form-control" id="nama" aria-describedby="emailHelp" >
             </div>
             <div class="mb-3">
                 <label for="nomor_telepon" class="form-label">Nomor Telepon</label>
-                <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon" aria-describedby="emailHelp" required>
+                <input type="text" name="nomor_telepon" class="form-control" id="nomor_telepon" aria-describedby="emailHelp" >
             </div>
             <div class="mb-3">
                 <label for="username" class="form-label">Username</label>
-                <input type="text" name="username" class="form-control" id="username" aria-describedby="emailHelp" required>
+                <input type="text" name="username" class="form-control" id="username" aria-describedby="emailHelp" >
             </div>
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
-                <input type="password" name="password" class="form-control" id="password" required>
+                <input type="password" name="password" class="form-control" id="password" >
             </div>
             <div class="mb-3">
                 <label for="password_confirmation" class="form-label">Confirm Password</label>
-                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" required>
+                <input type="password" name="password_confirmation" class="form-control" id="password_confirmation" >
             </div>
             <div class="mb-3">
-                <label for="gambar" class="form-label">Upload Image</label>
+                <label for="gambar" class="form-label">Gambar</label>
                 <input type="file" name="gambar" class="form-control" id="gambar">
             </div>
             <div class="mb-3" style="display: flex; justify-content: space-between; align-items: center;">

@@ -136,7 +136,7 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link ">Home</a>
+                    <a href="{{route ('dashboardgeneralmanageroperasional')}}" class="nav-item nav-link ">Home</a>
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('productlist')}}">Belanja</a>
                     <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('daftarlaporankriminalitas')}}">Laporan Kriminalitas</a>
@@ -153,7 +153,7 @@ $profilePicture = $user->gambar;
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())
-                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
+                        <a class="dropdown-item" href="/showAccount/{{$user->id}}">Hello <b>{{ auth()->user()->username }}</a>
                         @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
@@ -167,41 +167,41 @@ $profilePicture = $user->gambar;
     @php
     $cart = App\Models\Cart::all();
     @endphp
-    <div class="background"></div>
+    <!-- <div class="background"></div> -->
 
 
 
     <div class="Cart-Container">
         <div class="Cart-content" style="display:inline-block;">
-            <div class="card-border">
-                <?php $total = 0; ?>
+        <div class="card-border">
+    <?php $total = 0; ?>
 
-                @foreach($cart->where('user_id', auth()->user()->id_pelanggan_belanja_bantuan_karyawan) as $cl)
-                <div class="card" style="width: 18rem;">
-                    <img src="{{ URL::asset('images/product_pictures/'.$cl->product_picture) }}" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $cl->product_name }}</h5>
-                        <p class="card-text">Rp {{ number_format($cl->product_price, 0, ',', '.') }}.00</p>
-                        <p class="card-text">Kuantitas:
+    @foreach($cart->where('user_id', auth()->user()->id_pelanggan_belanja_bantuan_karyawan) as $cl)
+    <div class="card" style="width: 18rem;">
+        <img src="{{ URL::asset('images/product_pictures/'.$cl->product_picture) }}" class="card-img-top" alt="">
+        <div class="card-body">
+            <h5 class="card-title">{{ $cl->product_name }}</h5>
+            <p class="card-text">Rp {{ number_format($cl->product_price, 0, ',', '.') }}.00</p>
+            <p class="card-text">Kuantitas:
+                <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
+                <span class="quantity">{{$cl->quantity}}</span>
+                <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
+            </p>
+            <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }}">Hapus</a>
+            <form id="delete-form-{{ $cl->product_id }}" action="{{ route('removeProductCart2', $cl->product_id) }}" method="POST" style="display: none;">
+                @csrf
+                @method('DELETE')
+            </form>
+        </div>
+        <p style="color: red;">* Silakan me-refresh halaman setelah melakukan perubahan kuantitas barang!</p>
+        <?php $total += $cl->product_price * $cl->quantity; ?>
+    </div>
+    @if(($loop->iteration % 3) == 0)
+    <div style="flex-basis: 100%;"></div>
+    @endif
+    @endforeach
+</div>
 
-                            <button class="btn btn-sm btn-danger decrement-btn" data-product-id="{{$cl->product_id}}">-</button>
-
-                            <span class="quantity">{{$cl->quantity}}</span>
-                            <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
-                        </p>
-                        <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }}">Hapus</a>
-                        <form id="delete-form-{{ $cl->product_id }}" action="{{ route('removeProductCart2', $cl->product_id) }}" method="POST" style="display: none;">
-                            @csrf
-                            @method('DELETE')
-                        </form>
-                    </div>
-                    <?php $total += $cl->product_price * $cl->quantity; ?>
-                </div>
-                @if(($loop->iteration % 3) == 0)
-                <div style="flex-basis: 100%;"></div>
-                @endif
-                @endforeach
-            </div>
             <hr style="background-color:rgb(0,0,0); height:20px;">
             <?php $tax = $total * 0.1; ?>
             <div class="total">
@@ -209,10 +209,35 @@ $profilePicture = $user->gambar;
                 <br>
                 <?php $total += $tax; ?>
                 <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
-                <form action="{{ route('paymentProductCart2') }}" method="POST" id="payment-form">
-                    @csrf
-                    <button type="submit" class="btn btn-success mb-3 Payment">Pay</button>
-                </form>
+
+                <div style="display: flex; align-items: baseline;">
+
+                    <select id="metodePembayaran" style="background-color:lightblue; height:38px;font-weight: bold; border-radius:20px;">
+                        <option value="" disabled selected>Metode Pembayaran</option>
+                        <?php foreach ($metode_pembayaran as $metode) : ?>
+                            <?php if ($metode->saldo < 1) : ?>
+                                <?php $saldo_formatted = number_format((float) $metode->saldo, 0, ',', '.'); ?>
+                                <?php if ($metode->namametodepembayaran === 'Tunai' || $metode->namametodepembayaran === 'QRIS') : ?>
+                                    <option value="<?= $metode->saldo ?>">
+                                        <?= $metode->namametodepembayaran ?>
+                                    </option>
+                                <?php else : ?>
+                                    <option value="<?= $metode->saldo ?>">
+                                        <?= $metode->namametodepembayaran . ' (Rp ' . $saldo_formatted . '.00)' ?>
+                                    </option>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <form action="{{ route('paymentProductCart2') }}" method="POST" id="payment-form">
+                        @csrf
+                        @if ($user->status_belanja_bantuan_karyawan != 'active')
+                        <button type="submit" class="btn btn-success mb-3 Payment" style="margin-left:10px; margin-top:13px; border-radius:20px">Pay</button>
+                        @endif
+                    </form>
+                </div>
+
             </div>
         </div>
     </div>
@@ -313,7 +338,7 @@ $profilePicture = $user->gambar;
             url: "{{ route('incrementProductCart2') }}",
             data: {
                 _token: '{{ csrf_token() }}',
-                id_barang: productId, 
+                id_barang: productId,
                 increment: 1
             },
             success: function(data) {
@@ -362,13 +387,140 @@ $profilePicture = $user->gambar;
             })
             .then((willDelete) => {
                 if (willDelete) {
-                    $('#delete-form-' + productId).submit(); 
+                    $('#delete-form-' + productId).submit();
                 } else {
                     swal("Data deletion cancelled!");
                 }
             });
     });
 </script>
+
+<script>
+    $('.Payment').click(function(e) {
+        e.preventDefault();
+
+        var MethodValue = $('#metodePembayaran').val();
+        var totalAmount = parseFloat(<?php echo $total; ?>);
+        var MethodName = $('#metodePembayaran option:selected').text();
+
+        // Flag variable to track if "Bayar" button was clicked
+        var bayarClicked = false;
+
+        swal({
+                title: "Lakukan Pembayaran?",
+                text: "Anda akan melakukan pembayaran sejumlah Rp " + totalAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+                icon: "info",
+                buttons: ["Batal", "Bayar"],
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+            })
+            .then((willPay) => {
+                if (willPay) {
+                    // Set the flag to true when "Bayar" button is clicked
+                    bayarClicked = true;
+
+                    if (MethodValue == null) {
+                        // Check if "Bayar" button was clicked
+                        if (bayarClicked) {
+                            swal("Pilih Metode Pembayaran");
+                        }
+                        return;
+                    }
+
+                    if (MethodName.includes("Tunai")) {
+                        $('#payment-form').submit();
+                        swal("Pembayaran Berhasil!");
+                        return;
+                    }
+
+                    if (MethodName.includes("QRIS")) {
+                        // Display initial message with QR code and waiting status
+                        swal({
+                            title: "Kode Bayar",
+                            text: "Menunggu Pembayaran",
+                            content: {
+                                element: "div",
+                                attributes: {
+                                    innerHTML: `
+                    <img src="https://gkjw.or.id/wp-content/uploads/2023/05/QRIS-Dummy.jpg" style="max-width: 100%;">
+                    <p id="countdown-text" style="margin-top: 10px;">VA: 9128232351212<br>Menunggu Pembayaran (10 detik)</p>
+                `
+                                }
+                            },
+                            buttons: false,
+                        }).then((value) => {
+                            // After the initial message is displayed, start the timer for 1 second
+                            var countdown = 1; // Initial countdown value
+                            var timer = setInterval(function() {
+                                countdown--;
+                                // Update the countdown text
+                                $('#countdown-text').html(`VA: 9128232351212<br>Menunggu Pembayaran (${countdown} detik)`);
+                                // When countdown reaches 0, show the success message and stop the timer
+
+                                if (countdown <= 0) {
+                                    clearInterval(timer);
+                                    swal("Pembayaran Berhasil!");
+                                    // Submit the payment form after 1 second
+                                    setTimeout(function() {
+
+                                        $('#payment-form').submit();
+                                    }, 1000); // 1 second in milliseconds
+                                }
+                            }, 1000); // Update the countdown every second
+                        });
+
+                        return;
+                    }
+
+
+
+
+                    // Other payment methods
+                    if (MethodName.includes("Gopay") && (MethodValue < totalAmount)) {
+                        swal("Saldo kurang, silakan pilih metode pembayaran yang lain!");
+                        return;
+                    }
+
+                    if (MethodName.includes("Ovo") && (MethodValue < totalAmount)) {
+                        swal("Saldo kurang, silakan pilih metode pembayaran yang lain!");
+                        return;
+                    }
+
+                    // Submit the payment form for other payment methods
+                    $('#payment-form').submit();
+                    swal("Pembayaran Berhasil!");
+                } else {
+                    swal("Pembayaran Dibatalkan");
+                }
+            });
+    });
+
+
+    // Disable the SweetAlert when selecting a payment method
+    $('#metodePembayaran').change(function() {
+        // Reset the flag when the dropdown menu is interacted with
+        bayarClicked = false;
+    });
+
+    // Variable to track if "Bayar" button was clicked
+    var bayarClicked = false;
+
+    // Listen for click events on the "Bayar" button
+    $('.Payment').click(function(e) {
+        // Set the flag to true when "Bayar" button is clicked
+        bayarClicked = true;
+    });
+
+    // Listen for click events on the dropdown menu
+    $('#metodePembayaran').click(function(e) {
+        // Check if the click event originated from the "Bayar" button
+        if (!bayarClicked) {
+            // If not, prevent the SweetAlert from being triggered
+            e.stopPropagation();
+        }
+    });
+</script>
+
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>

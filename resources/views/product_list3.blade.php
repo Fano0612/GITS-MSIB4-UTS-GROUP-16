@@ -50,7 +50,7 @@ $profilePicture = $user->gambar;
     <!-- Template Stylesheet -->
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
     <style>
-            .background {
+        .background {
             position: fixed;
             background-size: cover;
             top: 0;
@@ -65,112 +65,117 @@ $profilePicture = $user->gambar;
 </head>
 
 <body>
-<div class="background">
+    <div class="background">
 
-</div>
-<div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: space-between; border-bottom: 0.5px solid black; padding-top:10px;padding-bottom:10px;">
+    </div>
+    <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: space-between; border-bottom: 0.5px solid black; padding-top:10px;padding-bottom:10px;">
 
-<div style="display: flex; align-items: center;">
-    <a href="" class="navbar-brand p-0">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png" style="width:150px;height:50px;">
-    </a>
-</div>
+        <div style="display: flex; align-items: center;">
+            <a href="" class="navbar-brand p-0">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png" style="width:150px;height:50px;">
+            </a>
+        </div>
 
-<form class="d-flex" role="search" style="max-width: 100%; width: 100%;">
-    <input id="searchInput" class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" style="width: calc(100% - 30px); max-width: 1200px; border-radius:20px;">
-</form>
+        <form class="d-flex" role="search" style="max-width: 100%; width: 100%;">
+            <input id="searchInput" class="form-control me-2" type="search" placeholder="Cari" aria-label="Search" style="width: calc(100% - 30px); max-width: 1200px; border-radius:20px;">
+        </form>
 
-<a href="{{route ('showProductCart')}}" style=" margin-right:10px; padding-top:10px;">
-    <i class="fa fa-shopping-cart" style="font-size:30px"></i>
-</a>
+        <a href="{{route ('showProductCart')}}" style=" margin-right:10px; padding-top:10px;">
+            <i class="fa fa-shopping-cart" style="font-size:30px"></i>
+        </a>
 
-<div style="display: inline-block;">
+        <div style="display: inline-block;">
 
 
-    <div class="dropdown" style="display: inline-block;">
-        <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
-        </button>
-        <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
-            @if (auth()->check())
-            <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</b></a>
-            @endif
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
+            <div class="dropdown" style="display: inline-block;">
+                <button class="btn" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="{{ asset('images/'.$profilePicture) }}" alt="" width="48" height="48" style="border-radius: 50%;">
+                </button>
+                <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
+                    @if (auth()->check())
+                    <a class="dropdown-item" href="/showAccount3/{{$user->id}}">Hello <b>{{ auth()->user()->username }}</b></a>
+                    @endif
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
+                </div>
+            </div>
         </div>
     </div>
-</div>
-</div>
 
 
-<div class="container-fluid position-relative p-2">
-<nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: white; border-bottom: 0.5px solid white;">
+    <div class="container-fluid position-relative p-2">
+        <nav class="navbar navbar-expand-lg navbar-light px-4 px-lg-5 py-3 py-lg-0" style="background-color: white; border-bottom: 0.5px solid white;">
 
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
-        <span class="fa fa-bars"></span>
-    </button>
-    <div class="collapse navbar-collapse justify-content-center" id="navbarCollapse">
-        <div class="navbar-nav py-0">
-        <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link ">Home</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                <span class="fa fa-bars"></span>
+            </button>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarCollapse">
+                <div class="navbar-nav py-0">
+                    <a href="{{route ('dashboardpelanggan')}}" class="nav-item nav-link ">Home</a>
                     <a href="{{route ('product_list_front')}}" class="nav-item nav-link active">Belanja</a>
                     <a href="{{route ('laporankriminalitas')}}" class="nav-item nav-link">Laporan Kriminalitas</a>
                     <a href="{{route ('transaction_list3')}}" class="nav-item nav-link">Riwayat Belanja</a>
 
-        </div>
+                </div>
+            </div>
+        </nav>
     </div>
-</nav>
-</div>
 
-<!-- Navbar & Hero End -->
-<button id="categoryDropdownBtn" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top:150px;margin-left:40px; background:white; border-radius: 10px; color: black;">
-  Kategori <span class="caret" style="color: black;"></span>
-</button>
+    <!-- Navbar & Hero End -->
+    <button id="categoryDropdownBtn" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top:150px;margin-left:40px; background:white; border-radius: 10px; color: black;">
+        Kategori <span class="caret" style="color: black;"></span>
+    </button>
 
 
-<ul class="dropdown-menu">
-@php
-$categories = App\Models\Category::all();
-@endphp
-@foreach($categories as $category)
-<li><a class="dropdown-item category-item" href="#" data-category-id="{{ $category->id }}">{{ $category->product_category }}</a></li>
-@endforeach
-</ul>
+
+    @php
+    $categories = App\Models\Category::all();
+    @endphp
+    @if($categories->isEmpty())
+    <p>Data tidak ditemukan!</p>
+    @else
+    <ul class="dropdown-menu">
+        @foreach($categories as $category)
+        <li><a class="dropdown-item category-item" href="#" data-category-id="{{ $category->id }}">{{ $category->product_category }}</a></li>
+        @endforeach
+    </ul>
+    @endif
     <!-- Navbar & Hero End -->
     @php
     $products = App\Models\Barang::all();
     @endphp
 
 
-<div class="container-xxl py-3" style="margin-top: 10px;">
-    <div class="container">
-        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
-            @foreach($products as $prod)
-            <div class="col mb-4" data-category-id="{{ $prod->kategori_id }}">
-                <div class="card">
-                    <img src="{{ asset('images/product_pictures/'.$prod->foto) }}" class="card-img-top" alt="">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ $prod->namabarang }}</h5>
-                        <p class="card-text">Rp {{ number_format($prod->harga, 0, ',', '.') }}.00</p>
-                        <p class="card-text">Stock: {{ $prod->jumlahstokbarang }}</p>
-                        <div class="d-flex justify-content-between align-items-center">
-                            @if($prod->jumlahstokbarang > 0)
-                            <form action="{{ route('buyproduct') }}" method="POST">
-                                @csrf
-                                <input type="hidden" name="product_id" value="{{ $prod->id_barang }}">
-                                <button type="submit" class="btn btn-primary">Beli</button>
-                            </form>
-                            @else
-                            <p class="card-text text-danger">Stok Habis</p>
-                            @endif
-                            <button type="button" class="btn btn-secondary detail-btn" data-bs-toggle="modal" data-bs-target="#productDetailModal" data-product-id="{{ $prod->id_barang }}">Detil</button>
+    <div class="container-xxl py-3" style="margin-top: 10px;">
+        <div class="container">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4">
+                @foreach($products as $prod)
+                <div class="col mb-4" data-category-id="{{ $prod->kategori_id }}">
+                    <div class="card">
+                        <img src="{{ asset('images/product_pictures/'.$prod->foto) }}" class="card-img-top" alt="">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ $prod->namabarang }}</h5>
+                            <p class="card-text">Rp {{ number_format($prod->harga, 0, ',', '.') }}.00</p>
+                            <p class="card-text">Stock: {{ $prod->jumlahstokbarang }}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                @if($prod->jumlahstokbarang > 0)
+                                <form action="{{ route('buyproduct') }}" method="POST">
+                                    @csrf
+                                    <input type="hidden" name="product_id" value="{{ $prod->id_barang }}">
+                                    <button type="submit" class="btn btn-primary">Beli</button>
+                                </form>
+                                @else
+                                <p class="card-text text-danger">Stok Habis</p>
+                                @endif
+                                <button type="button" class="btn btn-secondary detail-btn" data-bs-toggle="modal" data-bs-target="#productDetailModal" data-product-id="{{ $prod->id_barang }}">Detil</button>
+                            </div>
                         </div>
                     </div>
                 </div>
+                @endforeach
             </div>
-            @endforeach
         </div>
     </div>
-</div>
 
 
     <div class="modal fade" id="productDetailModal" tabindex="-1" aria-labelledby="productDetailModalLabel" aria-hidden="true">
@@ -319,6 +324,27 @@ $categories = App\Models\Category::all();
 
                     $('#productDetailModal').modal('show');
                 }
+                else{
+                    
+                    $('#productDetailModal .modal-body').html(
+                        `<div class="card">
+        <img src="{{ asset('images/product_pictures/') }}/${product.foto}" class="card-img-top mx-auto d-block" alt="" style="width: 200px; height: 200px;">
+        <div class="card-body">
+
+        <div class="container">
+  <div class="row">
+
+    <h1>Data tidak ditemukan!</h1>
+  </div>
+</div>
+ 
+            
+        </div>
+    </div>`
+                    );
+
+                    $('#productDetailModal').modal('show');
+                }
             });
         });
     </script>
@@ -345,28 +371,28 @@ $categories = App\Models\Category::all();
         });
     </script>
 
-<script>
-    $(document).ready(function() {
-        $('.category-item').click(function(e) {
-            e.preventDefault();
-            var categoryId = $(this).data('category-id');
-            var categoryText = $(this).text();
-            $('#categoryDropdownBtn').text(categoryText); 
-            filterProducts(categoryId);
-        });
-
-        function filterProducts(categoryId) {
-            $('.col.mb-4').each(function() {
-                var productCategoryId = $(this).data('category-id');
-                if (productCategoryId == categoryId || categoryId == 0) {
-                    $(this).show();
-                } else {
-                    $(this).hide();
-                }
+    <script>
+        $(document).ready(function() {
+            $('.category-item').click(function(e) {
+                e.preventDefault();
+                var categoryId = $(this).data('category-id');
+                var categoryText = $(this).text();
+                $('#categoryDropdownBtn').text(categoryText);
+                filterProducts(categoryId);
             });
-        }
-    });
-</script>
+
+            function filterProducts(categoryId) {
+                $('.col.mb-4').each(function() {
+                    var productCategoryId = $(this).data('category-id');
+                    if (productCategoryId == categoryId || categoryId == 0) {
+                        $(this).show();
+                    } else {
+                        $(this).hide();
+                    }
+                });
+            }
+        });
+    </script>
 
 </body>
 

@@ -4,12 +4,12 @@ if (!auth()->check() || auth()->user()->status != 'active') {
     echo "<script>alert('Silakan login untuk mengakses sistem!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
-  }
+}
 if (auth()->user()->jabatan != 'karyawan') {
     echo "<script>alert('Anda Bukan Karyawan!');</script>";
     echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
     die();
-  }
+}
 
 
 $user = auth()->user();
@@ -20,9 +20,9 @@ $profilePicture = $user->gambar;
 <html lang="en">
 
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Indomaret Self Service System - Keranjang Belanja Karyawan</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Indomaret Self Service System - Keranjang Belanja Karyawan</title>
     <link rel="icon" type="image/x-icon" href="https://upload.wikimedia.org/wikipedia/commons/9/9d/Logo_Indomaret.png">
     <!-- Favicon -->
     <link href="{{ asset('img/favicon.ico') }}" rel="icon">
@@ -44,75 +44,80 @@ $profilePicture = $user->gambar;
 
 
     <style>
-                  .adjustment{
-                    display: flex;
-                    align-items: flex-start;
-                  }
-                        .background {
-                      position: fixed;
-                      background-size: cover;
-                      top: 0;
-                      left: 0;
-                      z-index: -1;
-                      width: 100%;
-                      height: 100%;
-                      background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
-                      filter: blur(5px);
-                    }
-                    .card-border{
-                      border-style: solid;
-                      flex-wrap:wrap; 
-                      justify-content:center;
-                      width: fit-content;
-                      block-size: fit-content;
-                      margin-top: 30px;
-                      margin-bottom: 30px;
-                      margin-right: auto;
-                      margin-left: auto;
-                    }
-                    .card {
-                      display: inline-block;
-                      margin: 10px;
+        .adjustment {
+            display: flex;
+            align-items: flex-start;
+        }
 
-                      }
-                      .hr1 {
-                        padding: 0;
-                        margin: 0;
-                    }
-                    
-                    footer {
-                        background-color: rgba(255, 255, 255, 0.7);
-                    }
-                    
-                    .h1-footer {
-                        color: rgb(152, 255, 200);
-                        text-align: center;
-                        font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-                    }
-                    
-                    .text-muted {
-                        text-align: center;
-                        color: white;
-                    }
-                    
-                    img.sosimg {
-                        height: 20px;
-                        width: 20px;
-                        margin-right: 2px;
-                    }
-                    .Cart-Container{
-                      display: flex;
-                      justify-content: center;
-                      align-items: center;
-                      margin: 30px auto;
-                      width: 70%;
-                      height: 85%;
-                      background-color: #ffffff;
-                      border-radius: 20px;
-                      box-shadow: 0px 25px 40px #1687d933;
+        .background {
+            position: fixed;
+            background-size: cover;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://swamediainc.storage.googleapis.com/swa.co.id/wp-content/uploads/2022/01/17165433/Transaksi-GoPay-di-Indomaret.jpg');
+            filter: blur(5px);
+        }
 
-                      }
-  </style>
+        .card-border {
+            border-style: solid;
+            flex-wrap: wrap;
+            justify-content: center;
+            width: fit-content;
+            block-size: fit-content;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-right: auto;
+            margin-left: auto;
+        }
+
+        .card {
+            display: inline-block;
+            margin: 10px;
+
+        }
+
+        .hr1 {
+            padding: 0;
+            margin: 0;
+        }
+
+        footer {
+            background-color: rgba(255, 255, 255, 0.7);
+        }
+
+        .h1-footer {
+            color: rgb(152, 255, 200);
+            text-align: center;
+            font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+        }
+
+        .text-muted {
+            text-align: center;
+            color: white;
+        }
+
+        img.sosimg {
+            height: 20px;
+            width: 20px;
+            margin-right: 2px;
+        }
+
+        .Cart-Container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 30px auto;
+            width: 70%;
+            height: 85%;
+            background-color: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0px 25px 40px #1687d933;
+
+        }
+    </style>
 
 </head>
 <link rel="stylesheet" href="{{ asset('css/style.css') }}">
@@ -132,12 +137,12 @@ $profilePicture = $user->gambar;
             </button>
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <div class="navbar-nav ms-auto py-0">
-                <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link">Home</a>
-          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
-          <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
-          <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas2')}}">Laporan Kriminalitas</a>
-          <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Daftar Transaksi</a>
-        </div>
+                    <a href="{{route ('dashboardkaryawan')}}" class="nav-item nav-link">Home</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
+                    <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas2')}}">Laporan Kriminalitas</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Daftar Transaksi</a>
+                </div>
 
                 <a href="{{route ('showProductCart3')}}">
                     <i class="fa fa-shopping-cart" style="font-size:30px"></i>
@@ -148,7 +153,7 @@ $profilePicture = $user->gambar;
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())
-                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
+                        <a class="dropdown-item" href="/showAccount2/{{$user->id}}">Hello <b>{{ auth()->user()->username }}</a>
                         @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
@@ -159,14 +164,14 @@ $profilePicture = $user->gambar;
     </div>
     <!-- Navbar & Hero End -->
 
-@php
-$cart = App\Models\Cart::all();
-@endphp
-<div class ="background"></div>
+    @php
+    $cart = App\Models\Cart::all();
+    @endphp
+    <!-- <div class="background"></div> -->
 
 
 
-<div class="Cart-Container">
+    <div class="Cart-Container">
         <div class="Cart-content" style="display:inline-block;">
             <div class="card-border">
                 <?php $total = 0; ?>
@@ -190,6 +195,7 @@ $cart = App\Models\Cart::all();
                             @method('DELETE')
                         </form>
                     </div>
+                    <p style="color: red;">* Silakan me-refresh halaman setelah melakukan perubahan kuantitas barang!</p>
                     <?php $total += $cl->product_price * $cl->quantity; ?>
                 </div>
                 @if(($loop->iteration % 3) == 0)
@@ -204,11 +210,36 @@ $cart = App\Models\Cart::all();
                 <br>
                 <?php $total += $tax; ?>
                 <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
-                <form action="{{ route('paymentProductCart3') }}" method="POST" id="payment-form">
-                    @csrf
-                    <button type="submit" class="btn btn-success mb-3 Payment">Pay</button>
 
-                </form>
+                <div style="display: flex; align-items: baseline;">
+
+                    <select id="metodePembayaran" style="background-color:lightblue; height:38px;font-weight: bold; border-radius:20px;">
+                        <option value="" disabled selected>Metode Pembayaran</option>
+                        <?php foreach ($metode_pembayaran as $metode) : ?>
+                            <?php if ($metode->saldo < 1) : ?>
+                                <?php $saldo_formatted = number_format((float) $metode->saldo, 0, ',', '.'); ?>
+                                <?php if ($metode->namametodepembayaran === 'Tunai' || $metode->namametodepembayaran === 'QRIS') : ?>
+                                    <option value="<?= $metode->saldo ?>">
+                                        <?= $metode->namametodepembayaran ?>
+                                    </option>
+                                <?php else : ?>
+                                    <option value="<?= $metode->saldo ?>">
+                                        <?= $metode->namametodepembayaran . ' (Rp ' . $saldo_formatted . '.00)' ?>
+                                    </option>
+                                <?php endif; ?>
+                            <?php endif; ?>
+                        <?php endforeach; ?>
+                    </select>
+
+                    <form action="{{ route('paymentProductCart3') }}" method="POST" id="payment-form">
+                        @csrf
+                        @if ($user->status_belanja_bantuan_karyawan != 'active')
+                        <button type="submit" class="btn btn-success mb-3 Payment" style="margin-left:10px; margin-top:13px; border-radius:20px">Pay</button>
+                        @endif
+                    </form>
+                </div>
+
+
             </div>
         </div>
     </div>
@@ -366,9 +397,135 @@ $cart = App\Models\Cart::all();
     });
 </script>
 
+<script>
+    $('.Payment').click(function(e) {
+        e.preventDefault();
+
+        var MethodValue = $('#metodePembayaran').val();
+        var totalAmount = parseFloat(<?php echo $total; ?>);
+        var MethodName = $('#metodePembayaran option:selected').text();
+
+        // Flag variable to track if "Bayar" button was clicked
+        var bayarClicked = false;
+
+        swal({
+                title: "Lakukan Pembayaran?",
+                text: "Anda akan melakukan pembayaran sejumlah Rp " + totalAmount.toFixed(2).replace(/\d(?=(\d{3})+\.)/g, '$&,'),
+                icon: "info",
+                buttons: ["Batal", "Bayar"],
+                closeOnClickOutside: false,
+                closeOnEsc: false,
+            })
+            .then((willPay) => {
+                if (willPay) {
+                    // Set the flag to true when "Bayar" button is clicked
+                    bayarClicked = true;
+
+                    if (MethodValue == null) {
+                        // Check if "Bayar" button was clicked
+                        if (bayarClicked) {
+                            swal("Pilih Metode Pembayaran");
+                        }
+                        return;
+                    }
+
+                    if (MethodName.includes("Tunai")) {
+                        $('#payment-form').submit();
+                        swal("Pembayaran Berhasil!");
+                        return;
+                    }
+
+                    if (MethodName.includes("QRIS")) {
+                        // Display initial message with QR code and waiting status
+                        swal({
+                            title: "Kode Bayar",
+                            text: "Menunggu Pembayaran",
+                            content: {
+                                element: "div",
+                                attributes: {
+                                    innerHTML: `
+                    <img src="https://gkjw.or.id/wp-content/uploads/2023/05/QRIS-Dummy.jpg" style="max-width: 100%;">
+                    <p id="countdown-text" style="margin-top: 10px;">VA: 9128232351212<br>Menunggu Pembayaran (10 detik)</p>
+                `
+                                }
+                            },
+                            buttons: false,
+                        }).then((value) => {
+                            // After the initial message is displayed, start the timer for 1 second
+                            var countdown = 1; // Initial countdown value
+                            var timer = setInterval(function() {
+                                countdown--;
+                                // Update the countdown text
+                                $('#countdown-text').html(`VA: 9128232351212<br>Menunggu Pembayaran (${countdown} detik)`);
+                                // When countdown reaches 0, show the success message and stop the timer
+
+                                if (countdown <= 0) {
+                                    clearInterval(timer);
+                                    swal("Pembayaran Berhasil!");
+                                    // Submit the payment form after 1 second
+                                    setTimeout(function() {
+
+                                        $('#payment-form').submit();
+                                    }, 1000); // 1 second in milliseconds
+                                }
+                            }, 1000); // Update the countdown every second
+                        });
+
+                        return;
+                    }
+
+
+
+
+                    // Other payment methods
+                    if (MethodName.includes("Gopay") && (MethodValue < totalAmount)) {
+                        swal("Saldo kurang, silakan pilih metode pembayaran yang lain!");
+                        return;
+                    }
+
+                    if (MethodName.includes("Ovo") && (MethodValue < totalAmount)) {
+                        swal("Saldo kurang, silakan pilih metode pembayaran yang lain!");
+                        return;
+                    }
+
+                    // Submit the payment form for other payment methods
+                    $('#payment-form').submit();
+                    swal("Pembayaran Berhasil!");
+                } else {
+                    swal("Pembayaran Dibatalkan");
+                }
+            });
+    });
+
+
+    // Disable the SweetAlert when selecting a payment method
+    $('#metodePembayaran').change(function() {
+        // Reset the flag when the dropdown menu is interacted with
+        bayarClicked = false;
+    });
+
+    // Variable to track if "Bayar" button was clicked
+    var bayarClicked = false;
+
+    // Listen for click events on the "Bayar" button
+    $('.Payment').click(function(e) {
+        // Set the flag to true when "Bayar" button is clicked
+        bayarClicked = true;
+    });
+
+    // Listen for click events on the dropdown menu
+    $('#metodePembayaran').click(function(e) {
+        // Check if the click event originated from the "Bayar" button
+        if (!bayarClicked) {
+            // If not, prevent the SweetAlert from being triggered
+            e.stopPropagation();
+        }
+    });
+</script>
+
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
-  <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 
 </html>

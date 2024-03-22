@@ -122,11 +122,7 @@
             </div>
             @endif
 
-            <div class="row mb-3">
-                <div class="col-sm-3">
-                    <a class="btn btn-success" href="{{route ('transaction_list3')}}" role="button">Kembali</a>
-                </div>
-            </div>
+  
         </div>
     </div>
 

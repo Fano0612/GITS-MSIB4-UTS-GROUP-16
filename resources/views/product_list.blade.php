@@ -70,7 +70,7 @@ $profilePicture = $user->gambar;
                 </button>
                 <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                     @if (auth()->check())
-                    <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</b></a>
+                    <a class="dropdown-item" href="/showAccount/{{$user->id}}">Hello <b>{{ auth()->user()->username }}</b></a>
                     @endif
                     <div class="dropdown-divider"></div>
                     <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>
@@ -103,14 +103,18 @@ $profilePicture = $user->gambar;
     <button id="categoryDropdownBtn" class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" style="margin-top:150px;margin-left:40px; background:black; border-radius: 10px;">
     Kategori
 </button>
-<ul class="dropdown-menu">
     @php
         $categories = App\Models\Category::all();
     @endphp
-    @foreach($categories as $category)
-        <li><a class="dropdown-item category-item" href="#" data-category-id="{{ $category->id }}">{{ $category->product_category }}</a></li>
-    @endforeach
-</ul>
+@if($categories->isEmpty())
+    <p>Data tidak ditemukan!</p>
+@else
+    <ul class="dropdown-menu">
+        @foreach($categories as $category)
+            <li><a class="dropdown-item category-item" href="#" data-category-id="{{ $category->id }}">{{ $category->product_category }}</a></li>
+        @endforeach
+    </ul>
+@endif
 
     @php
     $products = App\Models\Barang::all();
@@ -233,6 +237,27 @@ $profilePicture = $user->gambar;
     <div class="col-6">${product.tanggalkedaluwarsa}</div>
     <div class="col-4">Jumlah Stok Barang: </div>
     <div class="col-6">${product.jumlahstokbarang}</div>
+  </div>
+</div>
+ 
+            
+        </div>
+    </div>`
+                    );
+
+                    $('#productDetailModal').modal('show');
+                }
+                else{
+                    
+                    $('#productDetailModal .modal-body').html(
+                        `<div class="card">
+        <img src="{{ asset('images/product_pictures/') }}/${product.foto}" class="card-img-top mx-auto d-block" alt="" style="width: 200px; height: 200px;">
+        <div class="card-body">
+
+        <div class="container">
+  <div class="row">
+
+    <h1>Data tidak ditemukan!</h1>
   </div>
 </div>
  

@@ -61,15 +61,9 @@ class ProductListController extends Controller
         $currentUser = Auth::user();
     
         if ($request->has('id')) {
-            // Get the user ID from the request
             $userId = $request->input('id');
-            
-            // Find the user based on the ID
             $userToBeHelped = User::find($userId);
-            
-            // Check if the user exists and is not the same as the authenticated user
             if ($userToBeHelped && $userToBeHelped->id !== $currentUser->id) {
-                // Copy the user ID to id_pelanggan_belanja_bantuan_karyawan field
                 $currentUser->id_pelanggan_belanja_bantuan_karyawan = $userId;
                 $currentUser->save();
             }
@@ -86,6 +80,7 @@ class ProductListController extends Controller
         $productCategories = Category::whereIn('id', $productIds)->get();
         return view('product_list', compact('products', 'productCategories'));
     }
+    
     public function index6(Request $request)
     {
         $currentUser = Auth::user();

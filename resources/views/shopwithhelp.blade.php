@@ -135,7 +135,7 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
 
 <body>
     <!-- Navbar & Hero Start -->
-    <div class="background"></div>
+    <!-- <div class="background"></div> -->
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
         <h1>Belanja dengan Bantuan Karyawan</h1>
     </div>
@@ -168,7 +168,7 @@ if (isset($_FILES['product_picture']) && $_FILES['product_picture']['error'] == 
                     </button>
                     <div class="dropdown-menu dropdown-menu-right position-relative" aria-labelledby="dropdownMenuButton">
                         @if (auth()->check())
-                        <a class="dropdown-item" href="">Hello <b>{{ auth()->user()->username }}</a>
+                        <a class="dropdown-item" href="/showAccount/{{$user->id}}">Hello <b>{{ auth()->user()->username }}</a>
                         @endif
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{{route ('logout')}}">Logout</a>

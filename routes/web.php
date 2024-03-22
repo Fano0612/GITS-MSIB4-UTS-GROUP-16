@@ -25,6 +25,14 @@ Route::get('/showProfile/{id}', [UserController::class, 'showProfile'])->name('s
 Route::get('/deleteProfile/{id}', [UserController::class, 'deleteProfile'])->name('deleteProfile');
 
 
+Route::post('/editAccount/{id}', [UserController::class, 'editAccount'])->name('editAccount');
+Route::post('/editAccount2/{id}', [UserController::class, 'editAccount2'])->name('editAccount2');
+Route::post('/editAccount3/{id}', [UserController::class, 'editAccount3'])->name('editAccount3');
+
+Route::get('/showAccount/{id}', [UserController::class, 'showAccount'])->name('showAccount');
+Route::get('/showAccount2/{id}', [UserController::class, 'showAccount2'])->name('showAccount2');
+Route::get('/showAccount3/{id}', [UserController::class, 'showAccount3'])->name('showAccount3');
+
 
 // GENERAL USER
 Route::get('', function () {
@@ -164,6 +172,9 @@ Route::post('/laporankriminalitas/insert', [LaporanKriminalitasController::class
 Route::get('/viewProductTransaction3/{transactionId}', [ProductController::class, 'viewProductTransaction3'])->name('viewProductTransaction3');
 Route::get('/printTransaction3/{transactionId}', [ProductController::class, 'printTransaction3'])->name('printTransaction3');
 
+
+
+
 Route::post('/paymentProductCart3', [App\Http\Controllers\ProductController::class, 'paymentProductCart3'])->name('paymentProductCart3');
 Route::post('/incrementProductCart3', [App\Http\Controllers\ProductController::class, 'incrementProductCart3'])->name('incrementProductCart3');
 Route::post('/decrementProductCart3', [App\Http\Controllers\ProductController::class, 'decrementProductCart3'])->name('decrementProductCart3');
@@ -172,6 +183,8 @@ Route::post('/buyProduct', [App\Http\Controllers\ProductController::class, 'buyP
 Route::get('/showProductCart', [App\Http\Controllers\ProductController::class, 'showProductCart'])->name('showProductCart');
 Route::get('/product_list3', [ProductListController::class, 'index3'])->name('product_list3');
 Route::get('/product_list4', [ProductListController::class, 'index4'])->name('product_list4');
+
+
 
 Route::get('/transaction_list3', function () {
     return view('transaction_list3');

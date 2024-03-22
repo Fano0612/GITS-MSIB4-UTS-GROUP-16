@@ -71,7 +71,7 @@ if (auth()->user()->jabatan != 'karyawan') {
 
 <body>
 
-    <div class="background"></div>
+    <!-- <div class="background"></div> -->
     <nav class="navbar navbar-expand-lg bg-body-tertiary mb-3">
         <div class="container-fluid">
 
