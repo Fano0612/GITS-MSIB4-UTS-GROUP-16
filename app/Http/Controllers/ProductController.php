@@ -284,7 +284,7 @@ class ProductController extends Controller
         $product = Barang::find($productId);
 
         if (!$product) {
-            return redirect()->back()->with('error', 'Product not found!');
+            return redirect()->back()->with('error', 'Produk tidak ditemukan!');
         }
 
         $userId = auth()->user()->id;
@@ -304,7 +304,7 @@ class ProductController extends Controller
         }
         $product->decrement('jumlahstokbarang', 1);
 
-        return redirect()->back()->with('success', 'Product successfully added to the cart!');
+        return redirect()->back()->with('success', 'Produk berhasil ditambahkan!');
     }
 
     public function buyProduct2(Request $request)
@@ -726,7 +726,7 @@ class ProductController extends Controller
             $user->status_belanja_bantuan_karyawan = 'inactive';
             $user->save();
         }
-        return redirect()->route('showProductCart')->with('success', 'Payment successful');
+        return redirect()->route('showProductCart')->with('success', 'Pembayaran Berhasil!');
     }
 
     public function paymentProductCart2()
@@ -764,7 +764,7 @@ class ProductController extends Controller
                 ->update(['status_belanja_bantuan_karyawan' => 'inactive']);
         }
 
-        return redirect()->route('showProductCart2')->with('success', 'Payment successful');
+        return redirect()->route('showProductCart2')->with('success', 'Pembayaran Berhasil!');
     }
     public function paymentProductCart3()
     {
@@ -802,7 +802,7 @@ class ProductController extends Controller
                 ->update(['status_belanja_bantuan_karyawan' => 'inactive']);
         }
 
-        return redirect()->route('showProductCart3')->with('success', 'Payment successful');
+        return redirect()->route('showProductCart3')->with('success', 'Pembayaran Berhasil!');
     }
 
 

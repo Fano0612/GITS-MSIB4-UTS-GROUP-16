@@ -83,7 +83,7 @@ $profilePicture = $user->gambar;
 <body>
     <div class="background"></div>
     <div class="title" style="text-align:center; background:white; display: flex; align-items: center; justify-content: center;border-bottom: 0.5px solid black;">
-        <h1>PeLaporan Kegiatan Kriminalitas</h1>
+        <h1>Pelaporan Kegiatan Kriminalitas</h1>
     </div>
 
     <div class="container-fluid position-relative p-0">

@@ -163,6 +163,7 @@ $profilePicture = $user->gambar;
 
     @php
     $cart = App\Models\Cart::all();
+    $metode_pembayaran= App\Models\MetodePembayaran::all();
     @endphp
     <div class="background"></div>
 
@@ -187,7 +188,7 @@ $profilePicture = $user->gambar;
                             <button class="btn btn-sm btn-primary increment-btn" data-product-id="{{$cl->product_id}}">+</button>
                         </p>
                         <a href="#" class="btn btn-danger delete" data-id="{{ $cl->product_id }}">Hapus</a>
-                        
+
                         <form id="delete-form-{{ $cl->product_id }}" action="{{ route('removeProductCart', $cl->product_id) }}" method="POST" style="display: none;">
                             @csrf
                             @method('DELETE')
@@ -208,7 +209,7 @@ $profilePicture = $user->gambar;
                 <br>
                 <?php $total += $tax; ?>
                 <h2>Total&nbsp;= Rp {{ number_format($total, 0, ',', '.') }}.00</h2>
-
+                @if ($user->status_belanja_bantuan_karyawan != 'active')
                 <div style="display: flex; align-items: baseline;">
 
                     <select id="metodePembayaran" style="background-color:lightblue; height:38px;font-weight: bold; border-radius:20px;">
@@ -229,7 +230,7 @@ $profilePicture = $user->gambar;
 
                     <form action="{{ route('paymentProductCart') }}" method="POST" id="payment-form">
                         @csrf
-                        @if ($user->status_belanja_bantuan_karyawan != 'active')
+
                         <button type="submit" class="btn btn-success mb-3 Payment" style="margin-left:10px; margin-top:13px; border-radius:20px">Pay</button>
                         @endif
                     </form>

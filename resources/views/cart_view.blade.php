@@ -166,6 +166,7 @@ $profilePicture = $user->gambar;
 
     @php
     $cart = App\Models\Cart::all();
+    $metode_pembayaran= App\Models\MetodePembayaran::all();
     @endphp
     <!-- <div class="background"></div> -->
 
