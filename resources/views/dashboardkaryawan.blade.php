@@ -9,7 +9,7 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 <?php
 if (auth()->user()->jabatan != 'karyawan') {
   echo "<script>alert('Anda Bukan Karyawan');</script>";
-  echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
+  echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
   die();
 }
 $user = auth()->user();
