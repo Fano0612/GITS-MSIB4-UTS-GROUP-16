@@ -68,7 +68,7 @@ $profilePicture = $user->gambar;
                     <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas2')}}">Laporan Kriminalitas</a>
                     <a class="nav-item nav-link active" aria-current="page" href="{{route ('transaction_list2')}}">Daftar Transaksi</a>
                 </div>
-                <a href="{{route ('shopwithhelp')}}">
+                <a href="{{route ('shopwithhelp2')}}">
                     <i class="fas fa-comments" style="font-size:30px"></i>
                 </a>
                 &nbsp; &nbsp;
