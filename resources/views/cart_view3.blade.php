@@ -7,7 +7,7 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 }
 if (auth()->user()->jabatan != 'pelanggan') {
     echo "<script>alert('Anda Bukan Pelanggan!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/dashboardpelanggan'; }, 1000);</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 

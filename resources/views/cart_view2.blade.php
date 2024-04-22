@@ -7,7 +7,7 @@ if (!auth()->check() || auth()->user()->status != 'active') {
 }
 if (auth()->user()->jabatan != 'karyawan') {
     echo "<script>alert('Anda Bukan Karyawan!');</script>";
-    echo "<script>setTimeout(function() { window.location.href = '/dashboardkaryawan'; }, 1000);</script>";
+    echo "<script>setTimeout(function() { window.location.href = '/login'; }, 1000);</script>";
     die();
 }
 
@@ -141,7 +141,7 @@ $profilePicture = $user->gambar;
                     <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Belanja</a>
                     <a class="nav-item nav-link " aria-current="page" href="{{route ('product_menu')}}">Data Barang</a>
                     <a class="nav-item nav-link " aria-current="page" href="{{route ('daftarlaporankriminalitas2')}}">Laporan Kriminalitas</a>
-                    <a class="nav-item nav-link" aria-current="page" href="{{route ('product_list2')}}">Daftar Transaksi</a>
+                    <a class="nav-item nav-link" aria-current="page" href="{{route ('transaction_list2')}}">Daftar Transaksi</a>
                 </div>
 
                 <a href="{{route ('showProductCart3')}}">
@@ -166,7 +166,8 @@ $profilePicture = $user->gambar;
 
     @php
     $cart = App\Models\Cart::all();
-    $metode_pembayaran= App\Models\MetodePembayaran::all();
+    $metode_pembayaran = App\Models\MetodePembayaran::whereNotIn('namametodepembayaran', ['Ovo', 'Gopay'])->get();
+
     @endphp
     <!-- <div class="background"></div> -->
 
@@ -214,27 +215,25 @@ $profilePicture = $user->gambar;
 
                 <div style="display: flex; align-items: baseline;">
 
-                    <select id="metodePembayaran" style="background-color:lightblue; height:38px;font-weight: bold; border-radius:20px;">
+                <select id="metodePembayaran" style="background-color:lightblue; height:38px;font-weight: bold; border-radius:20px;">
                         <option value="" disabled selected>Metode Pembayaran</option>
                         <?php foreach ($metode_pembayaran as $metode) : ?>
-                            <?php if ($metode->saldo < 1) : ?>
-                                <?php $saldo_formatted = number_format((float) $metode->saldo, 0, ',', '.'); ?>
-                                <?php if ($metode->namametodepembayaran === 'Tunai' || $metode->namametodepembayaran === 'QRIS') : ?>
-                                    <option value="<?= $metode->saldo ?>">
+                            <?php $saldo_formatted = number_format((float) $metode->saldo, 0, ',', '.'); ?>
+                            
+                                <option value="<?= $metode->saldo ?>">
+                                    <?php if ($metode->namametodepembayaran === 'Tunai' ||$metode->namametodepembayaran === 'QRIS') : ?>
                                         <?= $metode->namametodepembayaran ?>
-                                    </option>
-                                <?php else : ?>
-                                    <option value="<?= $metode->saldo ?>">
+                                    <?php else : ?>
                                         <?= $metode->namametodepembayaran . ' (Rp ' . $saldo_formatted . '.00)' ?>
-                                    </option>
-                                <?php endif; ?>
-                            <?php endif; ?>
+                                    <?php endif; ?>
+                                </option>
+                            
                         <?php endforeach; ?>
                     </select>
 
                     <form action="{{ route('paymentProductCart3') }}" method="POST" id="payment-form">
                         @csrf
-                        @if ($user->status_belanja_bantuan_karyawan != 'active')
+                        @if ($user->status_belanja_bantuan_karyawan == 'active')
                         <button type="submit" class="btn btn-success mb-3 Payment" style="margin-left:10px; margin-top:13px; border-radius:20px">Pay</button>
                         @endif
                     </form>
